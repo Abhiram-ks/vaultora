@@ -46,11 +46,11 @@ class _checkScreenState extends State<checkScreen> {
                         color: Colors.white.withOpacity(0.6),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      padding: EdgeInsets.all(screenWidth * 0.0),
+                      padding: EdgeInsets.all(screenWidth * 0.01),
                       child: Lottie.asset(
                         'assets/gif/welcome_vaultora.json',
                         fit: BoxFit.contain,
-                        height: screenHeight * 0.4,
+                        height: screenHeight * 0.6,
                       ),
                     )
                   ],
@@ -94,17 +94,39 @@ class _checkScreenState extends State<checkScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 15),
+                      padding: EdgeInsets.symmetric(vertical: 14),
                     ),
                         child: Text('Sign in',
                         style: TextStyle(
                           color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600
                         ),),
                       ),
                     ),
                   ),
                 ],
-              )
+              ),
+               SizedBox(height: screenHeight*0.02),
+               Row(
+                children: [
+                  Padding(padding: EdgeInsets.symmetric(horizontal:  screenWidth * 0.1)),
+                  Text('Already have an account?',
+                  style: TextStyle(color: Colors.white),),
+                  GestureDetector(
+                    onTap: (){
+
+                    },
+                    child: Text(
+                      '\tLogin',
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 0, 102, 255)
+                      ),
+                    ),
+                  )
+                ],
+               ),
+               SizedBox(height: screenHeight*0.11,)
             ],
           ))
         ],
