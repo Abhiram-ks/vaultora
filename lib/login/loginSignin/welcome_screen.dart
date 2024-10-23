@@ -1,25 +1,20 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-class checkScreen extends StatefulWidget {
-  const checkScreen({super.key});
+class CheckScreen extends StatefulWidget {
+  const CheckScreen({super.key});
 
   @override
-  State<checkScreen> createState() => _checkScreenState();
+  State<CheckScreen> createState() => _CheckScreenState();
 }
 
-class _checkScreenState extends State<checkScreen> {
+class _CheckScreenState extends State<CheckScreen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    // return Scaffold(
-    //   body: Center(
-    //     // child: Text('data'),
-    //     child:
-    // ),
-    // );
     return Scaffold(
       body: Stack(
         children: [
@@ -33,7 +28,7 @@ class _checkScreenState extends State<checkScreen> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Spacer(),
+              SizedBox(height: screenHeight * 0.1,),
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.05,
@@ -41,21 +36,56 @@ class _checkScreenState extends State<checkScreen> {
                 height: screenHeight * 0.3,
                 child: Stack(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.6),
-                        borderRadius: BorderRadius.circular(20),
+                     CarouselSlider(
+                       options: CarouselOptions(
+                          height: screenHeight * 0.3,
+                          autoPlay: true, 
+                          enlargeCenterPage: true,  
+                          viewportFraction: 0.7,    
+                          aspectRatio: 16 / 9,
+                        ),
+                      items: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: EdgeInsets.all(screenWidth * 0.01),
+                            child: Lottie.asset(
+                              'assets/gif/welcome_vaultora.json',
+                              fit: BoxFit.contain,
+                              height: screenHeight * 0.6,
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: EdgeInsets.all(screenWidth * 0.01),
+                            child: Lottie.asset(
+                              'assets/gif/Security3.json',
+                              fit: BoxFit.contain,
+                              height: screenHeight * 0.6,
+                            ),
+                          ),
+                         Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: EdgeInsets.all(screenWidth * 0.01),
+                            child: Lottie.asset(
+                              'assets/gif/Animation - 1729605813184.json',
+                              fit: BoxFit.contain,
+                              height: screenHeight * 0.6,
+                            ),
+                          ),
+                        ],
                       ),
-                      padding: EdgeInsets.all(screenWidth * 0.01),
-                      child: Lottie.asset(
-                        'assets/gif/welcome_vaultora.json',
-                        fit: BoxFit.contain,
-                        height: screenHeight * 0.6,
-                      ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
               SizedBox(
                 height: screenHeight * 0.2,
               ),
@@ -88,15 +118,17 @@ class _checkScreenState extends State<checkScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                            // Navigator. of(context).push(MaterialPageRoute(builder: (context) => LiquidSwipeScreen(),));
+                        },
                         style:  ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF3451FF),
+                          backgroundColor:const Color(0xFF3451FF),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                        child: Text('Sign in',
+                        child: const Text('Sign in',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -111,16 +143,16 @@ class _checkScreenState extends State<checkScreen> {
                Row(
                 children: [
                   Padding(padding: EdgeInsets.symmetric(horizontal:  screenWidth * 0.1)),
-                  Text('Already have an account?',
+                 const Text('Already have an account?',
                   style: TextStyle(color: Colors.white),),
                   GestureDetector(
                     onTap: (){
-
+      
                     },
-                    child: Text(
+                    child:const Text(
                       '\tLogin',
                       style: TextStyle(
-                        color: const Color.fromARGB(255, 0, 102, 255)
+                        color:  Color.fromARGB(255, 0, 102, 255)
                       ),
                     ),
                   )

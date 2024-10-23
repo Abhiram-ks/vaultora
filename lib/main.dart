@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'login/splash_screen.dart';
+import 'login/loginSignin/splash_screen.dart';
 
 void main(){
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      home: SplashScreen(),
+      home:const SplashScreen(),
     );
   }
 }

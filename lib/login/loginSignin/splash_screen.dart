@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vaultora_inventory_app/login/welcome_screen.dart';
-import 'package:vaultora_inventory_app/main.dart';
+
+import '../loginandsignin/LiquidSwipe/landing_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -72,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   child: Container(
                     width: screenWidth * 0.2  ,
                     height: 4,
-                    color: Colors.blue, // Blue color for the line
+                    color: Colors.blue,
                   ),
                 ),
               ],
@@ -111,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     await Future.delayed(const Duration(seconds: 2));
     Navigator.of(context).pushReplacement( 
       MaterialPageRoute(
-        builder: (ctx) => checkScreen(),
+        builder: (ctx) =>const LandingScreen(),
       ),
     );
   }
