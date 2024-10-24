@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class ScreenTwo extends StatelessWidget {
-  const ScreenTwo({super.key});
+class ScreenThree extends StatelessWidget {
+  const ScreenThree({super.key});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
+    return  Scaffold(
       body: Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                 Color.fromARGB(255, 224, 248, 88),
-              Color.fromARGB(255, 139, 240, 137)
+                 Color.fromARGB(255, 88, 179, 248),
+              Color.fromARGB(255, 216, 240, 137)
                 ],
                begin: Alignment.topCenter, end: Alignment.bottomCenter
               ),
@@ -24,7 +24,7 @@ class ScreenTwo extends StatelessWidget {
               children: [
                 SizedBox(height: size.height  * 0.02),
                 Lottie.asset(
-                  'assets/gif/Security3.json',
+                  'assets/gif/Animation - 1729708985261.json',
                   fit: BoxFit.contain,
                   height: size.height * 0.6,
                 ),
@@ -34,8 +34,8 @@ class ScreenTwo extends StatelessWidget {
                     SizedBox(
                       width: 300,
                       child:  Text(
-                        '"Privacy is a promise—secure the data like it’s your own And build trust."\n'
-                        '"by being transparent with every action you take."',
+                        '"An admin inventory app streamlines stock management."\n'
+                        '"orders, and alerts for efficient operations."',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
@@ -47,10 +47,13 @@ class ScreenTwo extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                Padding(
+               
+              ],
+            ),
+          ),
+           Padding(
                   padding: EdgeInsets.only(right:size.width * 0.1,),
-                  child: Align(
+                  child:const Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
                         'swipe->',
@@ -62,10 +65,7 @@ class ScreenTwo extends StatelessWidget {
                       ),
                   ),
                 ),
-              ],
-            ),
-          ),
-         
+      
         ],
       ),
     );
