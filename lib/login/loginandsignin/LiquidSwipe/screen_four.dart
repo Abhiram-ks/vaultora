@@ -2,31 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/login/loginSignin/welcome_screen.dart';
 
+import '../../decorationLand/decoration_landing.dart';
+
 class ScreenFour extends StatefulWidget {
   const ScreenFour({super.key});
 
   @override
   State<ScreenFour> createState() => _ScreenFourState();
 }
-
 class _ScreenFourState extends State<ScreenFour> {
   @override
   Widget build(BuildContext context) {
    final size = MediaQuery.of(context).size;
+    final screenFour= ScreenColor(colors: [
+    const Color.fromARGB(255, 198, 42, 255),
+    const Color.fromRGBO(253, 232, 136, 1)
+    ]);
     return Scaffold(
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 198, 42, 255),
-                  Color.fromRGBO(208, 253, 136, 1)
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
+           decoration: screenFour.gradientDecoration,
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.02),
@@ -63,7 +59,6 @@ class _ScreenFourState extends State<ScreenFour> {
               width: size.width * 0.8,
               child: Row(
                 children: [
-                 
                   const Text(
                     'Let’s get start',
                     style: TextStyle(

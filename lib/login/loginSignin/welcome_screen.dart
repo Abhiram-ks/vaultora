@@ -2,6 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vaultora_inventory_app/colors/colors.dart';
+import 'package:vaultora_inventory_app/login/loginSignin/login_screen.dart';
+import 'package:vaultora_inventory_app/login/singin/signup.dart';
 
 class CheckScreen extends StatefulWidget {
   const CheckScreen({super.key});
@@ -23,6 +26,9 @@ class _CheckScreenState extends State<CheckScreen> {
               'assets/welcome/main image.jpg',
               fit: BoxFit.cover,
             ),
+          ),
+             Container(
+            color: Colors.black.withOpacity(0.83),
           ),
           Positioned.fill(
               child: Column(
@@ -49,7 +55,7 @@ class _CheckScreenState extends State<CheckScreen> {
                       items: [
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.6),
+                            color: Colors.white.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding: EdgeInsets.all(screenWidth * 0.01),
@@ -61,7 +67,7 @@ class _CheckScreenState extends State<CheckScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.6),
+                            color: Colors.white.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding: EdgeInsets.all(screenWidth * 0.01),
@@ -73,7 +79,7 @@ class _CheckScreenState extends State<CheckScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.6),
+                            color: Colors.white.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding: EdgeInsets.all(screenWidth * 0.01),
@@ -106,7 +112,7 @@ class _CheckScreenState extends State<CheckScreen> {
                 'for efficient operations.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
-                  color: Colors.white,
+                  color:textColor2 ,
                   fontSize: 16,
                   fontWeight: FontWeight.w200,
                 ),
@@ -122,7 +128,7 @@ class _CheckScreenState extends State<CheckScreen> {
                           EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigator. of(context).push(MaterialPageRoute(builder: (context) => LiquidSwipeScreen(),));
+                          Navigator. of(context).push(MaterialPageRoute(builder: (context) =>const SingInScreen(),));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF3451FF),
@@ -132,7 +138,7 @@ class _CheckScreenState extends State<CheckScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
                         child: const Text(
-                          'Sign in',
+                          'Sign Up',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -154,7 +160,9 @@ class _CheckScreenState extends State<CheckScreen> {
                     style: TextStyle(color: Colors.white),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const LoginScreen(),));
+                    },
                     child: const Text(
                       '\tLogin',
                       style: TextStyle(color: Color.fromARGB(255, 0, 102, 255)),
@@ -164,9 +172,10 @@ class _CheckScreenState extends State<CheckScreen> {
               ),
               SizedBox(
                 height: screenHeight * 0.11,
-              )
+              ),
             ],
-          ))
+          )
+          )
         ],
       ),
     );

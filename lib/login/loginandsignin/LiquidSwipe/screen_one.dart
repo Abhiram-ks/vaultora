@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:vaultora_inventory_app/login/loginSignin/welcome_screen.dart';
+import 'package:vaultora_inventory_app/login/decorationLand/decoration_landing.dart';
+
+import 'screen_four.dart';
 
 class ScreenOne extends StatefulWidget {
   const ScreenOne({super.key});
@@ -13,20 +15,15 @@ class _ScreenOneState extends State<ScreenOne> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+        final screenOne = ScreenColor(colors: [
+     const Color.fromARGB(255, 42, 255, 188), 
+     const Color.fromRGBO(195, 255, 149, 1),  
+    ]);
     return Scaffold(
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 42, 255, 188),
-                  Color.fromRGBO(195, 255, 149, 1)
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomRight,
-              ),
-            ),
+           decoration: screenOne.gradientDecoration,
             child: Column(
               children: [
                 SizedBox(height: size.height * 0.02),
@@ -43,7 +40,7 @@ class _ScreenOneState extends State<ScreenOne> {
                       child: Text(
                         '"Offer seamless solutions to track stock levels."\n'
                         '"Time is what we want most, but what we use worst."',
-                        textAlign: TextAlign.center, // Center align text
+                        textAlign: TextAlign.center, 
                         style: TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontWeight: FontWeight.w700,
@@ -66,9 +63,9 @@ class _ScreenOneState extends State<ScreenOne> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const CheckScreen(),
+                          builder: (context) => const ScreenFour(),
                         ),
                       );
                     },
