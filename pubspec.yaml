@@ -39,12 +39,14 @@ dependencies:
   lottie: ^3.1.2
   carousel_slider: ^5.0.0
   liquid_swipe: ^3.1.0
-  hive_flutter: ^1.1.0
   hive: ^2.2.3
+  hive_flutter: ^1.1.0
   http: ^1.2.2
   image_picker: ^1.1.2
   shared_preferences: ^2.3.2
   path_provider: ^2.1.4
+  font_awesome_flutter: ^10.7.0
+  curved_navigation_bar: ^1.0.6
 
 dev_dependencies:
   flutter_test:

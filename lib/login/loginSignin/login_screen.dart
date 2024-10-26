@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:vaultora_inventory_app/colors/colors.dart';
 import 'package:vaultora_inventory_app/login/decorationLand/decoration.dart';
 
-import '../../home/homepage.dart';
+import '../../main page/main_page.dart';
 import '../decorationLand/decoration2.dart';
 import '../decorationLand/decoration_landing.dart';
 

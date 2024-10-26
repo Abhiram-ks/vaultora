@@ -3,16 +3,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'db/functions/adminfunction.dart';
+import 'db/models/user.dart';
 import 'login/loginSignin/splash_screen.dart';
 
 void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
+ WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(UserModelAdapter()); 
+  Hive.registerAdapter(UserModelAdapter());
    await initUserDB();
 
   runApp(MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

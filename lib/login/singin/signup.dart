@@ -23,6 +23,19 @@ class _SingInScreenState extends State<SingInScreen> {
   final ValueNotifier<bool> _agreeToTerms = ValueNotifier(false);
   String? _errorText;
 
+  String _adminnameController ='';
+  String _emailController = '';
+  String _phoneController = '';
+  String _passwordController = '';
+  
+  bool _validateFields(){
+    setState(() {
+   _adminnameController ='';
+   _emailController = '';
+   _phoneController = '';
+  _passwordController = '';
+    });
+  }
   @override
   @override
   Widget build(BuildContext context) {
