@@ -16,8 +16,8 @@ class _ScreenOneState extends State<ScreenOne> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
         final screenOne = ScreenColor(colors: [
-     const Color.fromARGB(255, 42, 255, 188), 
-     const Color.fromRGBO(195, 255, 149, 1),  
+     Colors.white,
+     Colors.white,
     ]);
     return Scaffold(
       body: Stack(
@@ -28,7 +28,7 @@ class _ScreenOneState extends State<ScreenOne> {
               children: [
                 SizedBox(height: size.height * 0.02),
                 Lottie.asset(
-                  'assets/gif/welcome_vaultora.json',
+                  'assets/gif/timefile.json',
                   fit: BoxFit.contain,
                   height: size.height * 0.6,
                 ),

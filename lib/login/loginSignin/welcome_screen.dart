@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/colors/colors.dart';
-import 'package:vaultora_inventory_app/login/loginSignin/login_screen.dart';
-import 'package:vaultora_inventory_app/login/singin/signup.dart';
+
+import '../LOGIN/login_page.dart';
+import '../REGISTER/onbording/onbording_screen.dart';
 
 class CheckScreen extends StatefulWidget {
   const CheckScreen({super.key});
@@ -84,7 +85,7 @@ class _CheckScreenState extends State<CheckScreen> {
                           ),
                           padding: EdgeInsets.all(screenWidth * 0.01),
                           child: Lottie.asset(
-                            'assets/gif/Animation - 1729708670423.json',
+                            'assets/gif/threeanimation.json',
                             fit: BoxFit.contain,
                             height: screenHeight * 0.6,
                           ),
@@ -128,7 +129,7 @@ class _CheckScreenState extends State<CheckScreen> {
                           EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator. of(context).push(MaterialPageRoute(builder: (context) =>const SingInScreen(),));
+                          Navigator. of(context).push(MaterialPageRoute(builder: (context) =>const OnboardingScreen(),));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF3451FF),
@@ -161,7 +162,7 @@ class _CheckScreenState extends State<CheckScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const LoginScreen(),));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const LoginPage(),));
                     },
                     child: const Text(
                       '\tLogin',
@@ -180,4 +181,4 @@ class _CheckScreenState extends State<CheckScreen> {
       ),
     );
   }
-}
+} 

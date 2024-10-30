@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/colors/colors.dart';
-//landing_screen_decoration_portion
+
 class ScreenColor {
   final List<Color> colors;
   ScreenColor({required this.colors});

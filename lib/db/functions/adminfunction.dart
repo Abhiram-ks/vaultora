@@ -1,13 +1,11 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import '../models/user.dart';
+import 'package:vaultora_inventory_app/db/models/user.dart';
 
 ValueNotifier<List<UserModel>> userListNotifier = ValueNotifier([]);
 Box<UserModel>? userBox;
-String? _currentLoggedInUserId; // Stores the ID of the currently logged-in user
 
-// Initialize the Hive database for user management
 Future<void> initUserDB() async {
   if (userBox == null) {
     userBox = await Hive.openBox<UserModel>('user_db');
@@ -17,23 +15,17 @@ Future<void> initUserDB() async {
   }
 }
 
-// Add a new user to the database
 Future<bool> addUser({
   required String id,
-  required String username,
+  required String name,
   required String email,
   required String phone,
+  required String username,
   required String pass,
 }) async {
   await initUserDB();
 
-  // Check if the username already exists
-  final existingUser = userBox!.values.firstWhere(
-    (user) => user.username == username,
-    orElse: () => UserModel(id: '', username: '', email: '', phone: '', password: ''),
-  );
-
-  if (existingUser.username.isNotEmpty) {
+  if (await userExists(username)) {
     log("Username already exists: $username");
     return false;
   }
@@ -41,15 +33,16 @@ Future<bool> addUser({
   try {
     final newUser = UserModel(
       id: id,
-      username: username,
+      name: name,
       email: email,
       phone: phone,
+      username: username,
       password: pass,
     );
 
     await userBox!.put(id, newUser);
-    await getAllUser(); // Refresh the user list
-    log("User added: $username");
+    await getAllUser();
+    log("User added successfully: $name");
     return true;
   } catch (e) {
     log("Error adding user: $e");
@@ -57,63 +50,48 @@ Future<bool> addUser({
   }
 }
 
-// Retrieve all users from the database
-Future<void> getAllUser() async {
+Future<bool> userExists(String username) async {
   await initUserDB();
-  userListNotifier.value.clear();
-  userListNotifier.value.addAll(userBox!.values);
-  userListNotifier.notifyListeners();
+  try {
+    final existingUser = userBox!.values.firstWhere(
+      (user) => user.username == username,
+      orElse: () => UserModel(
+          id: '', name: '', email: '', phone: '', username: '', password: ''),
+    );
+    log("Existing user check for username $username: ${existingUser.username.isNotEmpty}");
+    return existingUser.username.isNotEmpty;
+  } catch (e) {
+    log("Error in userExists: $e");
+    return false;
+  }
 }
 
-// Delete a user by ID
+Future<void> getAllUser() async {
+  await initUserDB();
+  if (userBox != null && userBox!.isOpen) {
+    userListNotifier.value = userBox!.values.toList();
+    userListNotifier.notifyListeners();
+  } else {
+    log("Error: userBox is null or not opened");
+  }
+}
+
 Future<void> deleteUser(String id) async {
   await initUserDB();
   await userBox!.delete(id);
-  await getAllUser(); // Refresh the user list
+  await getAllUser();
 }
 
-// Print all users in the console
 void printAllUsers() {
   for (var user in userListNotifier.value) {
-    log('Username: ${user.username}, Email: ${user.email}, Phone: ${user.phone}, Password: ${user.password}');
+    log('User: ${user.name}, Email: ${user.email}, Phone: ${user.phone}, Username: ${user.username}, Password: ${user.password}');
   }
 }
 
-// User login function
-Future<bool> loginUser({
-  required String username,
-  required String password,
-}) async {
+Future<void> logOutUser(String id) async {
   await initUserDB();
-
-  // Ensure no user is already logged in
-  if (_currentLoggedInUserId != null) {
-    log("Another user is already logged in");
-    return false;
-  }
-
-  // Check if the credentials match any user
-  final user = userBox!.values.firstWhere(
-    (user) => user.username == username && user.password == password,
-    orElse: () => UserModel(id: '', username: '', email: '', phone: '', password: ''),
-  );
-
-  if (user.username.isNotEmpty) {
-    _currentLoggedInUserId = user.id;
-    log("Login successful for user: $username");
-    return true;
-  } else {
-    log("Login failed: Invalid username or password");
-    return false;
-  }
-}
-
-// User logout function
-Future<void> logoutUser() async {
-  if (_currentLoggedInUserId != null) {
-    log("User logged out: $_currentLoggedInUserId");
-    _currentLoggedInUserId = null;
-  } else {
-    log("No user is currently logged in");
+  UserModel? user = userBox!.get(id);
+  if (user != null) {
+    await userBox!.put(id, user);
   }
 }

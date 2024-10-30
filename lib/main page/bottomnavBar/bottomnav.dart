@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -60,38 +58,38 @@ class _BottomnavState extends State<Bottomnav> {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
-      backgroundColor:Colors.transparent,
-      color:   const Color.fromARGB(255, 29, 66, 77),
+      backgroundColor: Colors.transparent,
+      color: const Color.fromARGB(255, 29, 66, 77),
       buttonBackgroundColor:  const Color.fromARGB(255, 29, 66, 77),
       
-      height: 70,
+      height: 60,
       index: _selectedIndex,
       onTap: bottomnavBar,
       items: <Widget>[
         FaIcon(
           FontAwesomeIcons.house,
-          size: 34,
-          color: _selectedIndex == 0 ? Colors.white : const Color.fromARGB(255, 200, 200, 200),
+          size: 32,
+          color: _selectedIndex == 0 ?Colors.white: const Color.fromARGB(255, 159, 159, 159),
         ),
         FaIcon(
           FontAwesomeIcons.cartShopping,
-          size: 34,
-          color: _selectedIndex == 1 ? Colors.white : const Color.fromARGB(255, 200, 200, 200),
+          size: 32,
+          color: _selectedIndex == 1 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
         FaIcon(
           FontAwesomeIcons.plus,
           size: 37,
-          color: _selectedIndex == 2 ? Colors.white : const Color.fromARGB(255, 200, 200, 200),
+          color: _selectedIndex == 2 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
         FaIcon(
           FontAwesomeIcons.clipboardList,
-          size: 36,
-          color: _selectedIndex == 3 ? Colors.white : const Color.fromARGB(255, 200, 200, 200),
+          size: 35,
+          color: _selectedIndex == 3 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
         FaIcon(
           FontAwesomeIcons.solidUser,
-          size: 34,
-          color: _selectedIndex == 4 ? Colors.white : const Color.fromARGB(255, 200, 200, 200),
+          size: 32,
+          color: _selectedIndex == 4 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
       ],
     );

@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Stack(
         children: [
-          BackgroundStack(),
+         const BackgroundStack(),
           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(screenWidth * 0.04),
@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 0, 0, 0)
-                                .withOpacity(0.28),
+                                .withOpacity(0.66),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Column(
@@ -99,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: CircleAvatar(
                           radius: MediaQuery.of(context).size.width * 0.15,
                           backgroundImage:
-                              AssetImage('assets/profile_image.png'),
+                            const AssetImage('assets/profile_image.png'),
                         ),
                       ),
                     ],
@@ -107,7 +107,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
                   const SizedBox(height: 16),
 
-                  // Settings and Logout Section
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
@@ -116,28 +115,28 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     child: Column(
                       children: [
-                        ListTile(
+                       const ListTile(
                           leading:
                               Icon(Icons.document_scanner, color: Colors.black),
                           title: Text('Terms & Conditions'),
                         ),
-                        ListTile(
+                       const ListTile(
                           leading: Icon(Icons.privacy_tip, color: Colors.black),
                           title: Text('Privacy Policy'),
                         ),
-                        ListTile(
+                       const ListTile(
                           leading:
                               Icon(Icons.info_outline, color: Colors.black),
                           title: Text('Overview'),
                         ),
-                        ListTile(
+                       const ListTile(
                           leading:
                               Icon(Icons.help_outline, color: Colors.black),
                           title: Text('About'),
                         ),
                         ListTile(
-                          leading: Icon(Icons.logout, color: Colors.red),
-                          title: Text('Logout',
+                          leading:const Icon(Icons.logout, color: Colors.red),
+                          title:const Text('Logout',
                               style: TextStyle(color: Colors.red)),
                           onTap: () {
                             // Add logout functionality

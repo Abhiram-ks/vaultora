@@ -22,7 +22,7 @@ class ScreenTwo extends StatelessWidget {
               children: [
                 SizedBox(height: size.height  * 0.02),
                 Lottie.asset(
-                  'assets/gif/Security3.json',
+                  'assets/gif/Animation - 1729708868342.json',
                   fit: BoxFit.contain,
                   height: size.height * 0.6,
                 ),

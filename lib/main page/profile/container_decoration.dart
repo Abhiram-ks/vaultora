@@ -8,12 +8,12 @@ class BlurredContainer extends StatelessWidget {
   final double? height;
 
   const BlurredContainer({
-    Key? key,
+    super.key,
     required this.text,
     this.sigmaX = 10.0,
     this.sigmaY = 10.0,
     this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class BlurredContainer extends StatelessWidget {
             height: height,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-                 color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.48),
+                 color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.40),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: Colors.transparent,
@@ -36,7 +36,7 @@ class BlurredContainer extends StatelessWidget {
           child: Text(
             text,
             style: const TextStyle(
-              color: Colors.white,
+              color: Color.fromARGB(255, 255, 255, 255),
               fontSize: 15,
               fontWeight: FontWeight.w400,
             ),
@@ -49,14 +49,14 @@ class BlurredContainer extends StatelessWidget {
 
 
 class InkWellButton extends StatelessWidget {
-  final VoidCallback onPressed; // Function to execute on press
+  final VoidCallback onPressed;
   final String text;
 
   const InkWellButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
