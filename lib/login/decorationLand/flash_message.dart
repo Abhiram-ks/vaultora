@@ -1,28 +1,33 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:vaultora_inventory_app/colors/colors.dart';
 
-class FlashMessage {
-  static void show(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content:Container(
-          height: 90,
-          decoration: BoxDecoration(
-            color: redColor, 
-            borderRadius: BorderRadius.circular(20)
-          ),
-          child:Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('oh shap !',style: TextStyle(fontSize: 18,color: textColor2),),
-              Text("Registering...",style: TextStyle(fontSize: 12,color: textColor2)),
-            ],
-          ),
-        ),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-    );
+class CustomDialog {
+  final BuildContext context;
+  CustomDialog({required this.context});
+
+  void show(){
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.info,
+      animType: AnimType.rightSlide,
+         title: 'Warning Info',
+      desc: 'Please complete all required details...',
+    )..show();
+  }
+}
+
+
+class CustomError {
+  final BuildContext context;
+  CustomError({required this.context});
+
+  void show(){
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.rightSlide,
+         title: 'Error Info',
+      desc: 'Mismatch in entered information...',
+    )..show();
   }
 }

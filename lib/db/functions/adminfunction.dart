@@ -1,8 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:vaultora_inventory_app/db/models/user.dart';
+import '../models/user/user.dart';
 
+ValueNotifier<UserModel?> currentUserNotifier = ValueNotifier<UserModel?>(null);
 ValueNotifier<List<UserModel>> userListNotifier = ValueNotifier([]);
 Box<UserModel>? userBox;
 
@@ -50,16 +51,61 @@ Future<bool> addUser({
   }
 }
 
+Future<bool> updateUser({
+  required String id,
+  required String username,
+  required String name,
+  required String phone,
+  required String bio,
+  required String age,
+}) async {
+  await initUserDB();
+    if (userBox == null) {
+    log("Error: userBox is not initialized.");
+    return false;
+  }
+  
+  try {
+    UserModel? user = userBox!.get(id);
+    if(user != null){
+      UserModel updatedUser = UserModel(
+        id: id,
+        name: name,
+        email: user.email,
+        phone: phone,
+        username: username,
+        password: user.password,
+        bio: bio,
+        age: age,
+        );
+
+        await userBox!.put(id, updatedUser);
+        await getAllUser();
+        log("User updated successfully: $username");
+         currentUserNotifier.value = updatedUser;
+      currentUserNotifier.notifyListeners();
+      return true;
+    }else {
+      log("User not found: $id");
+      return false;
+    }
+  }catch (e) {
+    log("Error updating user: $e");
+    return false;
+  }
+}
+
 Future<bool> userExists(String username) async {
   await initUserDB();
   try {
-    final existingUser = userBox!.values.firstWhere(
-      (user) => user.username == username,
-      orElse: () => UserModel(
-          id: '', name: '', email: '', phone: '', username: '', password: ''),
-    );
-    log("Existing user check for username $username: ${existingUser.username.isNotEmpty}");
-    return existingUser.username.isNotEmpty;
+    // final existingUser = userBox!.values.firstWhere(
+    //   (user) => user.username == username,
+    //   orElse: () => UserModel(
+    //       id: '', name: '', email: '', phone: '', username: '', password: ''),
+    // );
+    // log("Existing user check for username $username: ${existingUser.username.isNotEmpty}");
+    // return existingUser.username.isNotEmpty;
+     return userBox!.values.any((user) => user.username == username);
   } catch (e) {
     log("Error in userExists: $e");
     return false;

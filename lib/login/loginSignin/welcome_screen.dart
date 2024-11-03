@@ -14,7 +14,27 @@ class CheckScreen extends StatefulWidget {
   State<CheckScreen> createState() => _CheckScreenState();
 }
 
-class _CheckScreenState extends State<CheckScreen> {
+class _CheckScreenState extends State<CheckScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -28,7 +48,7 @@ class _CheckScreenState extends State<CheckScreen> {
               fit: BoxFit.cover,
             ),
           ),
-             Container(
+          Container(
             color: Colors.black.withOpacity(0.83),
           ),
           Positioned.fill(
@@ -98,22 +118,44 @@ class _CheckScreenState extends State<CheckScreen> {
               SizedBox(
                 height: screenHeight * 0.2,
               ),
-              Text(
-                'Vaultora',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w500,
+              AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return ShaderMask(
+                    shaderCallback: (bounds) {
+                      return LinearGradient(
+                        colors:const[Color.fromARGB(255, 58, 58, 58), Colors.white, Color.fromARGB(255, 100, 100, 100)],
+                        stops: [
+                          _animation.value - 0.2,
+                          _animation.value,
+                          _animation.value + 0.2
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    child: child,
+                  );
+                },
+                child: Text(
+                  'Vaultora',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              SizedBox(height: screenHeight*0.01,),
+              SizedBox(
+                height: screenHeight * 0.01,
+              ),
               Text(
                 'An admin inventory app streamlines\n'
                 'stock management, orders, and alerts\n'
                 'for efficient operations.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
-                  color:textColor2 ,
+                  color: textColor2,
                   fontSize: 16,
                   fontWeight: FontWeight.w200,
                 ),
@@ -129,7 +171,9 @@ class _CheckScreenState extends State<CheckScreen> {
                           EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator. of(context).push(MaterialPageRoute(builder: (context) =>const OnboardingScreen(),));
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const OnboardingScreen(),
+                          ));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF3451FF),
@@ -162,7 +206,9 @@ class _CheckScreenState extends State<CheckScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const LoginPage(),));
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ));
                     },
                     child: const Text(
                       '\tLogin',
@@ -175,10 +221,9 @@ class _CheckScreenState extends State<CheckScreen> {
                 height: screenHeight * 0.11,
               ),
             ],
-          )
-          )
+          ))
         ],
       ),
     );
   }
-} 
+}

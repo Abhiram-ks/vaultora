@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 part 'user.g.dart';
 
 @HiveType(typeId: 0)
-class UserModel {
+class UserModel{
   @HiveField(0)
   final String id;
 
@@ -22,6 +22,12 @@ class UserModel {
 
   @HiveField(5)
   final String password;
+  
+  @HiveField(6)
+  final String bio;
+
+  @HiveField(7)
+  final String age;
 
   UserModel({
     required this.id,
@@ -30,5 +36,7 @@ class UserModel {
     required this.phone,
     required this.username,
     required this.password,
+    this.bio ='',
+    this.age = '',
   });
 }

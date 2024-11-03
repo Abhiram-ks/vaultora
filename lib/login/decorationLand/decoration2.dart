@@ -1,9 +1,6 @@
-
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
-import '../Login/login_page.dart';
+import '../validation/validation.dart';
 
 class PasswordField extends StatefulWidget {
   final String labelText;
@@ -130,6 +127,7 @@ class _EmailFieldState extends State<EmailField> {
     );
   }
 }
+
 
 
 class CustomTextField extends StatelessWidget {

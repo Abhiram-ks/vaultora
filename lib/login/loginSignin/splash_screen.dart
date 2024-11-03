@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
+import '../../db/models/user/user.dart';
+import '../../main page/main_page.dart';
 import '../loginandsignin/LiquidSwipe/landing_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,14 +12,17 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _logoAnimation;
   late Animation<double> _colorAnimation;
+  UserModel? lastLoggedUser;
 
   @override
   void initState() {
     super.initState();
+    checkLoggedUser();
 
     _controller = AnimationController(
       vsync: this,
@@ -36,13 +42,41 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     );
 
     _controller.forward();
-    gotoLogin();
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  Future<void> checkLoggedUser() async {
+    var sessionBox = await Hive.openBox('sessionBox');
+    lastLoggedUser = sessionBox.get('lastLoggedUser') as UserModel?;
+
+    if (lastLoggedUser != null) {
+      gotoLoggedUser();
+    } else {
+      gotoLogin();
+    }
+  }
+
+  Future<void> gotoLoggedUser() async {
+    await Future.delayed(const Duration(seconds: 4));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (ctx) => Homepage(userDetails: lastLoggedUser!),
+      ),
+    );
+  }
+
+  Future<void> gotoLogin() async {
+    await Future.delayed(const Duration(seconds: 4));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (ctx) => const LandingScreen(),
+      ),
+    );
   }
 
   @override
@@ -79,10 +113,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 ShaderMask(
                   shaderCallback: (bounds) {
                     return LinearGradient(
-                      colors:const [Colors.red, Colors.white],
+                      colors: const [Colors.red, Colors.white],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      stops: [_colorAnimation.value, _colorAnimation.value + 0.3],
+                      stops: [
+                        _colorAnimation.value,
+                        _colorAnimation.value + 0.3
+                      ],
                     ).createShader(bounds);
                   },
                   child: Text(
@@ -141,15 +178,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Future<void> gotoLogin() async {
-    await Future.delayed(const Duration(seconds: 4));
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (ctx) => const LandingScreen(),
       ),
     );
   }

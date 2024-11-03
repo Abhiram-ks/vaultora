@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
@@ -181,7 +180,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             _errorText!,
-                            style:const TextStyle(color: Colors.red, fontSize: 10),
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 10),
                           ),
                         ),
                       ),
@@ -190,16 +190,24 @@ class _RegisterPageState extends State<RegisterPage> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          if (!_agreeToTerms.value) {
-                            setState(() {
-                              _errorText = "You must agree to the terms";
-                            });
-                            return;
-                          }
                           if (_validateAndSubmit()) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Registering...')),
+                              SnackBar(
+                                content: const Text(
+                                  'Registering...',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                ),
+                                backgroundColor: Colors.blueAccent,
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 1),
+                              ),
                             );
+
                             bool isSuccess = await addUser(
                               id: DateTime.now()
                                   .millisecondsSinceEpoch
@@ -215,9 +223,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               developer.log("User added");
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                               const SnackBar(
+                                const SnackBar(
                                   content: Text('Successfully registered!'),
-                                  duration: Duration(seconds: 2),
+                                  duration: Duration(seconds: 1),
                                 ),
                               );
                               Navigator.pushReplacement(
@@ -229,7 +237,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               developer.log("Failed to add user");
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                               const SnackBar(
+                                const SnackBar(
                                   content: Text(
                                       'Failed to register. Please try again.'),
                                   duration: Duration(seconds: 2),
@@ -266,7 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
                               builder: (context) => const LoginPage(),
                             ));
                           },

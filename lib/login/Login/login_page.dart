@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:vaultora_inventory_app/login/decorationLand/bg_image.dart';
-import '../../db/models/user.dart';
+import 'package:vaultora_inventory_app/login/decorationLand/flash_message.dart';
+import '../../db/models/user/user.dart';
 import '../../main page/main_page.dart';
 import '../decorationLand/decoration2.dart';
+import '../validation/validation.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<Offset> _vaultoraSlideAnimation;
-  late Animation<Offset> _welcomeSlideAnimation;
-
+  late Animation<double> _animation;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -32,29 +33,14 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     _controller = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
-    );
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+  }
 
-    _vaultoraSlideAnimation = Tween<Offset>(
-      begin: const Offset(-1, 0),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
-
-    _welcomeSlideAnimation = Tween<Offset>(
-      begin: const Offset(1, 0),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
-
-    _controller.forward();
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _validateAndLogin() {
@@ -65,22 +51,27 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
     bool isValid = true;
 
-    if (_emailController.text.isEmpty) {
+    final emailError = EmailTwoValidator.validate(_emailController.text);
+    final passwordError =
+        PasswordValidatorTwo.validate(_passwordController.text);
+
+    if (emailError != null) {
       setState(() {
-        _emailError = 'Please enter your emailId';
+        _emailError = emailError;
       });
       isValid = false;
     }
-
-    if (_passwordController.text.isEmpty) {
+    if (passwordError != null) {
       setState(() {
-        _passwordError = 'Please enter your password';
+        _passwordError = passwordError;
       });
       isValid = false;
     }
 
     if (isValid) {
       _login();
+    } else {
+      CustomDialog(context: context).show();
     }
   }
 
@@ -92,35 +83,27 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
     bool userFound = false;
     for (var element in userDB.values) {
+
+      
       if (element.email == emailId && element.password == password) {
+        
+        await userDB.put(element.id, element);
         await sessionBox.put('lastLoggedUser', element);
         userFound = true;
 
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => Homepage(userdetails: element),
+            builder: (context) => Homepage(userDetails: element),
           ),
         );
+
         break;
       }
-      //      if (element is UserModel) {
-      //   if (element.email == emailId && element.password == password) {
-      //     await sessionBox.put('lastLoggedUser', element);
-      //     userFound = true;
-
-      //     Navigator.of(context).pushReplacement(
-      //       MaterialPageRoute(
-      //         builder: (context) => Homepage(userdetails: element),
-      //       ),
-      //     );
-      //     break;
-      //   }
-      // }
     }
 
     if (!userFound) {
       setState(() {
-        _emailError = 'Invalid username or password';
+        CustomError(context: context).show();
       });
     }
   }
@@ -129,7 +112,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double titleFontSize = screenWidth * 0.07;
+    double titleFontSize = screenWidth * 0.1;
     double subtitleFontSize = screenWidth * 0.04;
 
     return Scaffold(
@@ -155,10 +138,31 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         fit: BoxFit.contain,
                       ),
                     ),
-                    SlideTransition(
-                      position: _vaultoraSlideAnimation,
-                      child: Align(
-                        alignment: Alignment.topLeft,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: AnimatedBuilder(
+                        animation: _animation,
+                        builder: (context, child) {
+                          return ShaderMask(
+                            shaderCallback: (bounds) {
+                              return LinearGradient(
+                                colors: const [
+                                  Color.fromARGB(255, 58, 58, 58),
+                                  Colors.white,
+                                  Color.fromARGB(255, 100, 100, 100)
+                                ],
+                                stops: [
+                                  _animation.value - 0.2,
+                                  _animation.value,
+                                  _animation.value + 0.2
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ).createShader(bounds);
+                            },
+                            child: child,
+                          );
+                        },
                         child: Text(
                           'Vaultora',
                           style: GoogleFonts.poppins(
@@ -181,10 +185,31 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.14),
-                    SlideTransition(
-                      position: _welcomeSlideAnimation,
-                      child: Align(
-                        alignment: Alignment.topLeft,
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: AnimatedBuilder(
+                        animation: _animation,
+                        builder: (context, child) {
+                          return ShaderMask(
+                            shaderCallback: (bounds) {
+                              return LinearGradient(
+                                colors: const [
+                                  Color.fromARGB(255, 58, 58, 58),
+                                  Colors.white,
+                                  Color.fromARGB(255, 100, 100, 100)
+                                ],
+                                stops: [
+                                  _animation.value - 0.2,
+                                  _animation.value,
+                                  _animation.value + 0.1
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ).createShader(bounds);
+                            },
+                            child: child,
+                          );
+                        },
                         child: Text(
                           'Welcome back!',
                           style: GoogleFonts.poppins(
@@ -206,7 +231,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         alignment: Alignment.centerRight,
                         child: Text(
                           _emailError,
-                        style: const TextStyle(color: Colors.red, fontSize: 12),
+                          style:
+                              const TextStyle(color: Colors.red, fontSize: 12),
                         ),
                       ),
                     SizedBox(height: screenHeight * 0.03),
@@ -221,7 +247,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         alignment: Alignment.centerRight,
                         child: Text(
                           _passwordError,
-                          style:const TextStyle(color: Colors.red, fontSize: 12),
+                          style:
+                              const TextStyle(color: Colors.red, fontSize: 12),
                         ),
                       ),
                     SizedBox(height: screenHeight * 0.07),
@@ -236,7 +263,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child:const Text(
+                        child: const Text(
                           'Login',
                           style: TextStyle(
                             color: Colors.white,
@@ -255,30 +282,5 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         ],
       ),
     );
-  }
-}
-
-
-class EmailTwoValidator {
-  static String? validate(String? email) {
-    if (email == null || email.isEmpty) {
-      return 'Email cannot be empty';
-    }
-    const String emailPattern =
-        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-    final RegExp regex = RegExp(emailPattern);
-    return regex.hasMatch(email) ? null : 'Please enter a valid email address';
-  }
-}
-
-class PasswordValidatorTwo {
-  static String? validate(String? password) {
-    if (password == null || password.isEmpty) {
-      return 'Password cannot be empty';
-    }
-    if (password.length < 4 || password.length > 8) {
-      return 'Password must be between 4 and 8 characters';
-    }
-    return null;
   }
 }
