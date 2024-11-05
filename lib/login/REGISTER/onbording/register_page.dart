@@ -70,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          BgimageRegisterLogin(),
+         const BgimageRegisterLogin(),
           SingleChildScrollView(
             child: Form(
               key: _formKey,

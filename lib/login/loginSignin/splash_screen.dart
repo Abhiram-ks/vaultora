@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
     );
 
     _logoAnimation = Tween<Offset>(
@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> gotoLoggedUser() async {
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 3));
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (ctx) => Homepage(userDetails: lastLoggedUser!),
@@ -71,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> gotoLogin() async {
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 3));
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (ctx) => const LandingScreen(),

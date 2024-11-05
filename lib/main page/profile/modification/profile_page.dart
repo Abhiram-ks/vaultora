@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -23,7 +24,15 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    currentUserNotifier.value = widget.userDetails;
+    loadCurrentUser();
+  }
+
+  Future<void> loadCurrentUser() async {
+    await initUserDB();
+    final user = userBox!.get(widget.userDetails.id);
+    if (user != null) {
+      currentUserNotifier.value = user;
+    }
   }
 
   @override
@@ -51,49 +60,76 @@ class _ProfilePageState extends State<ProfilePage> {
                 pinned: true,
                 automaticallyImplyLeading: false,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.lock_person, color: Colors.white),
-                        const SizedBox(width: 8),
-                        Text(
-                          value.username,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ],
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 8.0, left: 16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.lock_person, color: Colors.white),
+                          const SizedBox(width: 8),
+                          Text(
+                            value.username,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  titlePadding: const EdgeInsets.only(left: 16.0, top: 16.0),
-                  background: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(24),
-                      bottomRight: Radius.circular(24),
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Lottie.asset(
-                          'assets/gif/welcome 2.json',
-                          width: screenWidth * 0.9,
-                          height: screenHeight * 0.4,
-                        ),
-                        Positioned(
-                          child: SizedBox(
-                            width: screenWidth * 0.27,
-                            height: screenHeight * 0.27,
-                            child: const CircleAvatar(
-                              radius: 30,
-                              backgroundImage: AssetImage(
-                                  'assets/liquid/Research paper-rafiki.png'),
+                    titlePadding: const EdgeInsets.only(left: 16.0, top: 16.0),
+                    background: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(24),
+                        bottomRight: Radius.circular(24),
+                      ),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Lottie.asset(
+                            'assets/gif/welcome 2.json',
+                            width: screenWidth * 0.9,
+                            height: screenHeight * 0.4,
+                          ),
+                          Positioned(
+                            child: SizedBox(
+                              width: screenWidth *
+                                  0.27,
+                              height:
+                                  screenWidth * 0.27, 
+                              child: CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: ClipOval(
+                                  child: value.imagePath != null &&
+                                          value.imagePath!.isNotEmpty
+                                      ? ColorFiltered(
+                                          colorFilter: ColorFilter.mode(
+                                            Colors.black.withOpacity(0.2),
+                                            BlendMode.darken,
+                                          ),
+                                          child: Image.file(
+                                            File(value.imagePath!),
+                                            fit: BoxFit.cover,
+                                            width: screenWidth * 0.27,
+                                            height: screenWidth * 0.27,
+                                          ),
+                                        )
+                                      : ColorFiltered(
+                                          colorFilter: ColorFilter.mode(
+                                            Colors.black.withOpacity(0.2),
+                                            BlendMode.darken,
+                                          ),
+                                          child: Image.asset(
+                                            'assets/liquid/Timeline-bro.png',
+                                            fit: BoxFit.cover,
+                                            width: screenWidth * 0.27,
+                                            height: screenWidth * 0.27,
+                                          ),
+                                        ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                        ],
+                      ),
+                    )),
               ),
               SliverFillRemaining(
                 hasScrollBody: false,
@@ -138,7 +174,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 BlurredContainer(
                                   icon: Icons.person_2,
                                   maintext: 'Account Name',
-                                  text: (value.username),
+                                  text: value.username,
                                   height: screenHeight * 0.068,
                                 ),
                                 SizedBox(height: screenHeight * 0.01),
@@ -159,13 +195,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                 BlurredContainer(
                                   icon: Icons.notes_sharp,
                                   maintext: 'Bio',
-                                  text: (value.bio ?? ''),
+                                  text: value.bio,
                                   height: 100,
                                 ),
                                 SizedBox(height: screenHeight * 0.01),
                                 InkWellButton(
-                                  onPressed: ()async {
-                                    Navigator.of(context).push(MaterialPageRoute(
+                                  onPressed: () async {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
                                       builder: (context) => EditProfile(
                                         // userdata: widget.userDetails,
                                         userdata: value,

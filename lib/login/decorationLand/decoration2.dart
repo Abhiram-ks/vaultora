@@ -50,6 +50,7 @@ class _PasswordFieldState extends State<PasswordField> {
             }
             return widget.validator(value);
           },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: InputDecoration(
             labelText: widget.labelText,
             hintText: widget.hintText,
@@ -106,6 +107,7 @@ class _EmailFieldState extends State<EmailField> {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: widget.labelText,
         hintText: widget.hintText,
@@ -168,6 +170,7 @@ class CustomTextField extends StatelessWidget {
               controller: controller,
               obscureText: obscureText,
               validator: validator,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
                 labelText: labelText,
                 hintText: hintText,

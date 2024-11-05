@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:lottie/lottie.dart';
-
-import '../../../colors/colors.dart';
-import '../../../login/loginSignin/welcome_screen.dart';
-
 class ClickableRowItem extends StatelessWidget {
   final IconData icon; 
   final String text;   

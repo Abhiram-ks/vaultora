@@ -40,6 +40,7 @@ class Usenamefield extends StatelessWidget {
               controller: controller, 
               obscureText: obscureText,
               validator: validate, 
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
                 labelText: labelText,
                 hintText: hintText,
@@ -93,6 +94,7 @@ class CustomPhonenumber extends StatelessWidget {
               controller: controller,
               obscureText: obscureText,
               validator: validate,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               decoration: InputDecoration(
                 labelText: labelText,
                 hintText: hintText,

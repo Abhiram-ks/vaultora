@@ -6,10 +6,10 @@ class CenteredImageWithText extends StatefulWidget {
   final String text;
 
   const CenteredImageWithText({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   State<CenteredImageWithText> createState() => _CenteredImageWithTextState();

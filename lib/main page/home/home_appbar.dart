@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,8 +10,7 @@ class HomeAppbar extends StatefulWidget {
   State<HomeAppbar> createState() => _HomeAppbarState();
 }
 
-class _HomeAppbarState extends State<HomeAppbar>
-    with SingleTickerProviderStateMixin {
+class _HomeAppbarState extends State<HomeAppbar> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -57,7 +58,6 @@ class _HomeAppbarState extends State<HomeAppbar>
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Animated gradient effect on title text
                   AnimatedBuilder(
                     animation: _animation,
                     builder: (context, child) {
@@ -117,7 +117,7 @@ class _HomeAppbarState extends State<HomeAppbar>
                           style: GoogleFonts.poppins(
                             color: Colors.white70,
                             fontSize: screenWidth * 0.04,
-                            fontWeight: FontWeight.w500
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       );

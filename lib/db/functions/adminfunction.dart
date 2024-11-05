@@ -58,6 +58,7 @@ Future<bool> updateUser({
   required String phone,
   required String bio,
   required String age,
+  String? imagePath,
 }) async {
   await initUserDB();
     if (userBox == null) {
@@ -77,6 +78,7 @@ Future<bool> updateUser({
         password: user.password,
         bio: bio,
         age: age,
+        imagePath: imagePath ?? user.imagePath,
         );
 
         await userBox!.put(id, updatedUser);

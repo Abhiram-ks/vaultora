@@ -54,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          BgimageRegisterLogin(),
+        const  BgimageRegisterLogin(),
           AnimatedBuilder(
             animation: _pageController,
             builder: (context, child) {

@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage>
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          BgimageRegisterLogin(),
+       const BgimageRegisterLogin(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
             child: SingleChildScrollView(

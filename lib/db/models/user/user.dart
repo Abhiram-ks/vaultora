@@ -29,6 +29,9 @@ class UserModel{
   @HiveField(7)
   final String age;
 
+  @HiveField(8)
+  final String? imagePath;
+
   UserModel({
     required this.id,
     required this.name,
@@ -38,5 +41,6 @@ class UserModel{
     required this.password,
     this.bio ='',
     this.age = '',
+    this.imagePath,
   });
 }

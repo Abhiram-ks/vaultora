@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 class BgimageRegisterLogin extends StatelessWidget {
+  const BgimageRegisterLogin({super.key});
   @override
   Widget build(BuildContext context) {
     return Stack(

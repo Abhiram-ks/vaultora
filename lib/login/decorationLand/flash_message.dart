@@ -12,7 +12,7 @@ class CustomDialog {
       animType: AnimType.rightSlide,
          title: 'Warning Info',
       desc: 'Please complete all required details...',
-    )..show();
+    ).show();
   }
 }
 
@@ -28,6 +28,6 @@ class CustomError {
       animType: AnimType.rightSlide,
          title: 'Error Info',
       desc: 'Mismatch in entered information...',
-    )..show();
+    ).show();
   }
 }
