@@ -15,13 +15,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PageController _pageController = PageController();
+  final ScrollController _scrollController =
+      ScrollController(); // Controller for horizontal list
   int _currentPage = 0;
-  late Timer _timer;
+  int _scrollIndex = 0;
+  late Timer _pageTimer;
+  late Timer _scrollTimer;
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+
+    // Timer for auto-scrolling PageView
+    _pageTimer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage < 4) {
         _currentPage++;
       } else {
@@ -33,12 +39,28 @@ class _HomePageState extends State<HomePage> {
         curve: Curves.easeInOut,
       );
     });
+
+    // Timer for auto-scrolling horizontal list
+    _scrollTimer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
+      if (_scrollIndex < 3) {
+        _scrollIndex++;
+      } else {
+        _scrollIndex = 0;
+      }
+      _scrollController.animateTo(
+        _scrollIndex * 160.0,
+        duration: const Duration(milliseconds: 590),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    _pageTimer.cancel();
+    _scrollTimer.cancel();
     _pageController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -138,21 +160,41 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.024),
-//                       Text(
-//   'Category',
-//   style: GoogleFonts.kodchasan(
-//     fontSize: 20,        // Adjust font size
-//     color: Colors.black,  // Adjust color if needed
-//   ),
-// )
                       const Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Category',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
-                          )),
-                         SizedBox(height: screenHeight * 0.024),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Category',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.024),
+                      SizedBox(
+                        height: screenHeight / 5,
+                        child: ListView(
+                          controller: _scrollController,
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            CustomCard(
+                                imagePath: 'assets/category/file.png',
+                                title: 'Card 1'),
+                            SizedBox(width: 16),
+                            CustomCard(
+                                imagePath: 'assets/category/file (3).png',
+                                title: 'Card 2'),
+                            SizedBox(width: 16),
+                            CustomCard(
+                                imagePath: 'assets/category/file (2).png',
+                                title: 'Card 3'),
+                            SizedBox(width: 16),
+                            CustomCard(
+                                imagePath: 'assets/category/file (1).png',
+                                title: 'Card 4'),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

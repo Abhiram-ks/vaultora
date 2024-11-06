@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PageviewBuilder extends StatelessWidget {
   final PageController pageController;
@@ -90,6 +91,54 @@ class PageviewBuilder extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+
+
+
+class CustomCard extends StatelessWidget {
+  final String imagePath;
+  final String title;
+
+  const CustomCard({required this.imagePath, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return Card(
+      color: const Color.fromARGB(255, 237, 237, 237),
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Container(
+        width: screenWidth * 0.41,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          image: DecorationImage(
+            image: AssetImage(imagePath),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              bottom: 10, 
+              left: 10, 
+              child: Text(
+                title,
+                style: GoogleFonts.kodchasan(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
