@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vaultora_inventory_app/colors/colors.dart';
 
 class InventoryFunction extends StatelessWidget {
   final Color color;
   final String imagePath;
   final String title;
   final String subtitle;
-  final VoidCallback onTap; 
+  final VoidCallback onTap;
 
   const InventoryFunction({
     super.key,
@@ -33,31 +32,31 @@ class InventoryFunction extends StatelessWidget {
         ),
         child: SizedBox(
           width: screenWidth * 0.41,
-          height: screenWidth * 0.41, 
+          height: screenWidth * 0.41,
           child: Stack(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Lottie.asset(
-                        imagePath,
-                        fit: BoxFit.cover,
-                        width: screenWidth * 0.41,
-                        height: screenWidth * 0.42,
-                      )
+                  imagePath,
+                  fit: BoxFit.cover,
+                  width: screenWidth * 0.41,
+                  height: screenWidth * 0.42,
+                ),
               ),
-               Container(
-               decoration: BoxDecoration(
-               borderRadius: BorderRadius.circular(15),
-               gradient: LinearGradient(
-                 begin: Alignment.topLeft,
-                 end: Alignment.bottomRight,
-                 colors: [
-                   Colors.black.withOpacity(0.75),
-                   Colors.black.withOpacity(0.0),
-                 ],
-               ),
-                                   ),
-                                 ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.black.withOpacity(0.75),
+                      Colors.black.withOpacity(0.0),
+                    ],
+                  ),
+                ),
+              ),
               Positioned(
                 top: 10,
                 left: 10,
@@ -68,16 +67,16 @@ class InventoryFunction extends StatelessWidget {
                       title,
                       style: GoogleFonts.kodchasan(
                         fontSize: 20,
-                        color: textColor2,
-                        fontWeight: FontWeight.w400
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     Text(
                       subtitle,
                       style: GoogleFonts.kodchasan(
                         fontSize: 13,
-                        color: textColor2,
-                        fontWeight: FontWeight.w500
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],

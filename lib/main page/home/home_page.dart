@@ -6,6 +6,7 @@ import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_page.dart';
 import 'package:vaultora_inventory_app/main%20page/home/create_card.dart';
+import 'package:vaultora_inventory_app/main%20page/home/custom_card.dart';
 
 import 'package:vaultora_inventory_app/main%20page/home/home_appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/home/inventory_card.dart';
@@ -132,7 +133,7 @@ class _HomePageState extends State<HomePage> {
       SliverAppBar(
         automaticallyImplyLeading: false,
         backgroundColor: const Color.fromARGB(255, 29, 66, 77),
-        expandedHeight: screenHeight * 0.15,
+        expandedHeight: screenHeight * 0.13,
         pinned: true,
         flexibleSpace: const FlexibleSpaceBar(
           background: HomeAppbar(),
@@ -277,7 +278,10 @@ class _HomePageState extends State<HomePage> {
                     valueListenable: categoryListNotifier,
                     builder: (context, categories, child) {
                       return categories.isEmpty
-                          ? const Center(child: CircularProgressIndicator())
+                          ? const Padding(
+                            padding:  EdgeInsets.only(top: 10.0),
+                            child:  Center(child: CircularProgressIndicator()),
+                          )
                           : Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(

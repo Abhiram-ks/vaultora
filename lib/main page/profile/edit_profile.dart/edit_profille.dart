@@ -15,7 +15,7 @@ import '../validation/profile_validation.dart';
 
 class EditProfile extends StatefulWidget {
   final UserModel userdata;
-  const EditProfile({Key? key, required this.userdata}) : super(key: key);
+  const EditProfile({super.key, required this.userdata});
 
   @override
   State<EditProfile> createState() => _EditProfileState();
