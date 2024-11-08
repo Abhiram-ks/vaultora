@@ -5,13 +5,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
-import 'package:vaultora_inventory_app/login/validation/validation.dart';
 import 'package:vaultora_inventory_app/main%20page/profile/edit_profile.dart/Edit_style.dart';
-import 'package:vaultora_inventory_app/main%20page/profile/modification/profile_page.dart';
-
-import '../../../colors/colors.dart';
 import '../../../db/functions/adminfunction.dart';
+import '../../../login/DecVal/phone_validation.dart';
+
+import '../../../login/DecVal/validation.dart';
 import '../modification/container_decoration.dart';
+import '../validation/profile_validation.dart';
 
 class EditProfile extends StatefulWidget {
   final UserModel userdata;
@@ -98,11 +98,6 @@ class _EditProfileState extends State<EditProfile> {
         age: _ageController.text,
         imagePath: _selectedImagePath ?? widget.userdata.imagePath,
       );
-//      if (userBox != null) {
-//   await userBox!.put(widget.userdata.id, currentUserNotifier.value);
-// } else {
-//   log("UserBox is not initialized.");
-// }
       await userBox!.put(widget.userdata.id, updatedUser);
 
       currentUserNotifier.value = updatedUser;

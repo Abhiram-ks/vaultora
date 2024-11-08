@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -116,7 +114,7 @@ class _HomeAppbarState extends State<HomeAppbar> with SingleTickerProviderStateM
                           'Tech You Can Trust, Prices You\'ll Love!',
                           style: GoogleFonts.poppins(
                             color: Colors.white70,
-                            fontSize: screenWidth * 0.04,
+                            fontSize: screenWidth * 0.03,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

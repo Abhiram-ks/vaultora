@@ -1,48 +1,4 @@
-//validation for user name
-class NameValidator {
-  static String? validate(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter name';
-    }
-    if (value.startsWith(' ')) {
-      return 'Name cannot start with a space';
-    }
-    RegExp regExp = RegExp(r"^[A-Za-z][A-Za-z ]*$");
-    if (!regExp.hasMatch(value)) {
-      return 'Name must only contain letters and spaces';
-    }
-    int letterCount = value.replaceAll(RegExp(r'[^A-Za-z]'), '').length;
-    if (letterCount < 4) {
-      return 'Name must contain at least 4 letters';
-    }
-    return null;
-  }
-}
-//validation for user phone
-class PhoneNumberValidator {
-  static String? validate(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter phone number';
-    }
-    if (value.length != 10) {
-      return 'Invalid phone number';
-    }
-    return null;
-  }
-}
-//email validaton
-class EmailValidator {
-  static final emailRegex = RegExp(r'^[a-zA-Z0-9._%-]+@gmail\.com$');
 
-  static String? validate(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    } else if (!emailRegex.hasMatch(value)) {
-      return 'Enter a valid Gmail address';
-    }
-    return null;
-  }
-}
 //passwordValidator field
 class PasswordValidator {
   static String? validate(String? value) {
@@ -84,9 +40,7 @@ class ConfirmPasswordValidator {
     return null;
   }
 }
-
-
-
+//email validationio 
 class EmailTwoValidator {
   static String? validate(String? email) {
     if (email == null || email.isEmpty) {
@@ -98,7 +52,7 @@ class EmailTwoValidator {
     return regex.hasMatch(email) ? null : 'Please enter a valid email address';
   }
 }
-
+//pasword validation
 class PasswordValidatorTwo {
   static String? validate(String? password) {
     if (password == null || password.isEmpty) {
@@ -110,29 +64,24 @@ class PasswordValidatorTwo {
     return null;
   }
 }
-
-class AgeValidatorField {
-  static String? validate(String? age) {
-    if (age == null || age.isEmpty) {
-      return 'Please Enter Age';
+//venture validation
+class NameValidator {
+  static String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter name';
     }
-    final int? ageValue = int.tryParse(age);
-    if (ageValue == null || ageValue < 18 || ageValue > 120) {
-      return 'Age must be between 18 and 120';
+    if (value.startsWith(' ')) {
+      return 'Name cannot start with a space';
     }
-    return null;
-  }
-}
-
-
-class BioValidatorField {
-  static String? validate(String? bio) {
-    if (bio == null || bio.isEmpty) {
-      return 'Please Enter bio';
+    RegExp regExp = RegExp(r"^[A-Za-z][A-Za-z ]*$");
+    if (!regExp.hasMatch(value)) {
+      return 'Name must only contain letters and spaces';
     }
-    if (bio.length > 120) {
-      return 'Bio must not exceed 250 characters';
+    int letterCount = value.replaceAll(RegExp(r'[^A-Za-z]'), '').length;
+    if (letterCount < 4) {
+      return 'Name must contain at least 4 letters';
     }
     return null;
   }
 }
+

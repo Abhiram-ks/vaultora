@@ -100,13 +100,6 @@ Future<bool> updateUser({
 Future<bool> userExists(String username) async {
   await initUserDB();
   try {
-    // final existingUser = userBox!.values.firstWhere(
-    //   (user) => user.username == username,
-    //   orElse: () => UserModel(
-    //       id: '', name: '', email: '', phone: '', username: '', password: ''),
-    // );
-    // log("Existing user check for username $username: ${existingUser.username.isNotEmpty}");
-    // return existingUser.username.isNotEmpty;
      return userBox!.values.any((user) => user.username == username);
   } catch (e) {
     log("Error in userExists: $e");

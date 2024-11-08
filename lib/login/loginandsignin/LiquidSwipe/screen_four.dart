@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:vaultora_inventory_app/login/loginSignin/welcome_screen.dart';
+import 'package:vaultora_inventory_app/login/splash_welcom/welcome_screen.dart';
 
-import '../../decorationLand/decoration_landing.dart';
+import '../../Login_autotications/decoration_landing.dart';
+
 
 class ScreenFour extends StatefulWidget {
   const ScreenFour({super.key});

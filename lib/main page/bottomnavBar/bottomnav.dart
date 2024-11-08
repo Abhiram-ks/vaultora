@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Bottomnav extends StatefulWidget {
-  final Function(int) onTap; 
+  final Function(int) onTap;
 
-  const Bottomnav({super.key, required this.onTap}); 
+  const Bottomnav({super.key, required this.onTap});
+
   @override
   State<Bottomnav> createState() => _BottomnavState();
 }
@@ -60,38 +61,37 @@ class _BottomnavState extends State<Bottomnav> {
     return CurvedNavigationBar(
       backgroundColor: Colors.transparent,
       color: const Color.fromARGB(255, 29, 66, 77),
-      buttonBackgroundColor:  const Color.fromARGB(255, 29, 66, 77),
-      
+      buttonBackgroundColor: const Color.fromARGB(255, 29, 66, 77),
       height: 60,
       index: _selectedIndex,
       onTap: bottomnavBar,
       items: <Widget>[
         FaIcon(
           FontAwesomeIcons.house,
-          size: 32,
-          color: _selectedIndex == 0 ?Colors.white: const Color.fromARGB(255, 159, 159, 159),
+          size: 24,
+          color: _selectedIndex == 0 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
         FaIcon(
           FontAwesomeIcons.cartShopping,
-          size: 32,
+          size: 24, 
           color: _selectedIndex == 1 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
         FaIcon(
           FontAwesomeIcons.plus,
-          size: 37,
+          size: 30, 
           color: _selectedIndex == 2 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
         FaIcon(
           FontAwesomeIcons.clipboardList,
-          size: 35,
+          size: 25,
           color: _selectedIndex == 3 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
         FaIcon(
           FontAwesomeIcons.solidUser,
-          size: 32,
+          size: 24, 
           color: _selectedIndex == 4 ? Colors.white : const Color.fromARGB(255, 159, 159, 159),
         ),
       ],
     );
   }
-}  
+}

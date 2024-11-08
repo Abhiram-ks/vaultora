@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:vaultora_inventory_app/login/REGISTER/onbording/onbording_class.dart';
-import 'package:vaultora_inventory_app/login/REGISTER/onbording/register_page.dart';
+import 'package:vaultora_inventory_app/login/onbording/onbording_class.dart';
+import 'package:vaultora_inventory_app/login/REGISTER_PAGE/register_page.dart';
 
-import '../../../colors/colors.dart';
-import '../../decorationLand/bg_image.dart';
+import '../../colors/colors.dart';
+import '../Login_autotications/bg_image.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

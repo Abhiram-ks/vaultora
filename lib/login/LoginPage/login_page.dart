@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
-import 'package:vaultora_inventory_app/login/decorationLand/bg_image.dart';
-import 'package:vaultora_inventory_app/login/decorationLand/flash_message.dart';
+import 'package:vaultora_inventory_app/login/DecVal/validation.dart';
 import '../../db/models/user/user.dart';
 import '../../main page/main_page.dart';
-import '../decorationLand/decoration2.dart';
-import '../validation/validation.dart';
+import '../DecVal/email_validation.dart';
+import '../Login_autotications/bg_image.dart';
+import '../Login_autotications/decoration2.dart';
+import '../Login_autotications/flash_message.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

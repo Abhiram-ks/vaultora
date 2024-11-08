@@ -14,8 +14,6 @@ class ScreenColor {
     );
   }
 }
-
-
 class OrCall extends StatelessWidget {
   const OrCall({super.key});
   @override

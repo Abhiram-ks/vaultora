@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:vaultora_inventory_app/login/decorationLand/decoration_landing.dart';
 
+
+import '../../Login_autotications/decoration_landing.dart';
 import 'screen_four.dart';
 
 class ScreenOne extends StatefulWidget {

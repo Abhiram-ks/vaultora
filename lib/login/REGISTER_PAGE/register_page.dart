@@ -1,23 +1,23 @@
-import 'dart:ui';
 import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vaultora_inventory_app/db/functions/adminfunction.dart';
-import 'package:vaultora_inventory_app/login/LOGIN/login_page.dart';
 
-import '../../../colors/colors.dart';
-import '../../decorationLand/bg_image.dart';
-import '../../decorationLand/decoration.dart';
-import '../../decorationLand/decoration2.dart';
-import '../../decorationLand/decoration_landing.dart';
-import '../../validation/validation.dart';
+import '../../colors/colors.dart';
+import '../DecVal/email_validation.dart';
+import '../DecVal/phone_validation.dart';
+import '../DecVal/validation.dart';
+import '../DecVal/vanture_validation.dart';
+import '../LoginPage/login_page.dart';
+import '../Login_autotications/bg_image.dart';
+import '../Login_autotications/decoration2.dart';
+import '../Login_autotications/decoration_landing.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
-
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _ventureNameController = TextEditingController();
@@ -160,7 +160,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                // Handle terms & policy tap
                               },
                               child: const Text(
                                 "terms & policy",

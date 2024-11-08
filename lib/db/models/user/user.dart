@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 
 part 'user.g.dart';
 
@@ -12,7 +13,7 @@ class UserModel{
   final String name;
 
   @HiveField(2)
-  final String email;
+  final String email; 
 
   @HiveField(3)
   final String phone;
@@ -32,6 +33,9 @@ class UserModel{
   @HiveField(8)
   final String? imagePath;
 
+  @HiveField(9)
+  final CategoryModel? category;
+
   UserModel({
     required this.id,
     required this.name,
@@ -42,5 +46,6 @@ class UserModel{
     this.bio ='',
     this.age = '',
     this.imagePath,
+    this.category,
   });
 }

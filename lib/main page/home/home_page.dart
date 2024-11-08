@@ -1,22 +1,33 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vaultora_inventory_app/colors/colors.dart';
+import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
+import 'package:vaultora_inventory_app/db/models/user/user.dart';
+import 'package:vaultora_inventory_app/main%20page/add/add_page.dart';
+import 'package:vaultora_inventory_app/main%20page/home/create_card.dart';
+
 import 'package:vaultora_inventory_app/main%20page/home/home_appbar.dart';
+import 'package:vaultora_inventory_app/main%20page/home/inventory_card.dart';
 import 'package:vaultora_inventory_app/main%20page/home/page_view.dart';
 
+import '../../db/functions/categoryfunction.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({
+    super.key,
+    required UserModel userDetails,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  List<CategoryModel> categories = [];
+
   final PageController _pageController = PageController();
-  final ScrollController _scrollController =
-      ScrollController(); // Controller for horizontal list
+  final ScrollController _scrollController = ScrollController();
   int _currentPage = 0;
   int _scrollIndex = 0;
   late Timer _pageTimer;
@@ -25,8 +36,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
-    // Timer for auto-scrolling PageView
     _pageTimer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage < 4) {
         _currentPage++;
@@ -40,7 +49,6 @@ class _HomePageState extends State<HomePage> {
       );
     });
 
-    // Timer for auto-scrolling horizontal list
     _scrollTimer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
       if (_scrollIndex < 3) {
         _scrollIndex++;
@@ -49,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       }
       _scrollController.animateTo(
         _scrollIndex * 160.0,
-        duration: const Duration(milliseconds: 590),
+        duration: const Duration(microseconds: 770),
         curve: Curves.easeInOut,
       );
     });
@@ -119,90 +127,185 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: const Color.fromARGB(255, 29, 66, 77),
-            expandedHeight: screenHeight * 0.17,
-            pinned: true,
-            flexibleSpace: const FlexibleSpaceBar(
-              background: HomeAppbar(),
-            ),
-          ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.04),
-                  child: Column(
+        body:
+            CustomScrollView(physics: const BouncingScrollPhysics(), slivers: [
+      SliverAppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromARGB(255, 29, 66, 77),
+        expandedHeight: screenHeight * 0.15,
+        pinned: true,
+        flexibleSpace: const FlexibleSpaceBar(
+          background: HomeAppbar(),
+        ),
+      ),
+      SliverToBoxAdapter(
+          child: SingleChildScrollView(
+            child: Padding(
+                padding: EdgeInsets.all(screenWidth * 0.03),
+              child: Column(children: [
+                SizedBox(
+                  height: screenHeight / 4,
+                  width: double.infinity,
+                  child: PageviewBuilder(
+                    pageController: _pageController,
+                    itemCount: pageData.length,
+                    pageData: pageData,
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.024),
+                SmoothPageIndicator(
+                  controller: _pageController,
+                  count: pageData.length,
+                  effect: ExpandingDotsEffect(
+                    dotHeight: 8,
+                    dotWidth: 8,
+                    activeDotColor: textColor1,
+                    dotColor: Colors.grey,
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.024),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Inventory Functions',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 15,
+                      color: Colors.grey,
+                    )
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.024),
+                SizedBox(
+                  height: screenHeight / 5,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
                     children: [
-                      SizedBox(
-                        height: screenHeight / 4,
-                        width: double.infinity,
-                        child: PageviewBuilder(
-                          pageController: _pageController,
-                          itemCount: pageData.length,
-                          pageData: pageData,
-                        ),
+                      InventoryFunction(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddPage()));
+                        },
+                        imagePath: 'assets/category/animation(6).json',
+                        title: 'Purchase',
+                        subtitle: 'SUPPLY SUMMARY',
+                        color: const Color.fromARGB(255, 174, 222, 246),
                       ),
-                      SizedBox(height: screenHeight * 0.024),
-                      SmoothPageIndicator(
-                        controller: _pageController,
-                        count: pageData.length,
-                        effect: ExpandingDotsEffect(
-                          dotHeight: 8,
-                          dotWidth: 8,
-                          activeDotColor: textColor1,
-                          dotColor: Colors.grey,
-                        ),
+                      SizedBox(width: screenWidth * 0.03),
+                      InventoryFunction(
+                          onTap: () { 
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const AddPage()));
+                          },
+                          color: const Color.fromARGB(255, 226, 212, 255),
+                          imagePath: 'assets/category/animation(2).json',
+                          title: 'Revenue',
+                          subtitle: 'PROFIT TRACKER'),
+                      SizedBox(width: screenWidth * 0.03),
+                      InventoryFunction(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddPage()));
+                        },
+                        imagePath: 'assets/gif/twoanimation.json',
+                        title: 'Sales',
+                        subtitle: 'INCOME INSIGHTS',
+                        color: const Color.fromARGB(255, 245, 246, 174),
                       ),
-                      SizedBox(height: screenHeight * 0.024),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Category',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: screenHeight * 0.024),
-                      SizedBox(
-                        height: screenHeight / 5,
-                        child: ListView(
-                          controller: _scrollController,
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            CustomCard(
-                                imagePath: 'assets/category/file.png',
-                                title: 'Card 1'),
-                            SizedBox(width: 16),
-                            CustomCard(
-                                imagePath: 'assets/category/file (3).png',
-                                title: 'Card 2'),
-                            SizedBox(width: 16),
-                            CustomCard(
-                                imagePath: 'assets/category/file (2).png',
-                                title: 'Card 3'),
-                            SizedBox(width: 16),
-                            CustomCard(
-                                imagePath: 'assets/category/file (1).png',
-                                title: 'Card 4'),
-                          ],
-                        ),
+                      SizedBox(width: screenWidth * 0.03),
+                      InventoryFunction(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddPage()));
+                        },
+                        imagePath: 'assets/gif/welcome one.json',
+                        title: 'Products ',
+                        subtitle: 'INVENTORY OVERVIEW',
+                        color: const Color.fromARGB(255, 250, 246, 21),
                       ),
                     ],
                   ),
                 ),
-              ],
+                SizedBox(height: screenHeight * 0.024),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Category',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.024),
+                SizedBox(
+                  height: screenHeight / 5,
+                  child: ListView(
+                    controller: _scrollController,
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      const CustomCard(
+                          color: Color.fromARGB(255, 255, 193, 214),
+                          imagePath: 'assets/category/file.png',
+                          title: 'Earphone'),
+                      SizedBox(width: screenWidth * 0.04),
+                      const CustomCard(
+                          color: Colors.yellow,
+                          imagePath: 'assets/category/file (3).png',
+                          title: 'Over Head'),
+                      SizedBox(width: screenWidth * 0.04),
+                      const CustomCard(
+                          color: Color.fromARGB(255, 76, 175, 122),
+                          imagePath: 'assets/category/file (2).png',
+                          title: 'Neckband'),
+                      SizedBox(width: screenWidth * 0.04),
+                      const CustomCard(
+                          color: Color.fromARGB(255, 190, 211, 113),
+                          imagePath: 'assets/category/file (1).png',
+                          title: 'Earbuds'),
+                    ],
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.01),
+                ValueListenableBuilder<List<CategoryModel>>(
+                    valueListenable: categoryListNotifier,
+                    builder: (context, categories, child) {
+                      return categories.isEmpty
+                          ? const Center(child: CircularProgressIndicator())
+                          : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                height: screenHeight / 5,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: categories.length,
+                                  itemBuilder: (context, index) {
+                                    final category = categories[index];
+                                    return CreateCard(
+                                      imagePath: category.imagePath ,
+                                      title: category.categoryName,
+                                      categoryId: category.id,
+                                      onDelete: () async {
+                                        await deleteCategory(category.id);
+                                      },
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(width: screenWidth * 0.04);
+                                  },
+                                ),
+                              ),
+                            );
+                    }),
+              ]),
             ),
-          ),
-        ],
-      ),
-    );
+          )),
+    ]));
   }
 }

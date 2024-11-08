@@ -9,6 +9,7 @@ import 'package:vaultora_inventory_app/main%20page/profile/modification/settings
 import '../../../colors/colors.dart';
 import '../../../db/functions/adminfunction.dart';
 import '../../category/category_page.dart';
+import '../DialogBox/category_field.dart';
 import '../DialogBox/dialog_box.dart';
 import '../edit_profile.dart/edit_profille.dart';
 
@@ -44,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
       valueListenable: currentUserNotifier,
       builder: (context, value, _) {
         if (value == null) {
-          return const Scaffold(
+          return const Scaffold( 
             body: Center(
               child: CircularProgressIndicator(),
             ),
@@ -204,7 +205,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                       builder: (context) => EditProfile(
-                                        // userdata: widget.userDetails,
                                         userdata: value,
                                       ),
                                     ));
@@ -278,9 +278,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               ClickableRowItem(
                                 icon: Icons.category_sharp,
                                 text: 'Add Category',
-                                bgcolor: Colors.black,
+                                bgcolor: textColor1,
                                 onTap: () {
-                                  CatageryBox.showLogoutDialog(context);
+                                  CategoryBox.showAddCategoryDialog(context, widget.userDetails.id);
                                 },
                               ),
                               SizedBox(height: screenHeight * 0.02),
