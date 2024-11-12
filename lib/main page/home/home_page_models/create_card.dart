@@ -7,6 +7,7 @@ class CreateCard extends StatefulWidget {
   final String title;
   final String categoryId;
   final VoidCallback onDelete;
+  final Color backgroundColor;
 
   const CreateCard({
     super.key,
@@ -14,6 +15,7 @@ class CreateCard extends StatefulWidget {
     required this.title,
     required this.categoryId,
     required this.onDelete,
+    required this.backgroundColor,
   });
 
   @override
@@ -26,7 +28,7 @@ class _CreateCardState extends State<CreateCard> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Card(
-      color: const Color.fromARGB(255, 237, 237, 237),
+      color: widget.backgroundColor,
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -82,4 +84,3 @@ class _CreateCardState extends State<CreateCard> {
     );
   }
 }
-

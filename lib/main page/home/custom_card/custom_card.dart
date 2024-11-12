@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../colors/colors.dart';
+import '../../../colors/colors.dart';
 
 class CustomCard extends StatelessWidget {
   final String imagePath;
@@ -43,7 +43,7 @@ class CustomCard extends StatelessWidget {
             Container(
               width:
                   screenWidth * 0.41, 
-              height: screenWidth * 0.41,
+              height: screenWidth * 0.42,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 gradient: LinearGradient(

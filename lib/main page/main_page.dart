@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
 import 'package:vaultora_inventory_app/main%20page/bottomnavBar/bottomnav.dart';
-import 'stackBackgroud/background_stack.dart';
-import 'add/add_page.dart';
+import 'add/add_main/addpage.dart';
+
 import 'category/category_page.dart';
 import 'home/home_page.dart';
 import 'profile/modification/profile_page.dart';
@@ -28,7 +28,7 @@ class _HomepageState extends State<Homepage> {
     _pages.addAll([
       HomePage(userDetails: widget.userDetails),
       const ShoppingCart(),
-      const AddPage(),
+      const Addpage(),
       const CategoryPage(),
       ProfilePage(userDetails: widget.userDetails),
     ]);
@@ -44,7 +44,6 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       body: Stack(
         children: [
-         const BackgroundStack(),
           _pages[_selectedIndex],
         ],
       ),

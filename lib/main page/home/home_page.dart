@@ -4,13 +4,10 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vaultora_inventory_app/colors/colors.dart';
 import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
-import 'package:vaultora_inventory_app/main%20page/add/add_page.dart';
-import 'package:vaultora_inventory_app/main%20page/home/create_card.dart';
-import 'package:vaultora_inventory_app/main%20page/home/custom_card.dart';
-
-import 'package:vaultora_inventory_app/main%20page/home/home_appbar.dart';
-import 'package:vaultora_inventory_app/main%20page/home/inventory_card.dart';
-import 'package:vaultora_inventory_app/main%20page/home/page_view.dart';
+import 'package:vaultora_inventory_app/main%20page/home/home_page_models/create_card.dart';
+import 'package:vaultora_inventory_app/main%20page/home/home_page_models/home_appbar.dart';
+import 'package:vaultora_inventory_app/main%20page/home/home_page_models/page_view.dart';
+import 'package:vaultora_inventory_app/main%20page/home/inventory_card/inventory_home.dart';
 
 import '../../db/functions/categoryfunction.dart';
 
@@ -28,9 +25,8 @@ class _HomePageState extends State<HomePage> {
   List<CategoryModel> categories = [];
 
   final PageController _pageController = PageController();
-  final ScrollController _scrollController = ScrollController();
+
   int _currentPage = 0;
-  int _scrollIndex = 0;
   late Timer _pageTimer;
   late Timer _scrollTimer;
 
@@ -50,18 +46,7 @@ class _HomePageState extends State<HomePage> {
       );
     });
 
-    _scrollTimer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
-      if (_scrollIndex < 3) {
-        _scrollIndex++;
-      } else {
-        _scrollIndex = 0;
-      }
-      _scrollController.animateTo(
-        _scrollIndex * 160.0,
-        duration: const Duration(microseconds: 770),
-        curve: Curves.easeInOut,
-      );
-    });
+   
   }
 
   @override
@@ -69,7 +54,7 @@ class _HomePageState extends State<HomePage> {
     _pageTimer.cancel();
     _scrollTimer.cancel();
     _pageController.dispose();
-    _scrollController.dispose();
+
     super.dispose();
   }
 
@@ -77,6 +62,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+  final List<Color> cardColors = [
+  Colors.blueAccent,
+  Colors.greenAccent,
+  Colors.pinkAccent,
+  Colors.purpleAccent,
+  Colors.orangeAccent,
+];
 
     final List<Map<String, dynamic>> pageData = [
       {
@@ -183,56 +175,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.024),
-                SizedBox(
-                  height: screenHeight / 5,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      InventoryFunction(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const AddPage()));
-                        },
-                        imagePath: 'assets/category/animation(6).json',
-                        title: 'Purchase',
-                        subtitle: 'SUPPLY SUMMARY',
-                        color: const Color.fromARGB(255, 174, 222, 246),
-                      ),
-                      SizedBox(width: screenWidth * 0.03),
-                      InventoryFunction(
-                          onTap: () { 
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const AddPage()));
-                          },
-                          color: const Color.fromARGB(255, 226, 212, 255),
-                          imagePath: 'assets/category/animation(2).json',
-                          title: 'Revenue',
-                          subtitle: 'PROFIT TRACKER'),
-                      SizedBox(width: screenWidth * 0.03),
-                      InventoryFunction(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const AddPage()));
-                        },
-                        imagePath: 'assets/gif/twoanimation.json',
-                        title: 'Sales',
-                        subtitle: 'INCOME INSIGHTS',
-                        color: const Color.fromARGB(255, 245, 246, 174),
-                      ),
-                      SizedBox(width: screenWidth * 0.03),
-                      InventoryFunction(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const AddPage()));
-                        },
-                        imagePath: 'assets/gif/welcome one.json',
-                        title: 'Products ',
-                        subtitle: 'INVENTORY OVERVIEW',
-                        color: const Color.fromARGB(255, 250, 246, 21),
-                      ),
-                    ],
-                  ),
-                ),
+                const InventoryHome(),
                 SizedBox(height: screenHeight * 0.024),
                 const Align(
                   alignment: Alignment.centerLeft,
@@ -245,35 +188,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.024),
-                SizedBox(
-                  height: screenHeight / 5,
-                  child: ListView(
-                    controller: _scrollController,
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      const CustomCard(
-                          color: Color.fromARGB(255, 255, 193, 214),
-                          imagePath: 'assets/category/file.png',
-                          title: 'Earphone'),
-                      SizedBox(width: screenWidth * 0.04),
-                      const CustomCard(
-                          color: Colors.yellow,
-                          imagePath: 'assets/category/file (3).png',
-                          title: 'Over Head'),
-                      SizedBox(width: screenWidth * 0.04),
-                      const CustomCard(
-                          color: Color.fromARGB(255, 76, 175, 122),
-                          imagePath: 'assets/category/file (2).png',
-                          title: 'Neckband'),
-                      SizedBox(width: screenWidth * 0.04),
-                      const CustomCard(
-                          color: Color.fromARGB(255, 190, 211, 113),
-                          imagePath: 'assets/category/file (1).png',
-                          title: 'Earbuds'),
-                    ],
-                  ),
-                ),
                 SizedBox(height: screenHeight * 0.01),
+
                 ValueListenableBuilder<List<CategoryModel>>(
                     valueListenable: categoryListNotifier,
                     builder: (context, categories, child) {
@@ -283,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                             child:  Center(child: CircularProgressIndicator()),
                           )
                           : Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.only(top: 1.0),
                               child: SizedBox(
                                 height: screenHeight / 5,
                                 child: ListView.separated(
@@ -291,6 +207,7 @@ class _HomePageState extends State<HomePage> {
                                   itemCount: categories.length,
                                   itemBuilder: (context, index) {
                                     final category = categories[index];
+                                     final backgroundColor = cardColors[index % cardColors.length];
                                     return CreateCard(
                                       imagePath: category.imagePath ,
                                       title: category.categoryName,
@@ -298,6 +215,7 @@ class _HomePageState extends State<HomePage> {
                                       onDelete: () async {
                                         await deleteCategory(category.id);
                                       },
+                                      backgroundColor: backgroundColor,
                                     );
                                   },
                                   separatorBuilder: (context, index) {

@@ -263,7 +263,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.02),
-                    const OrCall(),
+                    const OrCall(text: 'or',),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

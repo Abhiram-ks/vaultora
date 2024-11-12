@@ -6,11 +6,11 @@ class PageviewBuilder extends StatelessWidget {
   final List<Map<String, dynamic>> pageData;
 
   const PageviewBuilder({
-    Key? key,
+    super.key,
     required this.pageController,
     required this.itemCount,
     required this.pageData,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

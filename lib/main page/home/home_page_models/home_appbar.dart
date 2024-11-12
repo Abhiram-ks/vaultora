@@ -55,7 +55,6 @@ class _HomeAppbarState extends State<HomeAppbar>
               ),
               SizedBox(width: screenWidth * 0.03),
               Expanded(
-                // Wrap Column with Expanded to ensure it fits within Row constraints
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
