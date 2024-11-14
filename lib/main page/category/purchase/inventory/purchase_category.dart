@@ -85,7 +85,7 @@ class _PurchaseCategoryState extends State<PurchaseCategory> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Purchase Data',
+                          'Product Data',
                           style: GoogleFonts.kodchasan(
                             fontSize: 20,
                             color: Colors.black,

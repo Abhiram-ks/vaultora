@@ -73,8 +73,8 @@ class ActionbuttonsSpecificationText extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           text, 
-          style: TextStyle(
-            color: const Color.fromARGB(255, 0, 0, 0),
+          style:const TextStyle(
+            color: const Color.fromARGB(255, 255, 255, 255),
             fontSize: 18,
           ),
         ),

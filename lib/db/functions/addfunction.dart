@@ -6,7 +6,7 @@ import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:flutter/foundation.dart';
 
 
-
+ValueNotifier<int> itemCountNotifier = ValueNotifier(0);
 ValueNotifier<AddModel?> currentCategoryNotifier = ValueNotifier<AddModel?>(null);
 ValueNotifier<List<AddModel>> addListNotifier = ValueNotifier([]);
 Box<AddModel>? addBox;
@@ -105,12 +105,17 @@ Future<bool> updateItem({
 Future<void> getAllItems() async {
   await initAddDB();
   if (addBox != null && addBox!.isOpen) {
-    addListNotifier.value = addBox!.values.toList();
+    addListNotifier.value = addBox!.values.toList()
+      ..sort((a, b) => a.itemName.toLowerCase().compareTo(b.itemName.toLowerCase()));
     addListNotifier.notifyListeners();
+
+    itemCountNotifier.value = addBox!.length;
   } else {
     log("Error: addBox is null or not opened");
   }
 }
+
+
 
 Future<void> deleteItem(String id) async {
   await initAddDB();

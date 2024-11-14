@@ -220,6 +220,8 @@ class _EditProfileState extends State<EditProfile> {
                               label: 'Account name',
                               controller: _adminNameController,
                               validate: NameValidator.validate,
+                              dividerColor: const Color.fromARGB(255, 204, 204, 204),
+                              textColor: const Color.fromARGB(255, 193, 193, 193),
                             ),
                             SizedBox(height: screenHeight * 0.01),
                             EditStyle(
@@ -227,6 +229,8 @@ class _EditProfileState extends State<EditProfile> {
                               controller: _ventureNameController,
                               label: 'Venture Name',
                               validate: VentureValidator.validate,
+                              dividerColor: const Color.fromARGB(255, 204, 204, 204),
+                              textColor: const Color.fromARGB(255, 193, 193, 193),
                             ),
                             SizedBox(height: screenHeight * 0.01),
                             EditStyle(
@@ -234,6 +238,10 @@ class _EditProfileState extends State<EditProfile> {
                               controller: _phoneController,
                               label: 'Phone Number',
                               validate: PhoneNumberValidator.validate,
+                              dividerColor:
+                                  const Color.fromARGB(255, 204, 204, 204),
+                              textColor:
+                                  const Color.fromARGB(255, 193, 193, 193),
                             ),
                             SizedBox(height: screenHeight * 0.01),
                             EditStyle(
@@ -241,6 +249,10 @@ class _EditProfileState extends State<EditProfile> {
                               controller: _ageController,
                               label: 'Age',
                               validate: AgeValidatorField.validate,
+                              dividerColor:
+                                  const Color.fromARGB(255, 204, 204, 204),
+                              textColor:
+                                  const Color.fromARGB(255, 193, 193, 193),
                             ),
                             SizedBox(height: screenHeight * 0.01),
                             EditStyle(
@@ -248,6 +260,8 @@ class _EditProfileState extends State<EditProfile> {
                               controller: _bioController,
                               label: 'Bio',
                               validate: BioValidatorField.validate,
+                              dividerColor: const Color.fromARGB(255, 204, 204, 204),
+                              textColor: const Color.fromARGB(255, 193, 193, 193),
                             ),
                             SizedBox(height: screenHeight * 0.02),
                             InkWellButton(

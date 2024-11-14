@@ -5,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 class EditStyle extends StatelessWidget {
   final IconData icon; 
   final TextEditingController controller;
-   final bool obscureText;
+  final bool obscureText;
   final String label;
   final String? Function(String? value) validate; 
+    final Color dividerColor; 
+  final Color textColor; 
 
   const EditStyle({
     super.key,
@@ -16,6 +18,8 @@ class EditStyle extends StatelessWidget {
     this.obscureText = false,
     required this.label,
     required this.validate, 
+    required this.dividerColor,
+    required this.textColor
   });
 
   @override
@@ -41,7 +45,7 @@ class EditStyle extends StatelessWidget {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   style: GoogleFonts.inter(
                     fontSize: 15,
-                    color: const Color.fromARGB(221, 105, 105, 105),
+                    color:textColor
                   ),
                   decoration: InputDecoration(
                     labelText: label,
@@ -54,7 +58,7 @@ class EditStyle extends StatelessWidget {
               ),
             ],
           ),
-          const Divider(),
+          Divider(color: dividerColor),
         ],
       ),
     );

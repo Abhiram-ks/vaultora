@@ -26,9 +26,9 @@ class DropDown extends StatelessWidget {
         return Container(
           height: height,
           decoration: BoxDecoration(
-            color: Colors.transparent, // Transparent background
-            borderRadius: BorderRadius.circular(15), // Rounded edges
-            border: Border.all(color: Colors.grey), // Border color and thickness
+            color: Colors.transparent, 
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.grey), 
           ),
           child: DropdownButtonFormField<String>(
             value: selectedCategoryNotifier.value,
@@ -37,7 +37,7 @@ class DropDown extends StatelessWidget {
             },
             decoration: InputDecoration(
               hintText: hintText,
-              border: InputBorder.none, // No additional border inside
+              border: InputBorder.none, 
               contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
             items: categoryList.map<DropdownMenuItem<String>>((CategoryModel category) {
@@ -46,7 +46,7 @@ class DropDown extends StatelessWidget {
                 child: Text(category.categoryName),
               );
             }).toList(),
-            dropdownColor: Colors.white, // Dropdown menu background color
+            dropdownColor: Colors.white, 
           ),
         );
       },

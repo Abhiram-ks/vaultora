@@ -27,7 +27,7 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     _pages.addAll([
       HomePage(userDetails: widget.userDetails),
-      const ShoppingCart(),
+      ShoppingCart(userDetails: widget.userDetails),
       Addpage(userDetails: widget.userDetails),
       const CategoryPage(),
       ProfilePage(userDetails: widget.userDetails),

@@ -31,29 +31,12 @@ class _AddpageState extends State<Addpage> {
           child: Column(
             children: [
               SizedBox(height: screenHeight * 0.024),
-               AddStyle(
-                buttonText: 'dlk',
-                descriptionText: 'ldk',
-                imagePath: '',
-                titleText: 'd'
-                ,onTap: () {
-                
-              },),
-              SizedBox(height: screenHeight * 0.024),
               CheckOut(
                 color: const Color.fromARGB(255, 33, 63, 77),
                 height: screenHeight * 0.06,
                 hintText: 'Add Product',
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AddProducts(userDetails: widget.userDetails),));
-                },
-              ),
-              SizedBox(height: screenHeight * 0.015),
-              CheckOut(
-                color: const Color.fromARGB(255, 37, 110, 10),
-                height: screenHeight * 0.06,
-                hintText: 'Check Out',
-                onTap: () {
                 },
               ),
             ],

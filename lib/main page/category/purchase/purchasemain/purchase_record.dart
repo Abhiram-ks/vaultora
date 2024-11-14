@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_product/appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/category/purchase/inventory/searchbar.dart';
+import '../../../../db/functions/addfunction.dart';
+import '../../../../db/models/add/add.dart';
 import '../../../add/add_product/add_style.dart';
 import '../detailPurchase/specification.dart';
 import '../inventory/button_fileds.dart';
@@ -16,7 +18,7 @@ class PurchaseRecord extends StatefulWidget {
 }
 
 class _PurchaseRecordState extends State<PurchaseRecord> {
-  int _selectedButtonIndex = -1;
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,65 +27,72 @@ class _PurchaseRecordState extends State<PurchaseRecord> {
 
     return Scaffold(
       appBar: const MyAppBarTwo(
-        titleText: 'Purchase Record',
+        titleText: 'Inventory Record',
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
-          child: Column(
-            children: [
-              SizedBox(height: screenHeight * 0.03),
-              Searchbarmain(
-                hintText: 'Search for Items',
-                onSearchPressed: () {},
-                onClearPressed: () {},
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+        child: Column(
+          children: [
+            SizedBox(height: screenHeight * 0.03),
+            // Search bar section
+            Searchbarmain(
+              hintText: 'Search for Items',
+              onSearchPressed: () {},
+              onClearPressed: () {},
+            ),
+            Row(
+              children: [
+                Container(
+
+                )
+              ],
+              // children: [
+               
+              //   SizedBox(width: screenWidth * 0.02),
+              //   const Expanded(
+              //     child: FiltaringPrice(
+              //       label: 'Minimum price',
+              //     ),
+              //   ),
+              //   SizedBox(width: screenWidth * 0.05),
+              //   const Expanded(
+              //     child: FiltaringPrice(
+              //       label: 'Maximum price',
+              //     ),
+              //   ),
+              // ],
+            ),
+            SizedBox(height: screenHeight * 0.01),
+            Expanded(
+              child: ValueListenableBuilder<List<AddModel>>(
+                valueListenable: addListNotifier,
+                builder: (context, addList, child) {
+                  return ListView.builder(
+                    itemCount: addList.length,
+                    itemBuilder: (context, index) {
+                      final item = addList[index];
+                      return Column(
+                        children: [
+                          AddStyle(
+                            imagePath: item.imagePath,
+                            titleText: item.itemName,
+                            descriptionText: item.description,
+                            buttonText: item.dropDown,
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Specification(item: item),
+                              ));
+                            },
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                        ],
+                      );
+                    },
+                  );
+                },
               ),
-              SizedBox(height: screenHeight * 0.01),
-              SizedBox(
-                height: screenHeight * 0.05,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
-                      child: ElevatedButtonField(
-                        text: 'Button $index',
-                        isSelected: _selectedButtonIndex == index,
-                        onPressed: () {
-                          setState(() {
-                            _selectedButtonIndex = index;
-                          });
-                          log('Button $index pressed');
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Row(
-                children: [
-                  SizedBox(width: screenWidth * 0.09),
-                  const Expanded(
-                    child: FiltaringPrice(
-                      label: 'Minimum price',
-                    ),
-                  ),
-                  SizedBox(width: screenWidth * 0.05),
-                  const Expanded(
-                    child: FiltaringPrice(
-                      label: 'Maximum price',
-                    ),
-                  ),
-                ],
-              ),
-                  SizedBox(height: screenHeight * 0.01),
-                  // AddStyle(data: 'dd', onTap: () {
-                  //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Specification(),));
-                  // },)
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

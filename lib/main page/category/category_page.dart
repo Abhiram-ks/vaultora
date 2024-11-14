@@ -6,6 +6,7 @@ import 'package:vaultora_inventory_app/main%20page/add/add_product/appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/category/categoryStyle/sales_category.dart';
 
 import '../../colors/colors.dart';
+import '../../db/functions/addfunction.dart';
 import '../home/home_page_models/page_view.dart';
 import 'purchase/inventory/purchase_category.dart';
 
@@ -25,6 +26,8 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
     super.initState();
+     getAllItems(); 
+
     _pageTimer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage < 4) {
         _currentPage++;
@@ -45,7 +48,6 @@ class _CategoryPageState extends State<CategoryPage> {
   void dispose() {
     _pageTimer.cancel();
     _pageController.dispose();
-
     super.dispose();
   }
 
@@ -138,7 +140,13 @@ final List<Map<String, dynamic>> pageData = [
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.05),
-                PurchaseCategory(volume: '897',),
+
+                ValueListenableBuilder<int>(valueListenable: itemCountNotifier,
+                 builder:  (context, count, child){
+                  return  PurchaseCategory(volume: count.toString());
+                 }
+                 ),
+               
                 SizedBox(height: screenHeight * 0.02),
                 SalesCategory(volule: '782',),
           ],
