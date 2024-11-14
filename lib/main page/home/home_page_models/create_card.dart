@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 class CreateCard extends StatefulWidget {
   final String imagePath;
   final String title;
   final String categoryId;
   final VoidCallback onDelete;
   final Color backgroundColor;
+  final VoidCallback onEdit;
 
   const CreateCard({
     super.key,
@@ -16,6 +18,7 @@ class CreateCard extends StatefulWidget {
     required this.categoryId,
     required this.onDelete,
     required this.backgroundColor,
+    required this.onEdit,
   });
 
   @override
@@ -72,11 +75,27 @@ class _CreateCardState extends State<CreateCard> {
             ),
           ),
           Positioned(
-            top: 5,
-            right: 5,
-            child: IconButton(
-              icon: const Icon(Icons.delete, color: Colors.white, size: 19),
-              onPressed: widget.onDelete,
+            top: 3,
+            right: 1,
+            child: PopupMenuButton<int>(
+              icon: const Icon(Icons.more_vert, color: Colors.white, size: 19),
+              onSelected: (value) {
+                if (value == 1) {
+                  widget.onDelete();
+                } else if (value == 2) {
+                  widget.onEdit();
+                }
+              },
+              itemBuilder: (BuildContext context) => [
+                const PopupMenuItem<int>(
+                  value: 1,
+                  child: Text('Delete'),
+                ),
+                const PopupMenuItem<int>(
+                  value: 2,
+                  child: Text('Edit'),
+                ),
+              ],
             ),
           ),
         ],

@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_product/appbar.dart';
-import 'package:vaultora_inventory_app/main%20page/category/categoryStyle/category_page_scoll.dart';
+import 'package:vaultora_inventory_app/main%20page/category/categoryStyle/sales_category.dart';
 
 import '../../colors/colors.dart';
+import '../home/home_page_models/page_view.dart';
+import 'purchase/inventory/purchase_category.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
@@ -19,7 +21,6 @@ class _CategoryPageState extends State<CategoryPage> {
 
   int _currentPage = 0;
   late Timer _pageTimer;
-  late Timer _scrollTimer;
 
   @override
   void initState() {
@@ -43,7 +44,6 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void dispose() {
     _pageTimer.cancel();
-    _scrollTimer.cancel();
     _pageController.dispose();
 
     super.dispose();
@@ -55,7 +55,7 @@ class _CategoryPageState extends State<CategoryPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 final List<Map<String, dynamic>> pageData = [
       {
-        'image': 'assets/liquid/girl.jpg',
+        'image': 'assets/listimage/image3.jpg',
         'title': 'Real-time Tracking',
         'subtitle': 'UPDATES STOCK LEVELS INSTANTLY',
         'subtitle2': 'An Inventory App is a digital tool that helps',
@@ -64,7 +64,7 @@ final List<Map<String, dynamic>> pageData = [
         'color': const Color.fromARGB(255, 171, 174, 118),
       },
       {
-        'image': 'assets/liquid/growth.jpg',
+        'image': 'assets/listimage/image4.jpg',
         'title': 'Revenue',
         'subtitle': 'PROFIT TRACKER, MONITORING GAINS',
         'subtitle2': 'Revenue is the total income a business',
@@ -73,7 +73,7 @@ final List<Map<String, dynamic>> pageData = [
         'color': const Color.fromARGB(255, 62, 58, 58),
       },
       {
-        'image': 'assets/liquid/manwith headset.jpg',
+         'image': 'assets/listimage/image6.jpg',
         'title': 'Universal Language ',
         'subtitle': 'CONNECTS PEOPLE ACROSS CULTURES',
         'subtitle2': 'Music is the art of combining sounds to express emotion,',
@@ -82,7 +82,7 @@ final List<Map<String, dynamic>> pageData = [
         'color': Colors.blue[300],
       },
       {
-        'image': 'assets/liquid/5363923.jpg',
+        'image': 'assets/listimage/image2.jpg',
         'title': 'Stock Management',
         'subtitle': 'MONITORS INVENTORY LEVELS EFFICIENTLY',
         'subtitle2': 'Stock is the supply of goods a business holds to',
@@ -91,8 +91,7 @@ final List<Map<String, dynamic>> pageData = [
         'color': const Color.fromARGB(255, 113, 93, 66),
       },
       {
-        'image':
-            'assets/liquid/happy-girl-singing-favorite-song-listening-music-wireless-headphones-smiling-dancing-standing-pink-background.jpg',
+       'image': 'assets/listimage/image1.jpg',
         'title': 'Seamless Experience',
         'subtitle': 'Enjoy the Features of the APP',
         'subtitle2': 'Inventory is the collection of goods a business keeps on',
@@ -104,24 +103,29 @@ final List<Map<String, dynamic>> pageData = [
 
  return Scaffold(
    appBar: const MyAppBar(
-    titleText: 'Category',
+    titleText: 'Inventory ',
     animationPath: 'assets/category/truck.json',
       ),
      body: SingleChildScrollView(
       child: Padding(
-        padding:EdgeInsets.symmetric(horizontal: screenWidth*0.02,),
+        padding:EdgeInsets.symmetric(horizontal: screenWidth*0.03,),
         child:  Column(
           children: [
             SizedBox(height: screenHeight*0.02,),
-            SizedBox(
-                  height: screenHeight / 4,
-                  width: double.infinity,
-                  child: CategoryPageScoll(
-                    pageController: _pageController,
-                    itemCount: pageData.length,
-                    pageData: pageData,
+            GestureDetector(
+              onDoubleTap: () {
+                
+              },
+              child: SizedBox(
+                    height: screenHeight / 4,
+                    width: double.infinity,
+                    child: PageviewBuilder(
+                      pageController: _pageController,
+                      itemCount: pageData.length,
+                      pageData: pageData,
+                    ),
                   ),
-                ),
+            ),
                 SizedBox(height: screenHeight * 0.024),
                 SmoothPageIndicator(
                   controller: _pageController,
@@ -133,7 +137,10 @@ final List<Map<String, dynamic>> pageData = [
                     dotColor: Colors.grey,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.024),
+                SizedBox(height: screenHeight * 0.05),
+                PurchaseCategory(volume: '897',),
+                SizedBox(height: screenHeight * 0.02),
+                SalesCategory(volule: '782',),
           ],
         ),),
     ),

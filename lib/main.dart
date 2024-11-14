@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 import 'db/functions/adminfunction.dart';
 import 'db/functions/categoryfunction.dart';
@@ -12,6 +13,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
   Hive.registerAdapter(CategoryModelAdapter());
+  Hive.registerAdapter(AddModelAdapter());
   await initUserDB();
   await initCategoryDB();
   runApp(const MyApp());

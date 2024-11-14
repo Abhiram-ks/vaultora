@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../models/category/catalog.dart';
 
 ValueNotifier<CategoryModel?> currentCategoryNotifier = ValueNotifier<CategoryModel?>(null);
-ValueNotifier<List<CategoryModel>> categoryListNotifier = ValueNotifier([]);
+ValueNotifier<List<CategoryModel>> categoryListNotifier = ValueNotifier<List<CategoryModel>>([]);
 Box<CategoryModel>? categoryBox;
 
 
@@ -43,6 +43,39 @@ Future<bool> addCategory({
     return false;
   }
 }
+
+Future<bool> updateCategory({
+  required String id,
+  required String categoryName,
+  required String imagePath,
+}) async {
+  await initCategoryDB();
+  try {
+    if (categoryBox!.containsKey(id)) {
+      final existingCategory = categoryBox!.get(id);
+      final updatedCategory = CategoryModel(
+        id: existingCategory!.id, 
+        userid: existingCategory.userid,
+        categoryName: categoryName, 
+        imagePath: imagePath,
+      );
+
+      await categoryBox!.put(id, updatedCategory);
+      log("Category updated successfully: $categoryName with new image path.");
+      
+      categoryListNotifier.value = categoryBox!.values.toList();
+      categoryListNotifier.notifyListeners();
+      return true;
+    } else {
+      log("Category with id $id does not exist.");
+      return false;
+    }
+  } catch (e) {
+    log("Error updating category: $e");
+    return false;
+  }
+}
+
 
 Future<void> deleteCategory(String id) async {
   await initCategoryDB();

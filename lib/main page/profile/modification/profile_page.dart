@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
       valueListenable: currentUserNotifier,
       builder: (context, value, _) {
         if (value == null) {
-          return const Scaffold( 
+          return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),

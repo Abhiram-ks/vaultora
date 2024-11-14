@@ -12,9 +12,9 @@ class ShoppingCart extends StatefulWidget {
 class _ShoppingCartState extends State<ShoppingCart> {
   @override
   Widget build(BuildContext context) {
-        double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    return  Scaffold(
+    //     double screenWidth = MediaQuery.of(context).size.width;
+    // double screenHeight = MediaQuery.of(context).size.height;
+    return const  Scaffold(
       appBar: MyAppBar(titleText: 'Sale Products', animationPath:  'assets/category/animation(6).json'),
  
     );

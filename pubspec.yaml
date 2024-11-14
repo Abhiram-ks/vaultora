@@ -49,6 +49,7 @@ dependencies:
   awesome_dialog: ^3.2.1
   image_picker: ^0.8.4+11
   smooth_page_indicator: ^1.2.0+3
+  readmore: ^3.0.0
 
 dev_dependencies:
   flutter_test:

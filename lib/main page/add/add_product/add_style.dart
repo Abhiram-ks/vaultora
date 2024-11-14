@@ -1,32 +1,53 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 class AddStyle extends StatelessWidget {
-  final String data;
-  const AddStyle({super.key, required this.data});
+  final VoidCallback? onTap;
+  final VoidCallback? onSwipe;
+  final String titleText;
+  final String descriptionText;
+  final String buttonText;
+  final String imagePath;
+
+  const AddStyle({
+    super.key,
+    this.onTap,
+    this.onSwipe,
+    required this.titleText,
+    required this.descriptionText,
+    required this.buttonText,
+    required this.imagePath,
+  });
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        color: Color(0xFFE8EDEB),
-        width: double.infinity,
-        height: screenHeight * 0.2,
-        alignment: Alignment.center,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Container(
+
+    return GestureDetector(
+      onTap: onTap,
+      onHorizontalDragEnd: (details) {
+        if (onSwipe != null) onSwipe!();
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          color: const Color(0xFFE8EDEB),
+          width: double.infinity,
+          height: screenHeight * 0.2,
+          alignment: Alignment.center,
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Icon(Icons.shopping_bag_rounded)),
+                        alignment: Alignment.topLeft,
+                        child: Icon(Icons.shopping_bag_rounded),
+                      ),
                     ),
                     ClipOval(
                       child: Container(
@@ -35,33 +56,32 @@ class AddStyle extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           image: DecorationImage(
-                            image: AssetImage('assets/welcome/main image.jpg'),
+                            image: imagePath.isNotEmpty
+                                ? FileImage(File(imagePath)) as ImageProvider
+                                : const AssetImage('assets/welcome/main image.jpg'),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Container(
-                    height: screenHeight * 0.2,
-                    color: const Color(0xFFEEF2C1),
-                    padding: const EdgeInsets.all(8.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Container(
+                      height: screenHeight * 0.2,
+                      color: const Color(0xFFEEF2C1),
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'sonydsasdfdasfsdfdsfdsfadafsdfdf',
+                            titleText,
                             style: const TextStyle(
                               color: Colors.black,
                               fontFamily: 'Poppins',
@@ -75,7 +95,7 @@ class AddStyle extends StatelessWidget {
                             height: screenHeight * 0.01,
                           ),
                           Text(
-                            'sonydsasdfdasfsdfdsfdsfadafsdfdfdsdsdsdsdsfdfsssssssssssssssssss',
+                            descriptionText,
                             style: const TextStyle(
                               color: Color.fromARGB(255, 95, 95, 95),
                               fontFamily: 'Poppins',
@@ -85,7 +105,7 @@ class AddStyle extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
-                          SizedBox(height: screenHeight*0.01,),
+                          SizedBox(height: screenHeight * 0.01),
                           Container(
                             padding: const EdgeInsets.all(8.0),
                             alignment: Alignment.centerLeft,
@@ -97,26 +117,27 @@ class AddStyle extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child:const Text(
-                              'Your text here',
-                              style:  TextStyle(
+                            child: Text(
+                              buttonText,
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16.0,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

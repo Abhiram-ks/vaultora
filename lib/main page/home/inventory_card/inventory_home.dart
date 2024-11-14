@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:vaultora_inventory_app/main%20page/category/purchase/purchasemain/purchase_record.dart';
 import 'package:vaultora_inventory_app/main%20page/home/inventory_card/inventory_card.dart';
 
 class InventoryHome extends StatelessWidget {
@@ -16,7 +16,7 @@ class InventoryHome extends StatelessWidget {
     children: [
       InventoryFunction(
         onTap: () {
-          
+          Navigator.of(context).push(MaterialPageRoute(builder:(context) => const PurchaseRecord(),));
         },
         imagePath: 'assets/category/animation(6).json',
         title: 'Purchase',

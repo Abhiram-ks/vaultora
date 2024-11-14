@@ -4,11 +4,11 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vaultora_inventory_app/colors/colors.dart';
 import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
+import 'package:vaultora_inventory_app/main%20page/home/home_page_models/action_popup.dart';
 import 'package:vaultora_inventory_app/main%20page/home/home_page_models/create_card.dart';
 import 'package:vaultora_inventory_app/main%20page/home/home_page_models/home_appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/home/home_page_models/page_view.dart';
 import 'package:vaultora_inventory_app/main%20page/home/inventory_card/inventory_home.dart';
-
 import '../../db/functions/categoryfunction.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,7 +28,6 @@ class _HomePageState extends State<HomePage> {
 
   int _currentPage = 0;
   late Timer _pageTimer;
-  late Timer _scrollTimer;
 
   @override
   void initState() {
@@ -45,14 +44,11 @@ class _HomePageState extends State<HomePage> {
         curve: Curves.easeInOut,
       );
     });
-
-   
   }
 
   @override
   void dispose() {
     _pageTimer.cancel();
-    _scrollTimer.cancel();
     _pageController.dispose();
 
     super.dispose();
@@ -62,13 +58,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-  final List<Color> cardColors = [
-  Colors.blueAccent,
-  Colors.greenAccent,
-  Colors.pinkAccent,
-  Colors.purpleAccent,
-  Colors.orangeAccent,
-];
+    final List<Color> cardColors = [
+      Colors.blueAccent,
+      Colors.greenAccent,
+      Colors.pinkAccent,
+      Colors.purpleAccent,
+      Colors.orangeAccent,
+    ];
 
     final List<Map<String, dynamic>> pageData = [
       {
@@ -133,101 +129,111 @@ class _HomePageState extends State<HomePage> {
       ),
       SliverToBoxAdapter(
           child: SingleChildScrollView(
-            child: Padding(
-                padding: EdgeInsets.all(screenWidth * 0.03),
-              child: Column(children: [
-                SizedBox(
-                  height: screenHeight / 4,
-                  width: double.infinity,
-                  child: PageviewBuilder(
-                    pageController: _pageController,
-                    itemCount: pageData.length,
-                    pageData: pageData,
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.024),
-                SmoothPageIndicator(
-                  controller: _pageController,
-                  count: pageData.length,
-                  effect: ExpandingDotsEffect(
-                    dotHeight: 8,
-                    dotWidth: 8,
-                    activeDotColor: textColor1,
-                    dotColor: Colors.grey,
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.024),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Inventory Functions',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 15,
-                      color: Colors.grey,
-                    )
-                  ],
-                ),
-                SizedBox(height: screenHeight * 0.024),
-                const InventoryHome(),
-                SizedBox(height: screenHeight * 0.024),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Category',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.024),
-                SizedBox(height: screenHeight * 0.01),
-
-                ValueListenableBuilder<List<CategoryModel>>(
-                    valueListenable: categoryListNotifier,
-                    builder: (context, categories, child) {
-                      return categories.isEmpty
-                          ? const Padding(
-                            padding:  EdgeInsets.only(top: 10.0),
-                            child:  Center(child: CircularProgressIndicator()),
-                          )
-                          : Padding(
-                              padding: const EdgeInsets.only(top: 1.0),
-                              child: SizedBox(
-                                height: screenHeight / 5,
-                                child: ListView.separated(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: categories.length,
-                                  itemBuilder: (context, index) {
-                                    final category = categories[index];
-                                     final backgroundColor = cardColors[index % cardColors.length];
-                                    return CreateCard(
-                                      imagePath: category.imagePath ,
-                                      title: category.categoryName,
-                                      categoryId: category.id,
-                                      onDelete: () async {
-                                        await deleteCategory(category.id);
-                                      },
-                                      backgroundColor: backgroundColor,
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(width: screenWidth * 0.04);
-                                  },
-                                ),
-                              ),
-                            );
-                    }),
-              ]),
+        child: Padding(
+          padding: EdgeInsets.all(screenWidth * 0.03),
+          child: Column(children: [
+            SizedBox(
+              height: screenHeight / 4,
+              width: double.infinity,
+              child: PageviewBuilder(
+                pageController: _pageController,
+                itemCount: pageData.length,
+                pageData: pageData,
+              ),
             ),
-          )),
+            SizedBox(height: screenHeight * 0.024),
+            SmoothPageIndicator(
+              controller: _pageController,
+              count: pageData.length,
+              effect: ExpandingDotsEffect(
+                dotHeight: 8,
+                dotWidth: 8,
+                activeDotColor: textColor1,
+                dotColor: Colors.grey,
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.024),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Inventory Functions',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 15,
+                  color: Colors.grey,
+                )
+              ],
+            ),
+            SizedBox(height: screenHeight * 0.024),
+            const InventoryHome(),
+            SizedBox(height: screenHeight * 0.024),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Category',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.024),
+            SizedBox(height: screenHeight * 0.01),
+            ValueListenableBuilder<List<CategoryModel>>(
+              valueListenable: categoryListNotifier,
+              builder: (context, categories, child) {
+                return categories.isEmpty
+                    ? const Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 1.0),
+                        child: SizedBox(
+                          height: screenHeight / 5,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: categories.length,
+                            itemBuilder: (context, index) {
+                              final category = categories[index];
+                              final backgroundColor =
+                                  cardColors[index % cardColors.length];
+                              return CreateCard(
+                                imagePath: category.imagePath,
+                                title: category.categoryName,
+                                categoryId: category.id,
+                                onDelete: () {
+                                  showDeleteConfirmation(context, category.id);
+                                },
+                                onEdit: () {
+                                  showEditConfirmation(
+                                    context,
+                                    category.id,
+                                    category.imagePath,
+                                    category.categoryName,
+                                  );
+                                },
+                                backgroundColor: backgroundColor,
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return SizedBox(width: screenWidth * 0.04);
+                            },
+                          ),
+                        ),
+                      );
+              },
+            )
+          ]),
+        ),
+      )),
     ]));
   }
 }
+
