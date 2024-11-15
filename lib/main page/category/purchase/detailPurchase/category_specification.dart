@@ -20,7 +20,7 @@ class CategorySpecification extends StatelessWidget {
           color: Colors.transparent,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: const Color.fromARGB(255, 134, 134, 134),
+            color: const Color.fromARGB(255, 95, 95, 95),
           ),
         ),
         child: Padding(

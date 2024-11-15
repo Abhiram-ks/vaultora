@@ -12,7 +12,6 @@ import 'package:vaultora_inventory_app/main%20page/add/add_product/field_decorat
 import '../../../db/functions/addfunction.dart';
 import '../../../db/models/user/user.dart';
 import '../../../login/Login_autotications/decoration_landing.dart';
-import '../../../login/Login_autotications/flash_message.dart';
 import '../add_product/check_out.dart';
 import '../add_product/drowp_down.dart';
 

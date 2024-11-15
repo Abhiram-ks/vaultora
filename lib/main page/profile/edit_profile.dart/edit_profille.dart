@@ -66,8 +66,8 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  Future<void> _saveProfile() async {
-    if (!_validateInputs() || _formKey.currentState?.validate() != true) {
+  Future<void> _saveProfile() async {  
+    if (! _validateInputs() || _formKey.currentState?.validate() != true) {
       log("Validation failed.");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill in all fields.')),

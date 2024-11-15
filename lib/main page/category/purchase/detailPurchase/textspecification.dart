@@ -14,7 +14,7 @@ class TextFormSpecification extends StatelessWidget {
       text,
       style: GoogleFonts.kodchasan(
         fontSize: 20,
-        color: const Color.fromARGB(255, 213, 213, 213),
+        color: const Color.fromARGB(255, 142, 142, 142),
         fontWeight: FontWeight.w500,
       ),
       overflow: TextOverflow.ellipsis, 

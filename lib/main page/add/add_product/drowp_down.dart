@@ -38,7 +38,7 @@ class DropDown extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               border: InputBorder.none, 
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             ),
             items: categoryList.map<DropdownMenuItem<String>>((CategoryModel category) {
               return DropdownMenuItem<String>(

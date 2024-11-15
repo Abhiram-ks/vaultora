@@ -25,7 +25,7 @@ class _PurchaseCategoryState extends State<PurchaseCategory> {
         context,
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 500),
-          pageBuilder: (context, animation, secondaryAnimation) => PurchaseRecord(),
+          pageBuilder: (context, animation, secondaryAnimation) =>const PurchaseRecord(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(1.0, 0.0); 
             const end = Offset.zero;       

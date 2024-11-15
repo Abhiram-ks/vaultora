@@ -1,14 +1,13 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_product/appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/category/purchase/inventory/searchbar.dart';
 import '../../../../db/functions/addfunction.dart';
 import '../../../../db/models/add/add.dart';
 import '../../../add/add_product/add_style.dart';
 import '../detailPurchase/specification.dart';
-import '../inventory/button_fileds.dart';
-import '../inventory/filtaring_price.dart';
 
 class PurchaseRecord extends StatefulWidget {
   const PurchaseRecord({super.key});
@@ -34,7 +33,6 @@ class _PurchaseRecordState extends State<PurchaseRecord> {
         child: Column(
           children: [
             SizedBox(height: screenHeight * 0.03),
-            // Search bar section
             Searchbarmain(
               hintText: 'Search for Items',
               onSearchPressed: () {},
@@ -64,31 +62,55 @@ class _PurchaseRecordState extends State<PurchaseRecord> {
             ),
             SizedBox(height: screenHeight * 0.01),
             Expanded(
-              child: ValueListenableBuilder<List<AddModel>>(
+               child: ValueListenableBuilder<List<AddModel>>(
                 valueListenable: addListNotifier,
                 builder: (context, addList, child) {
-                  return ListView.builder(
-                    itemCount: addList.length,
-                    itemBuilder: (context, index) {
-                      final item = addList[index];
-                      return Column(
+                  if (addList.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          AddStyle(
-                            imagePath: item.imagePath,
-                            titleText: item.itemName,
-                            descriptionText: item.description,
-                            buttonText: item.dropDown,
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Specification(item: item),
-                              ));
-                            },
+                          Lottie.asset(
+                            'assets/category/norecords.json', 
+                            width: screenWidth * 0.5,
+                            height: screenHeight * 0.3,
                           ),
-                          SizedBox(height: screenHeight * 0.01),
+                          SizedBox(height: screenHeight * 0.02),
+                        Text(
+            'No records found !',
+            style: GoogleFonts.kodchasan(
+              fontSize: 16,
+              color: Colors.grey,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
                         ],
-                      );
-                    },
-                  );
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: addList.length,
+                      itemBuilder: (context, index) {
+                        final item = addList[index];
+                        return Column(
+                          children: [
+                            AddStyle(
+                              imagePath: item.imagePath,
+                              titleText: item.itemName,
+                              descriptionText: item.description,
+                              buttonText: item.dropDown,
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Specification(item: item),
+                                ));
+                              },
+                            ),
+                            SizedBox(height: screenHeight * 0.01),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ),

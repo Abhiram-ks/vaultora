@@ -7,11 +7,11 @@ class ActionbuttonsSpecification extends StatelessWidget {
   final Color iconColor; 
 
   const ActionbuttonsSpecification({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.icon,
     required this.iconColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ActionbuttonsSpecification extends StatelessWidget {
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: const Color.fromARGB(255, 134, 134, 134),
+              color: const Color.fromARGB(255, 174, 174, 174),
             ),
           ),
           child: Padding(
@@ -74,7 +74,7 @@ class ActionbuttonsSpecificationText extends StatelessWidget {
         child: Text(
           text, 
           style:const TextStyle(
-            color: const Color.fromARGB(255, 255, 255, 255),
+            color:  Color.fromARGB(255, 255, 255, 255),
             fontSize: 18,
           ),
         ),

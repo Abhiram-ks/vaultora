@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 
 
 ValueNotifier<int> itemCountNotifier = ValueNotifier(0);
-ValueNotifier<AddModel?> currentCategoryNotifier = ValueNotifier<AddModel?>(null);
+ValueNotifier<AddModel?> currentiteamNotifier = ValueNotifier<AddModel?>(null);
 ValueNotifier<List<AddModel>> addListNotifier = ValueNotifier([]);
 Box<AddModel>? addBox;
 
@@ -63,6 +63,7 @@ Future<bool> updateItem({
   required String id,
   required String itemName,
   required String description,
+  required String itemCount,
   required String mrp,
   String? imagePath,
 }) async {
@@ -78,7 +79,7 @@ Future<bool> updateItem({
         description: description,
         purchaseRate: item.purchaseRate, 
         mrp: mrp,
-        itemCount: item.itemCount,      
+        itemCount:itemCount,      
         totalPurchase: item.totalPurchase,
         dropDown: item.dropDown,
         imagePath: imagePath ?? item.imagePath, 
@@ -87,8 +88,8 @@ Future<bool> updateItem({
       await addBox!.put(id, updatedItem);
       await getAllItems();
       log("Item updated successfully: $itemName");
-      currentCategoryNotifier.value = updatedItem;
-      currentCategoryNotifier.notifyListeners();
+      currentiteamNotifier.value = updatedItem;
+      currentiteamNotifier.notifyListeners();
       return true;
     } else {
       log("Item not found: $id");
@@ -114,8 +115,6 @@ Future<void> getAllItems() async {
     log("Error: addBox is null or not opened");
   }
 }
-
-
 
 Future<void> deleteItem(String id) async {
   await initAddDB();

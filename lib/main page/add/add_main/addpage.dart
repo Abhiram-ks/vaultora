@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_main/add_products.dart';
-import 'package:vaultora_inventory_app/main%20page/add/add_product/add_style.dart';
-
 import '../../../db/models/user/user.dart';
 import '../add_product/appbar.dart';
 import '../add_product/check_out.dart';

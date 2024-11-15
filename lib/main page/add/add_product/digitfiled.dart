@@ -76,7 +76,11 @@ class DigitInputValidator {
     else if (value.contains(' ')) {
       return 'No spaces allowed';
     }
+    
+    else if (RegExp(r'[a-zA-Z]').hasMatch(value)) {
+      return 'No Letters allowed';
+    }
+
     return null;
   }
 }
-
