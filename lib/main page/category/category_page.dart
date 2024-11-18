@@ -5,7 +5,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_product/appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/category/categoryStyle/sales_category.dart';
 
-import '../../colors/colors.dart';
+import '../../Color/colors.dart';
 import '../../db/functions/addfunction.dart';
 import '../home/home_page_models/page_view.dart';
 import 'purchase/inventory/purchase_category.dart';
@@ -148,7 +148,7 @@ final List<Map<String, dynamic>> pageData = [
                  ),
                
                 SizedBox(height: screenHeight * 0.02),
-                SalesCategory(volule: '782',),
+                const SalesCategory(volule: '782',),
           ],
         ),),
     ),

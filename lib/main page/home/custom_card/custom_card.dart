@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../colors/colors.dart';
+import '../../../Color/colors.dart';
 
 class CustomCard extends StatelessWidget {
   final String imagePath;

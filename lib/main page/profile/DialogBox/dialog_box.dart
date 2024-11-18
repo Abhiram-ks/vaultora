@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../colors/colors.dart';
-import '../../../login/splash_welcom/welcome_screen.dart';
+import '../../../Color/colors.dart';
+import '../../../log/splash_welcom/welcome_screen.dart';
 
 class DialogBox {
   static void showLogoutDialog(BuildContext context) {

@@ -36,6 +36,7 @@ Future<bool> addCategory({
     await categoryBox!.put(id, newCategory);
     log("Category added successfully: $categoryName for user: $userid");
    categoryListNotifier.value = categoryBox!.values.toList();
+    // ignore: invalid_use_of_protected_member
     categoryListNotifier.notifyListeners();
     return true;
   } catch (e) {
@@ -64,6 +65,7 @@ Future<bool> updateCategory({
       log("Category updated successfully: $categoryName with new image path.");
       
       categoryListNotifier.value = categoryBox!.values.toList();
+      // ignore: invalid_use_of_protected_member
       categoryListNotifier.notifyListeners();
       return true;
     } else {
@@ -77,12 +79,14 @@ Future<bool> updateCategory({
 }
 
 
+
 Future<void> deleteCategory(String id) async {
   await initCategoryDB();
   await categoryBox!.delete(id);
   log("Category deleted: $id");
 
  categoryListNotifier.value = categoryBox!.values.toList();
+   // ignore: invalid_use_of_protected_member
    categoryListNotifier.notifyListeners();
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:vaultora_inventory_app/colors/colors.dart';
+
+import '../../../Color/colors.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String titleText;

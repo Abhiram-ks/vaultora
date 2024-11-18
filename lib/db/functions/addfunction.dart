@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 ValueNotifier<int> itemCountNotifier = ValueNotifier(0);
 ValueNotifier<AddModel?> currentiteamNotifier = ValueNotifier<AddModel?>(null);
 ValueNotifier<List<AddModel>> addListNotifier = ValueNotifier([]);
+List<AddModel> originalItemList = [];
 Box<AddModel>? addBox;
 
 
@@ -65,6 +66,8 @@ Future<bool> updateItem({
   required String description,
   required String itemCount,
   required String mrp,
+  required String dropDown,
+  required String purchaseRate,
   String? imagePath,
 }) async {
   await initAddDB();
@@ -77,11 +80,11 @@ Future<bool> updateItem({
         userid: item.userid,
         itemName: itemName,
         description: description,
-        purchaseRate: item.purchaseRate, 
+        purchaseRate:purchaseRate, 
         mrp: mrp,
         itemCount:itemCount,      
         totalPurchase: item.totalPurchase,
-        dropDown: item.dropDown,
+        dropDown: dropDown,
         imagePath: imagePath ?? item.imagePath, 
       );
 
@@ -89,6 +92,7 @@ Future<bool> updateItem({
       await getAllItems();
       log("Item updated successfully: $itemName");
       currentiteamNotifier.value = updatedItem;
+      // ignore: invalid_use_of_protected_member
       currentiteamNotifier.notifyListeners();
       return true;
     } else {
@@ -106,8 +110,10 @@ Future<bool> updateItem({
 Future<void> getAllItems() async {
   await initAddDB();
   if (addBox != null && addBox!.isOpen) {
-    addListNotifier.value = addBox!.values.toList()
+    originalItemList = addBox!.values.toList()
       ..sort((a, b) => a.itemName.toLowerCase().compareTo(b.itemName.toLowerCase()));
+    addListNotifier.value = List.from(originalItemList);
+    // ignore: invalid_use_of_protected_member
     addListNotifier.notifyListeners();
 
     itemCountNotifier.value = addBox!.length;
@@ -128,4 +134,19 @@ void printAllItems() {
         'Purchase Rate: ${item.purchaseRate}, MRP: ${item.mrp}, '
         'Item Count: ${item.itemCount}, Total Purchase: ${item.totalPurchase},Dropdown: ${item.dropDown}');
   }
+}
+
+
+Future<double> getMaxMRP() async{
+  await initAddDB();
+
+  if (addBox != null && addBox!.isOpen) {
+    final mrps = addBox!.values
+        .map((item) => double.tryParse(item.mrp) ?? 0.0)
+        .toList();
+   if (mrps.isNotEmpty) {
+      return mrps.reduce((a, b) => a > b ? a : b);
+    }
+  }
+   return 0.0; 
 }

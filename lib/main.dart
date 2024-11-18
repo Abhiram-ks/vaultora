@@ -6,7 +6,7 @@ import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 import 'db/functions/adminfunction.dart';
 import 'db/functions/categoryfunction.dart';
 import 'db/models/user/user.dart';
-import 'login/splash_welcom/splash_screen.dart';
+import 'log/splash_welcom/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

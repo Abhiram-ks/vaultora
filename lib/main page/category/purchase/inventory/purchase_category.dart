@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
 import 'package:vaultora_inventory_app/main%20page/category/purchase/inventory/filtaring_price.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/purchasemain/purchase_record.dart';
+import 'package:vaultora_inventory_app/main%20page/category/purchase/purchasemain/record_inventory.dart';
 
 class PurchaseCategory extends StatefulWidget {
   final String volume;
@@ -15,7 +15,6 @@ class PurchaseCategory extends StatefulWidget {
 class _PurchaseCategoryState extends State<PurchaseCategory> {
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
@@ -158,7 +157,7 @@ class _PurchaseCategoryState extends State<PurchaseCategory> {
                             ),
                           ),
                         ),
-                       SwipeHint(),
+                       const SwipeHint(),
                       ],
                     ),
                   ),

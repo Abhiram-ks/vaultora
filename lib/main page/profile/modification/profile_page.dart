@@ -4,9 +4,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
-import 'package:vaultora_inventory_app/main%20page/profile/modification/container_decoration.dart';
+import 'package:vaultora_inventory_app/main%20page/profile/modification/inkewell_button_profile.dart';
+import 'package:vaultora_inventory_app/main%20page/profile/modification/blur_container_profile.dart';
 import 'package:vaultora_inventory_app/main%20page/profile/modification/settings.dart';
-import '../../../colors/colors.dart';
+import '../../../Color/colors.dart';
 import '../../../db/functions/adminfunction.dart';
 import '../../category/category_page.dart';
 import '../DialogBox/category_field.dart';
@@ -306,11 +307,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                   DialogBox.showLogoutDialog(context);
                                 },
                               ),
+                            
                             ],
                           ),
                         ),
                       ),
                     ),
+                      SizedBox(height: screenHeight * 0.1),
                   ],
                 ),
               ),

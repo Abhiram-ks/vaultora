@@ -1,11 +1,19 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 
-class HomeAppbar extends StatefulWidget {
+class HomeAppbar extends StatefulWidget implements PreferredSizeWidget {
   const HomeAppbar({super.key});
 
   @override
   State<HomeAppbar> createState() => _HomeAppbarState();
+
+
+  @override
+  Size get preferredSize =>
+      const Size.fromHeight(80.0); 
 }
 
 class _HomeAppbarState extends State<HomeAppbar>
@@ -33,98 +41,82 @@ class _HomeAppbarState extends State<HomeAppbar>
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return AppBar(
+      toolbarHeight: screenHeight * 0.09,
+      backgroundColor: appbarColor,
+      elevation: 0,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: screenHeight * 0.18,
-                width: screenWidth * 0.18,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/welcome/Screenshot_2024-10-22_112608-transformed.png',
+              AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return ShaderMask(
+                    shaderCallback: (bounds) {
+                      return LinearGradient(
+                        colors: const [
+                          Color.fromARGB(255, 149, 149, 149),
+                          Colors.white,
+                          Color.fromARGB(255, 124, 124, 124),
+                        ],
+                        stops: [
+                          _animation.value - 0.2,
+                          _animation.value,
+                          _animation.value + 0.2,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    blendMode: BlendMode.srcIn,
+                    child: Text(
+                      'Vaultora',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: screenWidth * 0.08,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    fit: BoxFit.contain,
-                  ),
-                ),
+                  );
+                },
               ),
-              SizedBox(width: screenWidth * 0.03),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AnimatedBuilder(
-                      animation: _animation,
-                      builder: (context, child) {
-                        return ShaderMask(
-                          shaderCallback: (bounds) {
-                            return LinearGradient(
-                              colors: const [
-                                Color.fromARGB(255, 105, 105, 105),
-                                Colors.white,
-                                Color.fromARGB(255, 119, 119, 119),
-                              ],
-                              stops: [
-                                _animation.value - 0.2,
-                                _animation.value,
-                                _animation.value + 0.2,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ).createShader(bounds);
-                          },
-                          blendMode: BlendMode.srcIn,
-                          child: Text(
-                            'Vaultora',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: screenWidth * 0.09,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
-                      },
+              AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
+                  return ShaderMask(
+                    shaderCallback: (bounds) {
+                      return LinearGradient(
+                        colors: const [
+                          Color.fromARGB(255, 149, 149, 149),
+                          Colors.white,
+                          Color.fromARGB(255, 85, 85, 85),
+                        ],
+                        stops: [
+                          _animation.value - 0.2,
+                          _animation.value,
+                          _animation.value + 0.2,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds);
+                    },
+                    blendMode: BlendMode.srcIn,
+                    child: Text(
+                      'Tech You Can Trust, Prices You’ll Love!',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1, 
+                      overflow: TextOverflow
+                          .ellipsis,
                     ),
-                    const SizedBox(height: 1),
-                    AnimatedBuilder(
-                      animation: _animation,
-                      builder: (context, child) {
-                        return ShaderMask(
-                          shaderCallback: (bounds) {
-                            return LinearGradient(
-                              colors: const [
-                                Color.fromARGB(255, 130, 130, 130),
-                                Colors.white,
-                                Color.fromARGB(255, 125, 125, 125),
-                              ],
-                              stops: [
-                                _animation.value - 0.2,
-                                _animation.value,
-                                _animation.value + 0.2,
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ).createShader(bounds);
-                          },
-                          blendMode: BlendMode.srcIn,
-                          child: Text(
-                            'Tech You Can Trust, Prices You\'ll Love!',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white70,
-                              fontSize: screenWidth * 0.03,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ],
           ),
@@ -133,3 +125,4 @@ class _HomeAppbarState extends State<HomeAppbar>
     );
   }
 }
+

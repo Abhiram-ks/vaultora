@@ -85,6 +85,7 @@ Future<bool> updateUser({
         await getAllUser();
         log("User updated successfully: $username");
          currentUserNotifier.value = updatedUser;
+      // ignore: invalid_use_of_protected_member
       currentUserNotifier.notifyListeners();
       return true;
     }else {
@@ -111,6 +112,7 @@ Future<void> getAllUser() async {
   await initUserDB();
   if (userBox != null && userBox!.isOpen) {
     userListNotifier.value = userBox!.values.toList();
+    // ignore: invalid_use_of_protected_member
     userListNotifier.notifyListeners();
   } else {
     log("Error: userBox is null or not opened");

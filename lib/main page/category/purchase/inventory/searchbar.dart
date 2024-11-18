@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import '../../../../db/functions/addfunction.dart';
+import '../../../../db/models/add/add.dart';
 
 class Searchbarmain extends StatefulWidget {
   final String hintText;
   final VoidCallback onSearchPressed;
-  final VoidCallback onClearPressed;
+  final VoidCallback onFilterPressed;
+  final bool isFilterActive;
 
   const Searchbarmain({
     super.key,
     required this.hintText,
     required this.onSearchPressed,
-    required this.onClearPressed,
+    required this.onFilterPressed,
+    required this.isFilterActive,
   });
 
   @override
@@ -23,11 +26,15 @@ class _SearchbarmainState extends State<Searchbarmain> {
   final TextEditingController _controller = TextEditingController();
 
   void _filterItems(String query) {
-    final filteredItems = addListNotifier.value
-        .where(
-            (item) => item.itemName.toLowerCase().contains(query.toLowerCase()))
-        .toList();
-    addListNotifier.value = filteredItems;
+    if (query.isEmpty) {
+      addListNotifier.value = List.from(originalItemList);
+    } else {
+      final filteredItems = originalItemList
+          .where((item) => item.itemName.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+      addListNotifier.value = filteredItems;
+    }
+    // ignore: invalid_use_of_protected_member
     addListNotifier.notifyListeners();
   }
 
@@ -69,19 +76,14 @@ class _SearchbarmainState extends State<Searchbarmain> {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              _controller.clear();
-              widget.onClearPressed();
-              getAllItems();
-            },
-            child: const Icon(
-              Icons.clear_sharp,
-              size: 26,
+            IconButton(
+            onPressed: widget.onFilterPressed,
+            icon: Icon(
+              widget.isFilterActive ? Icons.close : Icons.filter_alt,
               color: Colors.grey,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 5),
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Container(
@@ -90,9 +92,9 @@ class _SearchbarmainState extends State<Searchbarmain> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ElevatedButton(
-                onPressed: (){
-                   FocusScope.of(context).unfocus();
-                   widget.onSearchPressed();
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  widget.onSearchPressed();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
@@ -119,3 +121,6 @@ class _SearchbarmainState extends State<Searchbarmain> {
     );
   }
 }
+
+
+

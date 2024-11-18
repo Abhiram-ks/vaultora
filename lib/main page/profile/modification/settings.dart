@@ -3,6 +3,7 @@ class ClickableRowItem extends StatelessWidget {
   final IconData icon; 
   final String text;   
   final VoidCallback onTap; 
+  // ignore: prefer_typing_uninitialized_variables
   final bgcolor;
 
   const ClickableRowItem({

@@ -7,10 +7,9 @@ import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
 import 'package:vaultora_inventory_app/main%20page/profile/edit_profile.dart/Edit_style.dart';
 import '../../../db/functions/adminfunction.dart';
-import '../../../login/DecVal/phone_validation.dart';
-
-import '../../../login/DecVal/validation.dart';
-import '../modification/container_decoration.dart';
+import '../../../log/LoginAutotications/phone_validation.dart';
+import '../../../log/LoginAutotications/validation.dart';
+import '../modification/inkewell_button_profile.dart';
 import '../validation/profile_validation.dart';
 
 class EditProfile extends StatefulWidget {
@@ -23,7 +22,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
-
   late TextEditingController _adminNameController;
   late TextEditingController _ventureNameController;
   late TextEditingController _phoneController;
@@ -34,8 +32,7 @@ class _EditProfileState extends State<EditProfile> {
   void initState() {
     super.initState();
     _ventureNameController = TextEditingController(text: widget.userdata.name);
-    _adminNameController =
-        TextEditingController(text: widget.userdata.username);
+    _adminNameController =TextEditingController(text: widget.userdata.username);
     _phoneController = TextEditingController(text: widget.userdata.phone);
     _bioController = TextEditingController(text: widget.userdata.bio);
     _ageController = TextEditingController(text: widget.userdata.age);
@@ -50,29 +47,22 @@ class _EditProfileState extends State<EditProfile> {
         _ageController.text.isEmpty) {
       log("Please fill in all fields.");
       return false;
-    }
-    return true;
+    } return true;
   }
-
   final ImagePicker _picker = ImagePicker();
   String? _selectedImagePath;
-
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      setState(() {
-        _selectedImagePath = image.path;
-      });
+      setState(() {_selectedImagePath = image.path;});
     }
   }
 
   Future<void> _saveProfile() async {  
     if (! _validateInputs() || _formKey.currentState?.validate() != true) {
       log("Validation failed.");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields.')),
-      );
-      return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please fill in all fields.')),
+      );return;
     }
 
     bool updated = await updateUser(
@@ -99,17 +89,16 @@ class _EditProfileState extends State<EditProfile> {
         imagePath: _selectedImagePath ?? widget.userdata.imagePath,
       );
       await userBox!.put(widget.userdata.id, updatedUser);
-
       currentUserNotifier.value = updatedUser;
+
+      // ignore: invalid_use_of_protected_member
       currentUserNotifier.notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Profile updated successfully.')),
-      );
-      Navigator.pop(context);
+      );Navigator.pop(context);
     } else {
       log("Failed to update profile");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Update failed.')),
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Update failed.')),
       );
     }
   }

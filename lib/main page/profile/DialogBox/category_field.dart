@@ -10,7 +10,7 @@ class CategoryBox {
   static void showAddCategoryDialog(BuildContext context, String userId) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     XFile? selectedImage;
 
     showDialog(
@@ -24,7 +24,7 @@ class CategoryBox {
           content: StatefulBuilder(
             builder: (context, setState) {
               return Form(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -127,7 +127,7 @@ class CategoryBox {
                             ),
                           ),
                           onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (formKey.currentState!.validate()) {
                           final categoryName = categoryNameController.text;
                           final imagePath = selectedImage?.path;
 
