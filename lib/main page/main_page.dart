@@ -5,7 +5,7 @@ import 'add/add_main_pages/addpage.dart';
 import 'category/category_page.dart';
 import 'home/homepage.dart';
 import 'profile/modification/profile_page.dart';
-import 'sales/shop_page.dart';
+import 'package:vibration/vibration.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key, required this.userDetails});
@@ -49,9 +49,16 @@ class _HomepageState extends State<Homepage> {
     ]);
   }
 
+  Future<void> _vibrate() async {
+    if (await Vibration.hasVibrator() ?? false) {
+      Vibration.vibrate(duration: 60);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           IndexedStack(
@@ -69,6 +76,7 @@ class _HomepageState extends State<Homepage> {
                   setState(() {
                     _currentIndex = index;
                   });
+                  _vibrate();
                 },
                 itemBuilder: (context, index) {
                   double scale = _currentIndex == index ? 0.7 : 0.5;
@@ -88,6 +96,7 @@ class _HomepageState extends State<Homepage> {
                             setState(() {
                               _currentIndex = index;
                             });
+                            _vibrate(); 
                           },
                           child: Container(
                             width: 60,
@@ -130,5 +139,11 @@ class _HomepageState extends State<Homepage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }

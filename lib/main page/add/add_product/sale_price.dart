@@ -35,7 +35,7 @@ class _FieldDecorationState extends State<SalePrice> {
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0), 
               hintText: widget.hintText,
-              hintStyle: const TextStyle(color: Color.fromARGB(96, 94, 94, 94),fontFamily: 'Poppins',  fontWeight: FontWeight.w400,  ),
+              hintStyle: const TextStyle(color: Color.fromARGB(95, 94, 94, 94),fontFamily: 'Poppins',  fontWeight: FontWeight.w400,  ),
               filled: true,
               fillColor: Colors.transparent, 
               border: OutlineInputBorder(

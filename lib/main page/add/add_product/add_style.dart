@@ -73,61 +73,65 @@ class AddStyle extends StatelessWidget {
                   padding: const EdgeInsets.all(4.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: Container(
-                      height: screenHeight * 0.2,
-                      color: const Color(0xFFEEF2C1),
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            titleText,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 18.0,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                          SizedBox(
-                            height: screenHeight * 0.01,
-                          ),
-                          Text(
-                            descriptionText,
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 95, 95, 95),
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15.0,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                          ),
-                          SizedBox(height: screenHeight * 0.01),
-                          Container(
-                            padding: const EdgeInsets.all(8.0),
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              border: Border.all(
-                                color: const Color.fromARGB(255, 196, 196, 196),
-                                width: 1.5,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              buttonText,
+                    child: Material(
+                      shadowColor: Colors.black,
+                      elevation: 10,
+                      child: Container(
+                        height: screenHeight * 0.2,
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              titleText,
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 16.0,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w400,
+                                fontSize: 18.0,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.01,
+                            ),
+                            Text(
+                              descriptionText,
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 95, 95, 95),
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15.0,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                            SizedBox(height: screenHeight * 0.01),
+                            Container(
+                              padding: const EdgeInsets.all(8.0),
+                              alignment: Alignment.centerLeft,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                border: Border.all(
+                                  color: const Color.fromARGB(255, 196, 196, 196),
+                                  width: 1.5,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                buttonText,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.0,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

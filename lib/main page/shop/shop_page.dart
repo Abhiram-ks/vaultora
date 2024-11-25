@@ -14,10 +14,10 @@ class SalesData extends StatefulWidget {
 class _SalesDataState extends State<SalesData> {
   @override
   Widget build(BuildContext context) {
-        double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      appBar:const MyAppBarTwo(titleText: 'Sales Record'),
+    //     double screenWidth = MediaQuery.of(context).size.width;
+    // double screenHeight = MediaQuery.of(context).size.height;
+    return const Scaffold(
+      appBar: MyAppBarTwo(titleText: 'Sales Record'),
      body: SingleChildScrollView(
        
       ),

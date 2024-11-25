@@ -67,7 +67,7 @@ class _SpecificationState extends State<Specification> {
                       end: Alignment.bottomCenter,
                       colors: [
                         Color.fromARGB(255, 30, 59, 67),
-                        Color.fromARGB(255, 191, 214, 221),
+                        Color.fromARGB(255, 255, 255, 255),
                       ],
                     ),
                   ),
@@ -151,7 +151,7 @@ class _SpecificationState extends State<Specification> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color.fromARGB(255, 191, 214, 221),
+                        Color.fromARGB(255, 255, 255, 255),
                         Color.fromARGB(255, 30, 59, 67),
                       ],
                     ),

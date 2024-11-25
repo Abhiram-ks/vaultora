@@ -4,6 +4,8 @@ import 'package:lottie/lottie.dart';
 import 'package:readmore/readmore.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_main_pages/add_products.dart';
 import '../../../db/models/user/user.dart';
+import '../../profile/DialogBox/category_field.dart';
+import '../../sales/add_sales.dart';
 import '../add_product/appbar.dart';
 
 
@@ -32,7 +34,7 @@ class _AddpageState extends State<Addpage> {
             children: [
               SizedBox(height: screenHeight * 0.024),
               CustomContainer(
-                lottieFile: 'assets/category/add_purchases.json',
+                lottieFile: 'assets/category/truck.json',
                 title: 'Add Product',
                 description: 'This is a description about adding sales and its functionality.',
                 gradientColors1: const [
@@ -46,12 +48,17 @@ class _AddpageState extends State<Addpage> {
                 right: 10.0,
                 bottom: 10.0,
                 lottieSize: 102.0,
-                screen: AddProducts(userDetails: widget.userDetails),
+                onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => 
+                AddProducts(userDetails: widget.userDetails)
+                ));
+                },
+                
               ),
               SizedBox(height: screenHeight * 0.024),
               CustomContainer(
                 lottieFile: 'assets/gif/twoanimation.json',
-                title: 'Add Sales',
+                title: 'Add Category',
                 description: 'This is a description about adding sales and its functionality.',
                 gradientColors1: const[
                   
@@ -66,12 +73,15 @@ class _AddpageState extends State<Addpage> {
                 right: 10.0,
                 bottom: 10.0,
                 lottieSize: 102.0,
-                screen: AddProducts(userDetails: widget.userDetails),
+               onTap: (){
+                  CategoryBox.showAddCategoryDialog(context, widget.userDetails.id);
+               
+                },
               ),
               SizedBox(height: screenHeight * 0.024),
               CustomContainer(
                 lottieFile: 'assets/category/add_sales.json',
-                title: 'Revanue',
+                title: 'Add Sales',
                 description: 'This is a description about adding sales and its functionality.',
                 gradientColors1:const [
                    Color.fromARGB(255, 15, 53, 0),
@@ -84,27 +94,16 @@ class _AddpageState extends State<Addpage> {
                 right: 10.0,
                 bottom: 10.0,
                 lottieSize: 102.0,
-                screen: AddProducts(userDetails: widget.userDetails),
+                onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => 
+                const AddSales(
+
+
+                ),
+                ));
+                },
               ),
               SizedBox(height: screenHeight * 0.024),
-               CustomContainer(
-                lottieFile: 'assets/category/truck.json',
-                title: 'Stock Level',
-                description: 'This is a description about adding sales and its functionality.',
-                gradientColors1:const [
-                  
-                   Color.fromARGB(255, 246, 0, 180),
-                    Color.fromARGB(255, 53, 0, 39),
-                ],
-                gradientColors2: const[
-                   Color.fromARGB(255, 0, 0, 0),
-                  Color.fromARGB(255, 255, 163, 231),
-                ],
-                right: 10.0,
-                bottom: 10.0,
-                lottieSize: 102.0,
-                screen: AddProducts(userDetails: widget.userDetails),
-              ),SizedBox(height: screenHeight*0.12,)
             ],
           ),
         ),
@@ -121,7 +120,7 @@ class CustomContainer extends StatefulWidget {
   final double right;
   final double bottom;
   final double lottieSize;
-  final Widget screen;
+   final VoidCallback onTap;
   final String description; 
 
   const CustomContainer({
@@ -133,7 +132,7 @@ class CustomContainer extends StatefulWidget {
     required this.right,
     required this.bottom,
     required this.lottieSize,
-    required this.screen,
+    required this.onTap,
     required this.description,
   });
 
@@ -160,10 +159,7 @@ class _CustomContainerState extends State<CustomContainer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (ctx) => widget.screen));
-      },
+      onTap: widget.onTap, 
       child: TweenAnimationBuilder(
         duration: const Duration(seconds: 3),
         tween: ColorTween(

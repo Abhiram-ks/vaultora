@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:vaultora_inventory_app/Color/colors.dart';
 import '../../../../db/functions/addfunction.dart';
-import '../../../../db/models/add/add.dart';
+
 
 class Searchbarmain extends StatefulWidget {
   final String hintText;
