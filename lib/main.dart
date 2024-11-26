@@ -18,6 +18,7 @@ void main() async {
   Hive.registerAdapter(CategoryModelAdapter());
   Hive.registerAdapter(AddModelAdapter());
   Hive.registerAdapter(SalesModelAdapter());
+  Hive.registerAdapter(SaleProductAdapter());
   await initUserDB();
   await initCategoryDB();
   await initAddDB();

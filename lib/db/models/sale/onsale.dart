@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart';
 
+import '../add/add.dart';
+
 part 'onsale.g.dart';
 
 
@@ -9,29 +11,27 @@ class SalesModel extends HiveObject {
   final String id;
 
   @HiveField(1)
-  final String date;
-
-  @HiveField(2)
   final String accountName;
 
-  @HiveField(3)
+  @HiveField(2)
   final String address;
 
-  @HiveField(4)
+  @HiveField(3)
   final String phoneNumber;
 
-  @HiveField(5)
+  @HiveField(4)
   final String salesNumber;
 
-  @HiveField(6)
+  @HiveField(5)
   final String totalPrice;
 
-  @HiveField(7)
+  @HiveField(6)
   final List<SaleProduct> saleProduct;
+
+
 
   SalesModel({
     required this.id,
-    required this.date,
     required this.accountName,
     required this.address,
     required this.phoneNumber,
@@ -43,29 +43,17 @@ class SalesModel extends HiveObject {
 
 @HiveType(typeId: 4)
 class SaleProduct extends HiveObject {
-    @HiveField(0)
-  final String id;
-
-  @HiveField(1)
-  final String dropdown;
+  @HiveField(0)
+  final AddModel product;
 
   @HiveField(2)
-  final String product;
-
-  @HiveField(3)
-  final String mrprate;
-
-  @HiveField(4)
   final String count;
 
-  @HiveField(5)
+  @HiveField(3)
   final String price;
 
   SaleProduct({
-    required this.id,
-    required this.dropdown,
     required this.product,
-    required this.mrprate,
     required this.count,
     required this.price,
   });

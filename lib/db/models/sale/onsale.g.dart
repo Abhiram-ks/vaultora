@@ -18,35 +18,32 @@ class SalesModelAdapter extends TypeAdapter<SalesModel> {
     };
     return SalesModel(
       id: fields[0] as String,
-      date: fields[1] as String,
-      accountName: fields[2] as String,
-      address: fields[3] as String,
-      phoneNumber: fields[4] as String,
-      salesNumber: fields[5] as String,
-      saleProduct: (fields[7] as List).cast<SaleProduct>(),
-      totalPrice: fields[6] as String,
+      accountName: fields[1] as String,
+      address: fields[2] as String,
+      phoneNumber: fields[3] as String,
+      salesNumber: fields[4] as String,
+      saleProduct: (fields[6] as List).cast<SaleProduct>(),
+      totalPrice: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, SalesModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.date)
-      ..writeByte(2)
       ..write(obj.accountName)
-      ..writeByte(3)
+      ..writeByte(2)
       ..write(obj.address)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.phoneNumber)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.salesNumber)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.totalPrice)
-      ..writeByte(7)
+      ..writeByte(6)
       ..write(obj.saleProduct);
   }
 
@@ -72,30 +69,21 @@ class SaleProductAdapter extends TypeAdapter<SaleProduct> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SaleProduct(
-      id: fields[0] as String,
-      dropdown: fields[1] as String,
-      product: fields[2] as String,
-      mrprate: fields[3] as String,
-      count: fields[4] as String,
-      price: fields[5] as String,
+      product: fields[0] as AddModel,
+      count: fields[2] as String,
+      price: fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, SaleProduct obj) {
     writer
-      ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.dropdown)
-      ..writeByte(2)
-      ..write(obj.product)
       ..writeByte(3)
-      ..write(obj.mrprate)
-      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.product)
+      ..writeByte(2)
       ..write(obj.count)
-      ..writeByte(5)
+      ..writeByte(3)
       ..write(obj.price);
   }
 

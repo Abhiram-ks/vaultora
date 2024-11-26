@@ -1,6 +1,7 @@
-import 'dart:ffi';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:vaultora_inventory_app/db/models/sale/onsale.dart';
 import 'package:vaultora_inventory_app/main%20page/sales/salefiles/logo_section_decoration.dart';
 import 'package:vaultora_inventory_app/main%20page/sales/salefiles/sales_stack.dart';
 import 'package:vaultora_inventory_app/main%20page/sales/salefiles/textfiled_sale.dart';
@@ -23,34 +24,41 @@ class _AddSalesState extends State<AddSales> {
   final TextEditingController _AddressNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   bool isExpanded = false;
-  String? selectedDiscountType;
-  TextEditingController discountController = TextEditingController();
   ValueNotifier<double> totalAmountNotifier = ValueNotifier<double>(0.0);
-  ValueNotifier<double> discountedAmountNotifier = ValueNotifier<double>(0.0);
 
-  void calculateTotalAmount() {
+
+
+  @override
+  void initState() {
+    super.initState();
+    tempSaleNotifier.addListener(_calculateTotalPrice); 
+  }
+
+  @override
+  void dispose() {
+    tempSaleNotifier.removeListener(_calculateTotalPrice);
+    _BillingNameController.dispose();
+    _AddressNameController.dispose();
+    _phoneController.dispose();
+    totalAmountNotifier.dispose();
+    super.dispose();
+  }
+
+  void _calculateTotalPrice() {
     double total = 0.0;
+
     for (var sale in tempSaleNotifier.value) {
-      total += sale['totalPrice'];
+      String priceString = sale.price.replaceAll('₹', '').trim();
+      double itemPrice = double.tryParse(priceString) ?? 0.0;
+      total += itemPrice;
     }
-    totalAmountNotifier.value = total;
-    applyDiscount();
+
+    if (totalAmountNotifier.value != total) {
+      totalAmountNotifier.value = total; 
+    }
   }
 
-  void applyDiscount() {
-    double totalAmount = totalAmountNotifier.value;
-    double discountedAmount = totalAmount;
-    if (discountController.text.isNotEmpty) {
-      double discountValue = double.tryParse(discountController.text) ?? 0.0;
-      if (selectedDiscountType == "percentage") {
-        discountedAmount = totalAmount - (totalAmount * discountValue / 100);
-      } else if (selectedDiscountType == "fixed") {
-        discountedAmount = totalAmount - discountValue;
-      }
-      discountedAmount = discountedAmount < 0 ? 0 : discountedAmount;
-    }
-    discountedAmountNotifier.value = discountedAmount;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +67,7 @@ class _AddSalesState extends State<AddSales> {
 
     return Scaffold(
       body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             SalesStack(
@@ -106,11 +115,11 @@ class _AddSalesState extends State<AddSales> {
                                     horizontal: screenWidth * 0.05,
                                   ),
                                   child: Form(
-                                   key: _formKey,
+                                    key: _formKey,
                                     child: Column(
                                       children: [
                                         CustomTextFieldsale(
-                                           controller: _BillingNameController,
+                                          controller: _BillingNameController,
                                           hintText: 'Enter Full Name',
                                           labelText: 'Billing Name',
                                           validate: NameValidator.validate,
@@ -120,14 +129,15 @@ class _AddSalesState extends State<AddSales> {
                                           controller: _AddressNameController,
                                           hintText: 'Enter Address',
                                           labelText: 'Billing Address',
-                                            validate: VentureValidator.validate,
+                                          validate: VentureValidator.validate,
                                         ),
                                         const SizedBox(height: 16),
-                                         CustomTextFieldsalePhone(
+                                        CustomTextFieldsalePhone(
                                           controller: _phoneController,
                                           hintText: '',
                                           labelText: 'Phone Number',
-                                           validate: PhoneNumberValidator.validate,
+                                          validate:
+                                              PhoneNumberValidator.validate,
                                         ),
                                         const SizedBox(height: 16)
                                       ],
@@ -151,96 +161,90 @@ class _AddSalesState extends State<AddSales> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.038),
               child: SizedBox(
-                height: screenHeight * 0.52,
-                child: ValueListenableBuilder<List<Map<String, dynamic>>>(
+                height: screenHeight * 0.6,
+                child: ValueListenableBuilder<List<SaleProduct>>(
                   valueListenable: tempSaleNotifier,
-                  builder: (context, tempSales, _) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      calculateTotalAmount();
-                    });
-                    if (tempSales == null || tempSales.isEmpty) {
+                  builder: (context, saleList, child) {
+                    if (saleList.isEmpty) {
                       return const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.shopify, size: 30),
-                            Text("No items added yet."),
+                            Icon(
+                              Icons.shopify,
+                              size: 40,
+                            ),
+                            Text('No items added to sales list!'),
                           ],
                         ),
                       );
                     }
                     return ListView.builder(
-                      itemCount: tempSales.length,
+                      itemCount: saleList.length,
                       itemBuilder: (context, index) {
-                        final sale = tempSales[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                          child: Card(
-                            color: Colors.deepPurple[50],
-                            elevation: 4.0,
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Stack(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${sale['category']} - ${sale['item']}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium,
-                                      ),
-                                      const SizedBox(height: 4.0),
-                                      Text(
-                                        "Stock: ${sale['stockCount']} | Price: ₹${sale['totalPrice']}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                    ],
-                                  ),
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: Container(
-                                      height: screenHeight * 0.05,
-                                      width: screenHeight * 0.05,
-                                      decoration: BoxDecoration(
-                                        color: Colors.lightGreen,
-                                        borderRadius:
-                                            BorderRadius.circular(50.0),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          '${index + 1}',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: screenHeight * 0.02,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 4.0,
-                                    right: 4.0,
-                                    child: IconButton(
-                                      icon: const Icon(
-                                          Icons.delete_forever_rounded),
-                                      onPressed: () {
-                                        tempSales.removeAt(index);
-                                        tempSaleNotifier.value = [...tempSales];
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
+                        final item = saleList[index];
+                        return Dismissible(
+                          direction: DismissDirection.endToStart,
+                          background: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            color: Colors.red[200],
+                            alignment: Alignment.centerRight,
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: const Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                              size: 30,
                             ),
+                          ),
+                          onDismissed: (direction) {
+                            final removedProduct =
+                                tempSaleNotifier.value[index];
+
+                            tempSaleNotifier.value =
+                                List.from(tempSaleNotifier.value)
+                                  ..removeAt(index);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    '${removedProduct.product.itemName} Deleted'),
+                                action: SnackBarAction(
+                                  label: 'Undo',
+                                  textColor: Colors.white,
+                                  onPressed: () {
+                                    tempSaleNotifier.value =
+                                        List.from(tempSaleNotifier.value)
+                                          ..insert(index, removedProduct);
+                                  },
+                                ),
+                                duration: const Duration(seconds: 5),
+                              ),
+                            );
+                          },
+                          key: ValueKey(tempSaleNotifier.value[index]),
+                          child: Column(
+                            children: [
+                              ShowSaleAdded(
+                                titleText: item.product.itemName,
+                                descriptionText: item.product.description,
+                                buttonText: item.product.dropDown,
+                                imagePath: item.product.imagePath,
+                                price: item.price,
+                                badgeText: item.count,
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.015,
+                                child: const Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    '<-- Swipe to delete.      ',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       },
@@ -257,39 +261,15 @@ class _AddSalesState extends State<AddSales> {
               child: Center(
                 child: Column(
                   children: [
-                    DiscountSection(
-                      selectedDiscountType: selectedDiscountType,
-                      discountController: discountController,
-                      onTypeSelected: (value) {
-                        setState(() {
-                          selectedDiscountType = value;
-                          discountController.clear();
-                          applyDiscount();
-                        });
-                      },
-                      onDiscountChanged: () {
-                        applyDiscount();
-                      },
-                    ),
-                    const SizedBox(height: 16),
                     ValueListenableBuilder<double>(
-                      valueListenable: discountedAmountNotifier,
-                      builder: (context, totalAmount, _) {
+                      valueListenable: totalAmountNotifier,
+                      builder: (context, totalAmount, child) {
                         return ActionButtons(
                           addSaleText: 'Add Sale',
                           onAddSalePressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(20),
-                                ),
-                              ),
-                              builder: (BuildContext context) {
-                                return const BottomSheetContent();
-                              },
-                            );
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const MultipleSales(),
+                            ));
                           },
                           checkoutText: '₹ ${totalAmount.toStringAsFixed(2)}',
                           onCheckoutPressed: () {},
@@ -306,6 +286,213 @@ class _AddSalesState extends State<AddSales> {
                       style: TextStyle(fontSize: 10),
                     ),
                   ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ShowSaleAdded extends StatelessWidget {
+  final VoidCallback? onTap;
+  final VoidCallback? onSwipe;
+  final String titleText;
+  final String descriptionText;
+  final String buttonText;
+  final String imagePath;
+  final String price;
+  final String badgeText;
+
+  const ShowSaleAdded({
+    super.key,
+    this.onTap,
+    this.onSwipe,
+    required this.titleText,
+    required this.descriptionText,
+    required this.buttonText,
+    required this.imagePath,
+    required this.price,
+    required this.badgeText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return GestureDetector(
+      onTap: onTap,
+      onHorizontalDragEnd: (details) {
+        if (onSwipe != null) onSwipe!();
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Stack(
+          children: [
+            Container(
+              color: const Color(0xFFE8EDEB),
+              width: double.infinity,
+              height: screenHeight * 0.15,
+              alignment: Alignment.center,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Icon(Icons.shopify),
+                          ),
+                        ),
+                        ClipOval(
+                          child: Container(
+                            width: screenWidth * 0.2,
+                            height: screenWidth * 0.2,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              image: DecorationImage(
+                                image: imagePath.isNotEmpty
+                                    ? FileImage(File(imagePath))
+                                        as ImageProvider
+                                    : const AssetImage(
+                                        'assets/welcome/main image.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Material(
+                          shadowColor: Colors.black,
+                          elevation: 10,
+                          child: Container(
+                            height: screenHeight * 0.14,
+                            color: Colors.white,
+                            padding: const EdgeInsets.all(8.0),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    titleText,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 18.0,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                  SizedBox(height: screenHeight * 0.01),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.local_print_shop),
+                                      SizedBox(width: screenWidth * 0.02),
+                                      const Text(
+                                        'Price',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 95, 95, 95),
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15.0,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                      ),
+                                      SizedBox(width: screenWidth * 0.02),
+                                      Text(
+                                        price,
+                                        style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 95, 95, 95),
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15.0,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: screenHeight * 0.01),
+                                  Text(
+                                    descriptionText,
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 95, 95, 95),
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15.0,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                  ),
+                                  SizedBox(height: screenHeight * 0.01),
+                                  Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    alignment: Alignment.centerLeft,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                      border: Border.all(
+                                        color: const Color.fromARGB(
+                                            255, 196, 196, 196),
+                                        width: 1.5,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      buttonText,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16.0,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 7,
+              right: 7,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+                decoration: BoxDecoration(
+                  color: Colors.lightGreen[300],
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  badgeText,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

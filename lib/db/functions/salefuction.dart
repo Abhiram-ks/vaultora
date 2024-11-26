@@ -1,149 +1,99 @@
 import 'dart:developer';
-
-import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:vaultora_inventory_app/db/models/sale/onsale.dart';
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
-
-ValueNotifier<List<Map<String, dynamic>>> tempSaleNotifier = ValueNotifier([]);
-
-
+ValueNotifier<List<SaleProduct>> tempSaleNotifier = ValueNotifier([]);
 ValueNotifier<List<SalesModel>> salesListNotifier = ValueNotifier([]);
-List<SalesModel> originalSalesList = [];
-Box<SalesModel>? salesBox;
 
-
-ValueNotifier<List<SaleProduct>> saleProductListNotifier = ValueNotifier([]);
-Box<SaleProduct>? saleProductBox;
+late Box<SalesModel> salesBox;
+late Box<int> counterBox;
+int salesInvoiceCounter = 1;
 
 Future<void> initSalesDB() async {
-  if (salesBox == null || !salesBox!.isOpen) {
-    salesBox = await Hive.openBox<SalesModel>('sales_db');
-    log("sales_db box opened");
-  } else {
-    log("sales_db box is already open");
+  if (!Hive.isBoxOpen('salesBox')) {
+    salesBox = await Hive.openBox<SalesModel>('salesBox');
+    log("Sales DB box opened.");
   }
-  if (saleProductBox == null || !saleProductBox!.isOpen) {
-    saleProductBox = await Hive.openBox<SaleProduct>('sale_product_db');
-    log("sale_product_db box opened");
-  } else {
-    log("sale_product_db box is already open");
+  if (!Hive.isBoxOpen('salescounterBox')) {
+    counterBox = await Hive.openBox<int>('salescounterBox');
+    salesInvoiceCounter = counterBox.get('invoiceCounter') ?? 1;
+    log("Counter DB box opened.");
   }
 }
 
-
-Future<bool> addSales({
-  required String id,
-  required String date,
-  required String accountName,
-  required String address,
-  required String phoneNumber,
-  required String salesNumber,
-  required String totalPrice,
-  required List<SaleProduct> saleProducts,
-})async{
+Future<void> addSale(
+ String accountName,
+ String phoneNumber, 
+ String address,
+ String totalPrice,
+ ) async {
+  try {
     await initSalesDB();
 
-    try{
-    
-    for(var product in saleProducts){
-      await saleProductBox!.put(product.id, product); 
+    if (tempSaleNotifier.value.isEmpty) {
+      log("No products added to sale.");
+      return;
     }
 
-     final newSales = SalesModel(
-      id: id,
-      date: date,
+    final newSale = SalesModel(
+      id: "${DateTime.now().microsecondsSinceEpoch}",
       accountName: accountName,
       address: address,
       phoneNumber: phoneNumber,
-      salesNumber: salesNumber,
+      salesNumber: "IFC-$salesInvoiceCounter",
+      saleProduct: List.from(tempSaleNotifier.value),
       totalPrice: totalPrice,
-      saleProduct: saleProducts,
     );
-     await salesBox!.put(id, newSales);
-     await getAllSales();
-    log("Sales added successfully: $id");
-    return true;
-    } catch(e) {
-       log("Error adding sales: $e");
-       return false;
-    }
-}
 
+    tempSaleNotifier.value.clear();
+    await salesBox.put(newSale.id, newSale);
 
+    salesInvoiceCounter++;
+    await counterBox.put('invoiceCounter', salesInvoiceCounter);
 
-Future<bool> updateSale({
-  required String id,
-  String? accountName,
-  String? address,
-  String? phoneNumber,
-}) async {
-  await initSalesDB();
-
-  try {
-    SalesModel? sale = salesBox!.get(id);
-    if (sale != null) {
-      final updatedSale = SalesModel(
-        id: sale.id,
-        date: sale.date,
-        accountName: accountName ?? sale.accountName,
-        address: address ?? sale.address,
-        phoneNumber: phoneNumber ?? sale.phoneNumber,
-        salesNumber: sale.salesNumber,
-        totalPrice: sale.totalPrice,
-        saleProduct: sale.saleProduct,
-      );
-
-      await salesBox!.put(id, updatedSale);
-      await getAllSales();
-      debugPrint("Sale updated successfully.");
-      return true;
-    } else {
-      debugPrint("Sale not found for ID: $id");
-      return false;
-    }
+    await getAllSales();
+    log("Sale added successfully.");
   } catch (e) {
-    debugPrint("Error updating sale: $e");
-    return false;
+    log("Error in addSale: $e");
   }
 }
+
 
 
 Future<void> getAllSales() async {
   await initSalesDB();
-
-  if (salesBox != null && salesBox!.isOpen) {
-    salesListNotifier.value = salesBox!.values.toList();
-    salesListNotifier.notifyListeners();
-  }
+  salesListNotifier.value = salesBox.values.toList();
+  // ignore: invalid_use_of_protected_member
+  salesListNotifier.notifyListeners();
 }
 
 
-Future<void> deleteSale(String id) async {
-  await initSalesDB();
-  final sale = salesBox!.get(id);
-
-
-  if (sale != null) {
-   for (var product in sale.saleProduct) {
-    await saleProductBox!.delete(product.id);
-   }
-
-  await salesBox!.delete(id);
-  await getAllSales();
-  log("Sale and its products deleted successfully.");
-} else {
-   log("Sale not found for ID: $id");
-}
-}
 
 void printAllSales() {
   for (var sale in salesListNotifier.value) {
-    log('Sale: ID: ${sale.id}, Date: ${sale.date}, Account: ${sale.accountName}, Address: ${sale.address}, '
+    log('Sale: ID: ${sale.id}, Account: ${sale.accountName}, Address: ${sale.address}, '
         'Phone: ${sale.phoneNumber}, Sales Number: ${sale.salesNumber}, Total Price: ${sale.totalPrice}');
     for (var product in sale.saleProduct) {
-      log('  Product: ID: ${product.id}, mrprate: ${product.mrprate}, Name: ${product.product}, Count: ${product.count}, Price: ${product.price}');
+      log(', Name: ${product.product}, Count: ${product.count},}');
     }
+  }
+}
+
+Future<void> deleteSale(String id) async {
+  try {
+    await initSalesDB();
+    if (!salesBox.containsKey(id)) {
+      log("Sale not found.");
+      return;
+    }
+
+    await salesBox.delete(id);
+    await getAllSales();
+    log("Sale deleted successfully.");
+  } catch (e) {
+    log("Error deleting sale: $e");
   }
 }
