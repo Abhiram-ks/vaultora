@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,8 +7,8 @@ import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/db/functions/salefuction.dart';
 import 'package:vaultora_inventory_app/db/models/sale/onsale.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_product/appbar.dart';
-import 'package:vaultora_inventory_app/main%20page/sales/salefiles/actions_sale.dart';
-import 'package:vaultora_inventory_app/main%20page/sales/salefiles/snackbars.dart';
+import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/actions_sale.dart';
+import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/snackbars.dart';
 
 import '../../../db/functions/addfunction.dart';
 import '../../../db/models/add/add.dart';

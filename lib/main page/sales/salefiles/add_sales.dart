@@ -1,15 +1,17 @@
-import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/db/models/sale/onsale.dart';
-import 'package:vaultora_inventory_app/main%20page/sales/salefiles/logo_section_decoration.dart';
-import 'package:vaultora_inventory_app/main%20page/sales/salefiles/sales_stack.dart';
-import 'package:vaultora_inventory_app/main%20page/sales/salefiles/textfiled_sale.dart';
-import '../../db/functions/salefuction.dart';
-import '../../log/LoginAutotications/validation.dart';
-import '../../log/logAutetication/phone_validation.dart';
-import 'salefiles/actions_sale.dart';
-import 'salefiles/bottom_sale.dart';
+import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/logo_section_decoration.dart';
+import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/sales_stack.dart';
+import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/success_snackbar.dart';
+import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/textfiled_sale.dart';
+import '../../../db/functions/salefuction.dart';
+import '../../../log/LoginAutotications/validation.dart';
+import '../../../log/logAutetication/phone_validation.dart';
+import '../salebasefiles/actions_sale.dart';
+import 'add_multiple_sale.dart';
+import '../salebasefiles/iteam_dropdown.dart';
 
 class AddSales extends StatefulWidget {
   const AddSales({super.key});
@@ -20,25 +22,23 @@ class AddSales extends StatefulWidget {
 
 class _AddSalesState extends State<AddSales> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _BillingNameController = TextEditingController();
-  final TextEditingController _AddressNameController = TextEditingController();
+  final TextEditingController _billingNameController = TextEditingController();
+  final TextEditingController _addressNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   bool isExpanded = false;
   ValueNotifier<double> totalAmountNotifier = ValueNotifier<double>(0.0);
 
-
-
   @override
   void initState() {
     super.initState();
-    tempSaleNotifier.addListener(_calculateTotalPrice); 
+    tempSaleNotifier.addListener(_calculateTotalPrice);
   }
 
   @override
   void dispose() {
     tempSaleNotifier.removeListener(_calculateTotalPrice);
-    _BillingNameController.dispose();
-    _AddressNameController.dispose();
+    _billingNameController.dispose();
+    _addressNameController.dispose();
     _phoneController.dispose();
     totalAmountNotifier.dispose();
     super.dispose();
@@ -54,11 +54,9 @@ class _AddSalesState extends State<AddSales> {
     }
 
     if (totalAmountNotifier.value != total) {
-      totalAmountNotifier.value = total; 
+      totalAmountNotifier.value = total;
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,14 +117,14 @@ class _AddSalesState extends State<AddSales> {
                                     child: Column(
                                       children: [
                                         CustomTextFieldsale(
-                                          controller: _BillingNameController,
+                                          controller: _billingNameController,
                                           hintText: 'Enter Full Name',
                                           labelText: 'Billing Name',
                                           validate: NameValidator.validate,
                                         ),
                                         const SizedBox(height: 16),
                                         CustomTextFieldsale(
-                                          controller: _AddressNameController,
+                                          controller: _addressNameController,
                                           hintText: 'Enter Address',
                                           labelText: 'Billing Address',
                                           validate: VentureValidator.validate,
@@ -272,7 +270,113 @@ class _AddSalesState extends State<AddSales> {
                             ));
                           },
                           checkoutText: '₹ ${totalAmount.toStringAsFixed(2)}',
-                          onCheckoutPressed: () {},
+                          onCheckoutPressed: () {
+                            if (tempSaleNotifier.value.isEmpty) {
+                              CustomSnackBar.show(
+                                context: context,
+                                message: 'Add items before proceeding.',
+                              );
+                              return;
+                            }
+
+                            if (_formKey.currentState!.validate()) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('Confirm Checkout'),
+                                  content: const Text(
+                                      'Are you sure you want to proceed to checkout?'),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: Colors.transparent,
+                                            foregroundColor: Colors.black,
+                                            side: const BorderSide(
+                                                color: Colors.black,
+                                                width: 1.5),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 12),
+                                          ),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              String billingName =
+                                                  _billingNameController.text
+                                                      .trim();
+                                              String address =
+                                                  _addressNameController.text
+                                                      .trim();
+                                              String phoneNumber =
+                                                  _phoneController.text.trim();
+                                              String totalPrice =
+                                                  totalAmountNotifier.value
+                                                      .toStringAsFixed(2);
+
+                                              await addSale(
+                                                  billingName,
+                                                  phoneNumber,
+                                                  address,
+                                                  totalPrice);
+                                              log("Sale added: Name: $billingName, Address: $address, Phone: $phoneNumber, Total Price: ₹$totalPrice");
+
+                                              _billingNameController.clear();
+                                              _addressNameController.clear();
+                                              _phoneController.clear();
+                                              totalAmountNotifier.value = 0.0;
+                                              
+                                              SuccessfullyMessage.show(
+                                                context: context,
+                                                message:
+                                                    'Sale added successfully!',
+                                              );
+                                              Navigator.of(context).pop();
+                                               Navigator.of(context).pop();
+                                            } else {
+                                              CustomSnackBar.show(
+                                                context: context,
+                                                message:
+                                                    'Please fill all the required fields.',
+                                              );
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.black,
+                                            foregroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 12),
+                                          ),
+                                          child: const Text('Confirm'),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              );
+                            } else {
+                              CustomSnackBar.show(
+                                context: context,
+                                message: 'Please fill all the required fields.',
+                              );
+                            }
+                          },
                         );
                       },
                     ),
@@ -292,261 +396,6 @@ class _AddSalesState extends State<AddSales> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class ShowSaleAdded extends StatelessWidget {
-  final VoidCallback? onTap;
-  final VoidCallback? onSwipe;
-  final String titleText;
-  final String descriptionText;
-  final String buttonText;
-  final String imagePath;
-  final String price;
-  final String badgeText;
-
-  const ShowSaleAdded({
-    super.key,
-    this.onTap,
-    this.onSwipe,
-    required this.titleText,
-    required this.descriptionText,
-    required this.buttonText,
-    required this.imagePath,
-    required this.price,
-    required this.badgeText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return GestureDetector(
-      onTap: onTap,
-      onHorizontalDragEnd: (details) {
-        if (onSwipe != null) onSwipe!();
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Stack(
-          children: [
-            Container(
-              color: const Color(0xFFE8EDEB),
-              width: double.infinity,
-              height: screenHeight * 0.15,
-              alignment: Alignment.center,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Icon(Icons.shopify),
-                          ),
-                        ),
-                        ClipOval(
-                          child: Container(
-                            width: screenWidth * 0.2,
-                            height: screenWidth * 0.2,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              image: DecorationImage(
-                                image: imagePath.isNotEmpty
-                                    ? FileImage(File(imagePath))
-                                        as ImageProvider
-                                    : const AssetImage(
-                                        'assets/welcome/main image.jpg'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Material(
-                          shadowColor: Colors.black,
-                          elevation: 10,
-                          child: Container(
-                            height: screenHeight * 0.14,
-                            color: Colors.white,
-                            padding: const EdgeInsets.all(8.0),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    titleText,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18.0,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                  SizedBox(height: screenHeight * 0.01),
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.local_print_shop),
-                                      SizedBox(width: screenWidth * 0.02),
-                                      const Text(
-                                        'Price',
-                                        style: TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 95, 95, 95),
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15.0,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                      ),
-                                      SizedBox(width: screenWidth * 0.02),
-                                      Text(
-                                        price,
-                                        style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 95, 95, 95),
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15.0,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: screenHeight * 0.01),
-                                  Text(
-                                    descriptionText,
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 95, 95, 95),
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15.0,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                  ),
-                                  SizedBox(height: screenHeight * 0.01),
-                                  Container(
-                                    padding: const EdgeInsets.all(8.0),
-                                    alignment: Alignment.centerLeft,
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 196, 196, 196),
-                                        width: 1.5,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      buttonText,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16.0,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 7,
-              right: 7,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen[300],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  badgeText,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DiscountSection extends StatelessWidget {
-  final String? selectedDiscountType;
-  final Function(String?) onTypeSelected;
-  final TextEditingController discountController;
-  final VoidCallback onDiscountChanged;
-
-  const DiscountSection({
-    super.key,
-    required this.selectedDiscountType,
-    required this.onTypeSelected,
-    required this.discountController,
-    required this.onDiscountChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DropdownButton<String>(
-          hint: const Text('Apply Discount'),
-          value: selectedDiscountType,
-          items: const [
-            DropdownMenuItem(
-                value: "percentage", child: Text("Percentage (%)")),
-            DropdownMenuItem(value: "fixed", child: Text("Fixed (₹)")),
-          ],
-          onChanged: (value) {
-            onTypeSelected(value);
-          },
-        ),
-        if (selectedDiscountType != null) ...[
-          TextField(
-            controller: discountController,
-            onChanged: (_) => onDiscountChanged(),
-            decoration: InputDecoration(
-              labelText: selectedDiscountType == "percentage"
-                  ? "Discount (%)"
-                  : "Discount (₹)",
-              border: const OutlineInputBorder(),
-            ),
-            keyboardType: TextInputType.number,
-          ),
-        ],
-      ],
     );
   }
 }

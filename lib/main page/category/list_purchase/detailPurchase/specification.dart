@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/detailPurchase/actionbuttons_specification.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/detailPurchase/category_specification.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/detailPurchase/delete_edit.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/detailPurchase/edit_product.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/detailPurchase/stock_level.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/detailPurchase/textspecification.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/actionbuttons_specification.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/category_specification.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/delete_edit.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/edit_product.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/stock_level.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/textspecification.dart';
 
 import '../../../../db/functions/addfunction.dart';
 import '../../../../db/models/add/add.dart';

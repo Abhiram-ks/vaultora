@@ -33,17 +33,29 @@ class CustomSnackBar {
   static void showErrorSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('No product selected!'),
-        backgroundColor: Colors.grey,
-        duration: const Duration(seconds: 1),
+        content:const Row(
+          children: [
+             Text(
+              'No product selected!',
+              style: TextStyle(color: Colors.black),
+            ),
+             SizedBox(width: 24,),
+            Icon(Icons.warning,color: Colors.red,)
+          ],
+        ),
+         backgroundColor: Colors.red[50],
         behavior: SnackBarBehavior.floating,
+        elevation: 10,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.all(10.0),
+        duration: const Duration(seconds: 1),
         action: SnackBarAction(
           label: 'OK',
-          onPressed: () {},
+          textColor: Colors.black, 
+          onPressed: () {
+          },
         ),
       ),
     );

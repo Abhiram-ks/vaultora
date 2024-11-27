@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
-import 'package:readmore/readmore.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_main_pages/add_products.dart';
 import '../../../db/models/user/user.dart';
 import '../../profile/DialogBox/category_field.dart';
-import '../../sales/add_sales.dart';
+import '../../sales/salefiles/add_sales.dart';
 import '../add_product/appbar.dart';
 import '../add_product/readmore.dart';
 

@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
 
 import '../../add/add_main_pages/add_products.dart';
-import '../../category/purchase/purchasemain/record_inventory.dart';
+import '../../category/list_purchase/purchasemain/record_inventory.dart';
 import '../../profile/DialogBox/category_field.dart';
 import '../../profile/modification/profile_page.dart';
 

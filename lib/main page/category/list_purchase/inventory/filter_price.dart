@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/inventory/clear_filter.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/inventory/clear_filter.dart';
 
 import '../../../../db/functions/addfunction.dart';
 import '../../../../db/functions/categoryfunction.dart';

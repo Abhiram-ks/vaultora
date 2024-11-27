@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
 
-import '../../shop/shop_page.dart';
+import 'sale_record.dart';
 
 class SalesCategory extends StatefulWidget {
   final String volule;

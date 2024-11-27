@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/purchasemain/record_inventory.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/purchasemain/record_inventory.dart';
 import 'package:vaultora_inventory_app/main%20page/home/inventory_card/inventory_card.dart';
 
 class InventoryHome extends StatelessWidget {

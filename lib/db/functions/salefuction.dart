@@ -55,7 +55,8 @@ Future<void> addSale(
     await counterBox.put('invoiceCounter', salesInvoiceCounter);
 
     await getAllSales();
-    log("Sale added successfully.");
+    log(newSale.saleProduct.toString());
+  
   } catch (e) {
     log("Error in addSale: $e");
   }

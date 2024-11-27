@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/inventory/filtaring_price.dart';
-import 'package:vaultora_inventory_app/main%20page/category/purchase/purchasemain/record_inventory.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/inventory/filtaring_price.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_purchase/purchasemain/record_inventory.dart';
 
 class PurchaseCategory extends StatefulWidget {
   final String volume;

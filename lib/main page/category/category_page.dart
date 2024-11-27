@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_product/appbar.dart';
-import 'package:vaultora_inventory_app/main%20page/category/categoryStyle/sales_category.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_sale/sales_category.dart';
 
 import '../../Color/colors.dart';
 import '../../db/functions/addfunction.dart';
 import '../home/home_page_models/page_view.dart';
-import 'purchase/inventory/purchase_category.dart';
+import 'list_purchase/inventory/purchase_category.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
