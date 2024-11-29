@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pinch_to_zoom_scrollable/pinch_to_zoom_scrollable.dart';
 import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/actionbuttons_specification.dart';
 import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/category_specification.dart';
 import 'package:vaultora_inventory_app/main%20page/category/list_purchase/detailPurchase/delete_edit.dart';
@@ -115,24 +116,26 @@ class _SpecificationState extends State<Specification> {
                               height: screenWidth * 0.27,
                               child: CircleAvatar(
                                 backgroundColor: Colors.transparent,
-                                child: ClipOval(
-                                  child: widget.item.imagePath.isNotEmpty
-                                      ? Image.file(
-                                          File(value.imagePath),
-                                          fit: BoxFit.cover,
-                                          width: screenWidth * 0.27,
-                                          height: screenWidth * 0.27,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return const Icon(Icons.error);
-                                          },
-                                        )
-                                      : Image.asset(
-                                          'assets/welcome/main image.jpg',
-                                          fit: BoxFit.cover,
-                                          width: screenWidth * 0.27,
-                                          height: screenWidth * 0.27,
-                                        ),
+                                child: PinchToZoomScrollableWidget(
+                                  child: ClipOval(
+                                    child: widget.item.imagePath.isNotEmpty
+                                        ? Image.file(
+                                            File(value.imagePath),
+                                            fit: BoxFit.cover,
+                                            width: screenWidth * 0.27,
+                                            height: screenWidth * 0.27,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return const Icon(Icons.error);
+                                            },
+                                          )
+                                        : Image.asset(
+                                            'assets/welcome/main image.jpg',
+                                            fit: BoxFit.cover,
+                                            width: screenWidth * 0.27,
+                                            height: screenWidth * 0.27,
+                                          ),
+                                  ),
                                 ),
                               ),
                             ),

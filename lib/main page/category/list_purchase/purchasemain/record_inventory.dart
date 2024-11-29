@@ -63,6 +63,7 @@ class _PurchaseRecordState extends State<PurchaseRecord> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const MyAppBarTwo(titleText: 'Inventory Record'),
       body: GestureDetector(
         onTap: _closeFilter,
@@ -99,7 +100,7 @@ class _PurchaseRecordState extends State<PurchaseRecord> {
                                   'No records found !',
                                   style: GoogleFonts.kodchasan(
                                     fontSize: 16,
-                                    color: Colors.grey,
+                                    color: const Color.fromARGB(255, 129, 129, 129),
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),

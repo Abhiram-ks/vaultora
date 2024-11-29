@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
 
-import 'sale_record.dart';
+import 'sale_class/list_screen.dart/sale_record.dart';
 
 class SalesCategory extends StatefulWidget {
   final String volule;
@@ -116,7 +116,7 @@ class _SalesCategoryState extends State<SalesCategory> {
                               child: Row(
                                 children: [
                                   
-                               const Icon(Icons.description_outlined),
+                               const Icon(Icons.description_outlined,color: Colors.black,),
                                 const SizedBox(width: 5,),
                                 Text(
                             'Volume',

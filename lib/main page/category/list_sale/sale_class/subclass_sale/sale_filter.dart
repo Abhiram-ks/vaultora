@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:vaultora_inventory_app/main%20page/category/list_sale/clear_bottom_sale.dart';
+import 'package:intl/intl.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_sale/sale_class/subclass_sale/clear_bottom_sale.dart';
+import 'package:vaultora_inventory_app/main%20page/category/list_sale/sale_class/subclass_sale/date_invoice.dart';
 
 class SaleFilter extends StatefulWidget {
   final VoidCallback onClose;
   final VoidCallback onClearFilters;
+  final Function(DateTime?, DateTime?) onApplyFilters;
   final double screenWidth;
   final double screenHeight;
 
@@ -12,6 +14,7 @@ class SaleFilter extends StatefulWidget {
     super.key,
     required this.onClose,
     required this.onClearFilters,
+    required this.onApplyFilters,
     required this.screenWidth,
     required this.screenHeight,
   });
@@ -22,9 +25,15 @@ class SaleFilter extends StatefulWidget {
 }
 
 class _SaleFilterState extends State<SaleFilter> {
+  DateTime? _selectedStartDate;
+  DateTime? _selectedEndDate;
 
-
-  
+  void _updateSelectedDates(DateTime startDate, DateTime endDate) {
+    setState(() {
+      _selectedStartDate = startDate;
+      _selectedEndDate = endDate;
+    });
+  }
 
   void _showClearFilterBottomSheet() {
     showModalBottomSheet(
@@ -33,20 +42,28 @@ class _SaleFilterState extends State<SaleFilter> {
       builder: (context) {
         return ClearFilterBottomSaleSheet(
           onClear: () {
-        
+            setState(() {
+              _selectedStartDate = null;
+              _selectedEndDate = null;
+            });
           },
         );
       },
     );
   }
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    // double screenHeight = MediaQuery.of(context).size.height;
+
+    String startDateText = _selectedStartDate != null
+        ? DateFormat('dd/MM/yyyy').format(_selectedStartDate!)
+        : 'Start Date';
+    String endDateText = _selectedEndDate != null
+        ? DateFormat('dd/MM/yyyy').format(_selectedEndDate!)
+        : 'End Date';
+
     return Positioned(
       top: widget.screenHeight * 0.10 + 10,
       left: widget.screenWidth * 0.03,
@@ -86,55 +103,50 @@ class _SaleFilterState extends State<SaleFilter> {
                   ),
                 ],
               ),
-              SizedBox(height: widget.screenHeight * 0.02),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Categories',
-                  style: GoogleFonts.kodchasan(
-                    fontSize: 14,
-                    color: Colors.grey[800],
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              SizedBox(height: widget.screenHeight * 0.01),
-             
-              SizedBox(height: widget.screenHeight * 0.01),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Price Range',
-                  style: GoogleFonts.kodchasan(
-                    fontSize: 14,
-                    color: Colors.grey[800],
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              SizedBox(height: widget.screenHeight * 0.01),
-              Column(
+              Row(
                 children: [
-                 
-                  SizedBox(height: widget.screenHeight * 0.02),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      icon: const Icon(Icons.calendar_month,
+                          color: Colors.black, size: 28),
+                      onPressed: () {
+                        showBottomSheet(
+                            backgroundColor: Colors.white,
+                            context: context,
+                            builder: (context) {
+                              return DateRangePickerPopup(
+                                selectedStartDate: _selectedStartDate,
+                                selectedEndDate: _selectedEndDate,
+                                onDateRangeSelected: _updateSelectedDates,
+                              );
+                            });
+                      },
+                    ),
+                  ),
+                  SizedBox(width: screenWidth * 0.05),
+                  Text(startDateText),
+                  SizedBox(width: screenWidth * 0.05),
+                  Text(endDateText),
                 ],
               ),
               SizedBox(height: widget.screenHeight * 0.01),
               Row(
                 children: [
                   const SizedBox(width: 10),
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                       
-                      ],
+                      children: [],
                     ),
                   ),
                   const SizedBox(width: 15),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: () {
+                        widget.onApplyFilters(
+                            _selectedStartDate, _selectedEndDate);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                         foregroundColor: Colors.white,

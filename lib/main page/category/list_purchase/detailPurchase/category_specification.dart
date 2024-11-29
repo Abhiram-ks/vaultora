@@ -28,7 +28,7 @@ class CategorySpecification extends StatelessWidget {
           child: Row(
             children: [
               const SizedBox(width: 15),
-              const Icon(Icons.headset),
+              const Icon(Icons.headset,color: Colors.black,),
               const SizedBox(width: 8),
               Text(
                 volume,

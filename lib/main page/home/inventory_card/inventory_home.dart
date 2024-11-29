@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/main%20page/category/list_purchase/purchasemain/record_inventory.dart';
 import 'package:vaultora_inventory_app/main%20page/home/inventory_card/inventory_card.dart';
 
+import '../../category/list_sale/sale_class/list_screen.dart/sale_record.dart';
+
 class InventoryHome extends StatelessWidget {
   const InventoryHome({super.key});
 
@@ -36,7 +38,7 @@ class InventoryHome extends StatelessWidget {
       SizedBox(width: screenWidth * 0.03),
       InventoryFunction(
         onTap: () {
-          
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const SalesData(),));
         },
         imagePath: 'assets/gif/twoanimation.json',
         title: 'Sales',

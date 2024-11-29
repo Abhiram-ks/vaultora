@@ -1,11 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:vaultora_inventory_app/db/models/sale/onsale.dart';
 import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/logo_section_decoration.dart';
 import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/sales_stack.dart';
 import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/success_snackbar.dart';
 import 'package:vaultora_inventory_app/main%20page/sales/salebasefiles/textfiled_sale.dart';
+import '../../../db/functions/addfunction.dart';
 import '../../../db/functions/salefuction.dart';
 import '../../../log/LoginAutotications/validation.dart';
 import '../../../log/logAutetication/phone_validation.dart';
@@ -27,12 +29,29 @@ class _AddSalesState extends State<AddSales> {
   final TextEditingController _phoneController = TextEditingController();
   bool isExpanded = false;
   ValueNotifier<double> totalAmountNotifier = ValueNotifier<double>(0.0);
+  Map<AddModel, double> temporaryStock = {};
 
   @override
   void initState() {
     super.initState();
     tempSaleNotifier.addListener(_calculateTotalPrice);
+    initializeStock(); 
   }
+
+  void initializeStock() {
+    for (var product in addBox!.values) {
+      double count = double.tryParse(product.itemCount) ?? 0;
+      temporaryStock[product] = count;
+    }
+  }
+
+void updateTemporaryStock(AddModel product, double quantity) {
+  setState(() {
+    if (temporaryStock.containsKey(product)) {
+      temporaryStock[product] = (temporaryStock[product]! - quantity).clamp(0.0, double.infinity);
+    }
+  });
+}
 
   @override
   void dispose() {
@@ -69,12 +88,14 @@ class _AddSalesState extends State<AddSales> {
         child: Column(
           children: [
             SalesStack(
+              text: 'Add Sale Products',
               ther: Padding(
                 padding: const EdgeInsets.only(top: 94.0),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: screenWidth * 0.038),
                   child: Card(
+                    color: Colors.white,
                     child: Material(
                       elevation: 2,
                       borderRadius: BorderRadius.circular(15),
@@ -172,6 +193,7 @@ class _AddSalesState extends State<AddSales> {
                             Icon(
                               Icons.shopify,
                               size: 40,
+                              color: Colors.black,
                             ),
                             Text('No items added to sales list!'),
                           ],
@@ -198,8 +220,16 @@ class _AddSalesState extends State<AddSales> {
                             ),
                           ),
                           onDismissed: (direction) {
-                            final removedProduct =
-                                tempSaleNotifier.value[index];
+                              final removedProduct = tempSaleNotifier.value[index];
+  final product = removedProduct.product;
+  final quantity = removedProduct.count;
+
+
+ if (temporaryStock.containsKey(product)) {
+    double numericQuantity = double.tryParse(quantity) ?? 0.0;
+    temporaryStock[product] = temporaryStock[product]! + numericQuantity;
+  }
+
 
                             tempSaleNotifier.value =
                                 List.from(tempSaleNotifier.value)
@@ -266,7 +296,12 @@ class _AddSalesState extends State<AddSales> {
                           addSaleText: 'Add Sale',
                           onAddSalePressed: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const MultipleSales(),
+                              builder: (context) => MultipleSales(
+                                onAdd: (AddModel product, double quality) {
+                                  updateTemporaryStock(product, quality);
+                                },
+                                temporaryStock: temporaryStock,
+                              ),
                             ));
                           },
                           checkoutText: '₹ ${totalAmount.toStringAsFixed(2)}',
@@ -283,6 +318,7 @@ class _AddSalesState extends State<AddSales> {
                               showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
+                                  backgroundColor: Colors.white,
                                   title: const Text('Confirm Checkout'),
                                   content: const Text(
                                       'Are you sure you want to proceed to checkout?'),
@@ -337,14 +373,14 @@ class _AddSalesState extends State<AddSales> {
                                               _addressNameController.clear();
                                               _phoneController.clear();
                                               totalAmountNotifier.value = 0.0;
-                                              
+
                                               SuccessfullyMessage.show(
                                                 context: context,
                                                 message:
                                                     'Sale added successfully!',
                                               );
                                               Navigator.of(context).pop();
-                                               Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
                                             } else {
                                               CustomSnackBar.show(
                                                 context: context,

@@ -54,7 +54,7 @@ class ShowSaleAdded extends StatelessWidget {
                           padding: EdgeInsets.all(8.0),
                           child: Align(
                             alignment: Alignment.topLeft,
-                            child: Icon(Icons.shopify),
+                            child: Icon(Icons.shopify,color: Colors.black,),
                           ),
                         ),
                         ClipOval(
@@ -108,7 +108,7 @@ class ShowSaleAdded extends StatelessWidget {
                                   SizedBox(height: screenHeight * 0.01),
                                   Row(
                                     children: [
-                                      const Icon(Icons.local_print_shop),
+                                      const Icon(Icons.local_print_shop,color: Colors.black,),
                                       SizedBox(width: screenWidth * 0.02),
                                       const Text(
                                         'Price',

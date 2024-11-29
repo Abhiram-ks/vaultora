@@ -35,6 +35,7 @@ class EditStyle extends StatelessWidget {
                Icon(
                 icon,
                 size: 28,
+                color: Colors.black,
               ),
               SizedBox(width: screenWidth*0.05,),
               Flexible(

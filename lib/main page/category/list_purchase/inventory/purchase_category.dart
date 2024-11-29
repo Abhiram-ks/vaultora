@@ -133,7 +133,7 @@ class _PurchaseCategoryState extends State<PurchaseCategory> {
                               padding: const EdgeInsets.symmetric(horizontal: 3.0),
                               child: Row(
                                 children: [
-                                  const Icon(Icons.description_outlined),
+                                  const Icon(Icons.description_outlined,color: Colors.black,),
                                   const SizedBox(width: 5),
                                   Text(
                                     'Volume',

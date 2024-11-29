@@ -103,7 +103,7 @@ class FieldText extends StatelessWidget {
                    const Text(
                   ' *',
                   style:  TextStyle(
-                    color: Colors.red,
+                    color: Color.fromARGB(255, 255, 17, 0),
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),

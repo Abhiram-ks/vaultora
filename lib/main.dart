@@ -36,7 +36,9 @@ class MyApp extends StatelessWidget {
       title: 'Vaultora',
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.light,
+       primarySwatch: Colors.blue,
+       brightness: Brightness.light,
+       scaffoldBackgroundColor: Colors.white,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: const SplashScreen(),

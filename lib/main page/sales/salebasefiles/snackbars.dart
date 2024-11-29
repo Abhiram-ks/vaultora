@@ -43,7 +43,7 @@ class CustomSnackBar {
             Icon(Icons.warning,color: Colors.red,)
           ],
         ),
-         backgroundColor: Colors.red[50],
+          backgroundColor: Colors.red[50],
         behavior: SnackBarBehavior.floating,
         elevation: 10,
         shape: RoundedRectangleBorder(

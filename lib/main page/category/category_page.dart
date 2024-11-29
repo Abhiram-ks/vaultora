@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:vaultora_inventory_app/db/functions/salefuction.dart';
 import 'package:vaultora_inventory_app/main%20page/add/add_product/appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/category/list_sale/sales_category.dart';
 
@@ -27,6 +28,7 @@ class _CategoryPageState extends State<CategoryPage> {
   void initState() {
     super.initState();
      getAllItems(); 
+     getAllSales();
 
     _pageTimer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage < 4) {
@@ -148,7 +150,12 @@ final List<Map<String, dynamic>> pageData = [
                  ),
                
                 SizedBox(height: screenHeight * 0.02),
-                const SalesCategory(volule: '782',),
+                ValueListenableBuilder<int>(valueListenable: saleCountNotifier,
+                builder:  (context, count, child){
+                  return SalesCategory(volule: count.toString(),);
+                },
+                )
+                ,
           ],
         ),),
     ),

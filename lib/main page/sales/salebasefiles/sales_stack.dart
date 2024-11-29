@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SalesStack extends StatelessWidget {
+  final String text;
   final Widget ther;
 
-  const SalesStack({super.key, required this.ther});
+  const SalesStack({super.key, required this.ther,required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,8 @@ class SalesStack extends StatelessWidget {
               ),
             ),
             centerTitle: true,
-            title: const Text(
-              'Add Sale Products',
+            title:  Text(
+              text,
               style: TextStyle(color: Colors.white),
             ),
             elevation: 0.1,

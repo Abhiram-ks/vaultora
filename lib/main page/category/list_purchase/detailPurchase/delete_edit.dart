@@ -39,7 +39,7 @@ class DeleteConfirmationBottomSheet {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: Text(
-                  "Are you sure you want to delete the $itemName item?",
+                  "Are you sure you want to delete the $itemName data?",
                   style: const TextStyle(fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
