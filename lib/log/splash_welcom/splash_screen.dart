@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import '../../db/models/user/user.dart';
 import '../../main page/main_page.dart';
 import '../landscren/screen_land.dart';
@@ -87,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen>
     double subtitleFontSize = screenWidth * 0.04;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: black,
       body: Stack(
         children: [
           SizedBox(
@@ -113,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ShaderMask(
                   shaderCallback: (bounds) {
                     return LinearGradient(
-                      colors: const [Colors.red, Colors.white],
+                      colors:  [redColor, whiteColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       stops: [
@@ -125,7 +126,7 @@ class _SplashScreenState extends State<SplashScreen>
                   child: Text(
                     'Vaultora',
                     style: GoogleFonts.poppins(
-                      color: Colors.white,
+                      color: whiteColor,
                       fontSize: titleFontSize,
                       fontWeight: FontWeight.w600,
                     ),
@@ -140,7 +141,7 @@ class _SplashScreenState extends State<SplashScreen>
                     'for efficient operations.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                      color: Colors.white,
+                      color: whiteColor,
                       fontSize: subtitleFontSize,
                       fontWeight: FontWeight.w200,
                     ),
@@ -157,7 +158,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: Text(
                 '${(_controller.value * 100).toInt()}%',
                 style: GoogleFonts.poppins(
-                  color: Colors.white,
+                  color: whiteColor,
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),

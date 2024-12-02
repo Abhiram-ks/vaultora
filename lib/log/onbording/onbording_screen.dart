@@ -36,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: transParent,
       body: Stack(
         children: [
         const BgimageRegisterLogin(),
@@ -70,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     height: 10,width: _currentIndex == index ? 25 : 10,
                     margin: const EdgeInsets.symmetric(horizontal: 5),
                     decoration: BoxDecoration(
-                      color: _currentIndex == index ? Colors.blue : Colors.grey,
+                      color: _currentIndex == index ? Colors.blue : grey,
                       borderRadius: BorderRadius.circular(5),
                     ),
                   );

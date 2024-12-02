@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../db/functions/categoryfunction.dart';
-import '../../add/add_product/check_out.dart';
+import '../../add/productfiles_sub/check_out.dart';
 
 class EditBottomSheet extends StatefulWidget {
   final String id;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 
 class CenteredImageWithText extends StatefulWidget {
   final String imagePath;
@@ -63,10 +64,10 @@ class _CenteredImageWithTextState extends State<CenteredImageWithText>
                 return ShaderMask(
                   shaderCallback: (bounds) {
                     return LinearGradient(
-                      colors: const [
-                        Color.fromARGB(255, 170, 170, 170),
-                        Colors.white,
-                        Color.fromARGB(255, 166, 166, 166),
+                      colors:  [
+                        const Color.fromARGB(255, 170, 170, 170),
+                        whiteColor,
+                        const Color.fromARGB(255, 166, 166, 166),
 
                       ],
                       stops: [
@@ -86,7 +87,7 @@ class _CenteredImageWithTextState extends State<CenteredImageWithText>
                 style: GoogleFonts.roboto(
                   fontSize: screenWidth * 0.045,
                   fontWeight: FontWeight.w300,
-                  color: Colors.white,
+                  color: whiteColor,
                 ),
                 textAlign: TextAlign.center,
               ),

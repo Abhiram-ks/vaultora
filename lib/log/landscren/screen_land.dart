@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/log/landscren/land_four.dart';
 import 'land_one.dart';
 import 'land_three.dart';
@@ -26,10 +27,10 @@ class _LandingScreenState extends State<LandingScreen> {
       body: LiquidSwipe(
         pages: pages,
         enableLoop: false, 
-        slideIconWidget: const Icon(
+        slideIconWidget: Icon(
           Icons.arrow_back_ios,
           size: 30,
-          color: Colors.white,
+          color:whiteColor,
         ),
         waveType: WaveType.liquidReveal,
         fullTransitionValue: 600,

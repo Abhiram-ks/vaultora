@@ -50,7 +50,7 @@ class DialogBox {
                       child: SizedBox(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: textColor1,
+                            backgroundColor: black,
                           ),
                           onPressed: () async {
                             await logout(context);

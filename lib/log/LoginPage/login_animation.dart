@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 
 class ShaderText extends StatelessWidget {
   final String text;
@@ -22,10 +23,10 @@ class ShaderText extends StatelessWidget {
         return ShaderMask(
           shaderCallback: (bounds) {
             return LinearGradient(
-              colors: const [
-                Color.fromARGB(255, 58, 58, 58),
-                Colors.white,
-                Color.fromARGB(255, 100, 100, 100),
+              colors:  [
+                const Color.fromARGB(255, 58, 58, 58),
+                whiteColor,
+              const  Color.fromARGB(255, 100, 100, 100),
               ],
               stops: [
                 animation.value - 0.2,
@@ -39,7 +40,7 @@ class ShaderText extends StatelessWidget {
           child: Text(
             text,
             style: GoogleFonts.poppins(
-              color: Colors.white,
+              color: whiteColor,
               fontSize: fontSize,
               fontWeight: FontWeight.w600,
             ),

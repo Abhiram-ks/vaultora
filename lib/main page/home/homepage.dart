@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
           effect: ExpandingDotsEffect(
             dotHeight: 8,
             dotWidth: 8,
-            activeDotColor: textColor1,
+            activeDotColor: black,
             dotColor: Colors.grey,
           ),
         ),
@@ -178,7 +178,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         SizedBox(height: screenHeight * 0.024),
-        SizedBox(height: screenHeight * 0.01),
         ValueListenableBuilder<List<CategoryModel>>(
           valueListenable: categoryListNotifier,
           builder: (context, categories, child) {

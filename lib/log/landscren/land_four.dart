@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/log/splash_welcom/welcome_screen.dart';
 
 import '../Login_autotications/orline_dec.dart';
@@ -60,12 +61,12 @@ class _ScreenFourState extends State<ScreenFour> {
               width: size.width * 0.8,
               child: Row(
                 children: [
-                  const Text(
+                  Text(
                     'Let’s get start',
                     style: TextStyle(
                       fontFamily: 'Courier',
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: black,
                     ),
                   ),
                   const Spacer(),

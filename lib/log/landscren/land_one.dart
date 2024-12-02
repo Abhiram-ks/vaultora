@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/log/landscren/land_four.dart';
 
 
@@ -18,8 +19,8 @@ class _ScreenOneState extends State<ScreenOne> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
         final screenOne = ScreenColor(colors: [
-     Colors.white,
-     Colors.white,
+     whiteColor,
+     whiteColor,
     ]);
     return Scaffold(
       body: Stack(
@@ -34,7 +35,7 @@ class _ScreenOneState extends State<ScreenOne> {
                   fit: BoxFit.contain,
                   height: size.height * 0.6,
                 ),
-              const  Row(
+              Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
@@ -44,7 +45,7 @@ class _ScreenOneState extends State<ScreenOne> {
                         '"Time is what we want most, but what we use worst."',
                         textAlign: TextAlign.center, 
                         style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: black,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
                           fontFamily: 'Courier',
@@ -77,12 +78,12 @@ class _ScreenOneState extends State<ScreenOne> {
                     ),
                   ),
                   const Spacer(),
-                 const Text(
+                 Text(
                     'swipe->',
                     style: TextStyle(
                       fontFamily: 'Courier',
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: black,
                     ),
                   ),
                 ],

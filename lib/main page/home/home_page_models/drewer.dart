@@ -4,9 +4,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
+import 'package:vaultora_inventory_app/main%20page/Inventory/sales_record/sale_class/list_screen.dart/sale_record.dart';
+import 'package:vaultora_inventory_app/main%20page/add/ADD/add_sale/add_sales.dart';
+import 'package:vaultora_inventory_app/main%20page/add/ADD/logistic_stock/logistic.dart';
+import 'package:vaultora_inventory_app/main%20page/add/ADD/revanue/revanue.dart';
 
-import '../../add/add_main_pages/add_products.dart';
-import '../../category/list_purchase/purchasemain/record_inventory.dart';
+import '../../add/ADD/add_product/add_products.dart';
+import '../../Inventory/product_record/record_product/record_inventory.dart';
 import '../../profile/DialogBox/category_field.dart';
 import '../../profile/modification/profile_page.dart';
 
@@ -17,6 +21,7 @@ class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key, required this.userDetails});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AppDrawerState createState() => _AppDrawerState();
 }
 
@@ -173,21 +178,21 @@ class _AppDrawerState extends State<AppDrawer> with SingleTickerProviderStateMix
                             CustomListTile(
                           iconData: Icons.shopify_sharp,
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddProducts(userDetails: widget.userDetails,),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const AddSales(),));
                           },
                           text: 'Add sales',
                         ),SizedBox(height: screenHeight*0.004,),
                            CustomListTile(
                           iconData: Icons.bar_chart_rounded,
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddProducts(userDetails: widget.userDetails,),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const RevanuePage(),));
                           },
                           text: 'Revanue',
                         ),SizedBox(height: screenHeight*0.004,),
                            CustomListTile(
                           iconData: Icons.manage_search_rounded,
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddProducts(userDetails: widget.userDetails,),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const LogisticPage()));
                           },
                           text: 'Stock Level',
                         ),SizedBox(height: screenHeight*0.004,),
@@ -240,7 +245,7 @@ class _AppDrawerState extends State<AppDrawer> with SingleTickerProviderStateMix
                          CustomListTile(
                           iconData: Icons.monetization_on,
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PurchaseRecord(),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SalesData(),));
                           },
                           text: 'Sales Data',
                         ),SizedBox(height: screenHeight*0.004,),

@@ -1,11 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
-import 'add/add_main_pages/addpage.dart';
-import 'category/category_page.dart';
+import 'package:vaultora_inventory_app/main%20page/add/ADD/addpage/addpage.dart';
+
+import 'Inventory/category_page.dart';
 import 'home/homepage.dart';
 import 'profile/modification/profile_page.dart';
 import 'package:vibration/vibration.dart';
+
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key, required this.userDetails});
@@ -27,13 +29,6 @@ class _HomepageState extends State<Homepage> {
     Icons.add,
     Icons.shopping_cart,
     Icons.person,
-  ];
-
-  final List<String> texts = [
-    "Home",
-    "Add",
-    "Category",
-    "Profile",
   ];
 
   final List<Widget> _pages = [];
@@ -96,35 +91,40 @@ class _HomepageState extends State<Homepage> {
                             setState(() {
                               _currentIndex = index;
                             });
-                            _vibrate(); 
+                            _vibrate();
                           },
-                          child: Container(
-                            width: 60,
-                            height: 60,
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            decoration: BoxDecoration(
-                              boxShadow: _currentIndex == index
-                                  ? [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.2),
-                                        offset: const Offset(0, 2),
-                                        blurRadius: 10,
-                                        spreadRadius: 1,
-                                      ),
-                                    ]
-                                  : [],
-                              shape: BoxShape.circle,
-                              color: _currentIndex == index
-                                  ? Colors.white
-                                  : const Color.fromRGBO(184, 182, 182, 0.4),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                icons[index],
+                          child: Tooltip(
+                            message: index == 1
+                                ? "Revenue and Stock Scroll"
+                                : "Navigate",
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              decoration: BoxDecoration(
+                                boxShadow: _currentIndex == index
+                                    ? [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          offset: const Offset(0, 2),
+                                          blurRadius: 10,
+                                          spreadRadius: 1,
+                                        ),
+                                      ]
+                                    : [],
+                                shape: BoxShape.circle,
                                 color: _currentIndex == index
-                                    ? const Color(0xFF8C8C8C)
-                                    : Colors.white,
-                                size: _currentIndex == index ? 35 : 25,
+                                    ? Colors.white
+                                    : const Color.fromRGBO(184, 182, 182, 0.4),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  icons[index],
+                                  color: _currentIndex == index
+                                      ? const Color(0xFF8C8C8C)
+                                      : Colors.white,
+                                  size: _currentIndex == index ? 35 : 25,
+                                ),
                               ),
                             ),
                           ),

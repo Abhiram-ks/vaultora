@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-Color textColor1 = const Color.fromARGB(180, 0, 0, 0);
+Color black =  Colors.black;
 Color textColor2 = const Color.fromARGB(213, 255, 255, 255);
-Color redColor = const Color.fromARGB(180, 255, 0, 0);
+Color redColor = Colors.red;
 Color greyColor = const Color.fromARGB(255, 58, 58, 58);
-Color appbarColor = const Color.fromARGB(255, 29, 66, 77);
+Color appbarColor = Colors.white;
 Color whiteColor = Colors.white;
+Color grey = Colors.grey;
+Color green = Colors.green;
 Color transParent = Colors.transparent;

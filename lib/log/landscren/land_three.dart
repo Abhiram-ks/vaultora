@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 
 import '../Login_autotications/orline_dec.dart';
 
@@ -27,7 +28,7 @@ class ScreenThree extends StatelessWidget {
                   fit: BoxFit.contain,
                   height: size.height * 0.6,
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
@@ -37,7 +38,7 @@ class ScreenThree extends StatelessWidget {
                         '"orders, and alerts for efficient operations."',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: black,
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
                           fontFamily: 'Courier',
@@ -55,9 +56,9 @@ class ScreenThree extends StatelessWidget {
             left: size.width * 0.1,
             child: SizedBox(
               width: size.width * 0.8,
-              child:const Row(
+              child:Row(
                 children: [
-                   Spacer(),
+                   const Spacer(),
                
                    Align(
                     alignment: Alignment.bottomRight,
@@ -66,7 +67,7 @@ class ScreenThree extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Courier',
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: black,
                       ),
                     ),
                   ),

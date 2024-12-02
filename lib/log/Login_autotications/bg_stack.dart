@@ -16,7 +16,7 @@ class BgimageRegisterLogin extends StatelessWidget {
           ),
         ),
         Container(
-          color:textColor1.withOpacity(0.73),
+          color:black.withOpacity(0.73),
         ),
       ],
     );

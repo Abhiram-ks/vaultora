@@ -32,7 +32,7 @@ class CustomPhonenumber extends StatelessWidget {
             color: whiteColor.withOpacity(0.12),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Colors.transparent,
+              color:  transParent,
               width: 1.5,
             ),
           ),

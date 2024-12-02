@@ -48,7 +48,7 @@ class _CheckScreenState extends State<CheckScreen>
             ),
           ),
           Container(
-            color: Colors.black.withOpacity(0.83),
+            color: black.withOpacity(0.83),
           ),
           Positioned.fill(
               child: Column(
@@ -75,7 +75,7 @@ class _CheckScreenState extends State<CheckScreen>
                       items: [
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
+                            color: whiteColor.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding: EdgeInsets.all(screenWidth * 0.01),
@@ -87,7 +87,7 @@ class _CheckScreenState extends State<CheckScreen>
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
+                            color: whiteColor.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding: EdgeInsets.all(screenWidth * 0.01),
@@ -99,7 +99,7 @@ class _CheckScreenState extends State<CheckScreen>
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
+                            color: whiteColor.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           padding: EdgeInsets.all(screenWidth * 0.01),
@@ -123,7 +123,7 @@ class _CheckScreenState extends State<CheckScreen>
                   return ShaderMask(
                     shaderCallback: (bounds) {
                       return LinearGradient(
-                        colors:const[Color.fromARGB(255, 58, 58, 58), Colors.white, Color.fromARGB(255, 100, 100, 100)],
+                        colors:[const Color.fromARGB(255, 58, 58, 58), whiteColor, const Color.fromARGB(255, 100, 100, 100)],
                         stops: [
                           _animation.value - 0.2,
                           _animation.value,
@@ -139,7 +139,7 @@ class _CheckScreenState extends State<CheckScreen>
                 child: Text(
                   'Vaultora',
                   style: GoogleFonts.poppins(
-                    color: Colors.white,
+                    color: whiteColor,
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
                   ),
@@ -181,10 +181,10 @@ class _CheckScreenState extends State<CheckScreen>
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
-                        child: const Text(
+                        child:  Text(
                           'Sign Up',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: whiteColor,
                               fontSize: 16,
                               fontWeight: FontWeight.w600),
                         ),
@@ -199,9 +199,9 @@ class _CheckScreenState extends State<CheckScreen>
                   Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: screenWidth * 0.1)),
-                  const Text(
+                   Text(
                     'Already have an account?',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: whiteColor),
                   ),
                   GestureDetector(
                     onTap: () {

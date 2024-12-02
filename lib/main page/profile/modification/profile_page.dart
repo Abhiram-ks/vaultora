@@ -9,7 +9,7 @@ import 'package:vaultora_inventory_app/main%20page/profile/modification/blur_con
 import 'package:vaultora_inventory_app/main%20page/profile/modification/settings.dart';
 import '../../../Color/colors.dart';
 import '../../../db/functions/adminfunction.dart';
-import '../../category/category_page.dart';
+import '../../Inventory/category_page.dart';
 import '../DialogBox/category_field.dart';
 import '../DialogBox/dialog_box.dart';
 import '../edit_profile.dart/edit_profille.dart';
@@ -279,7 +279,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ClickableRowItem(
                                 icon: Icons.category_sharp,
                                 text: 'Add Category',
-                                bgcolor: textColor1,
+                                bgcolor: black,
                                 onTap: () {
                                   CategoryBox.showAddCategoryDialog(context, widget.userDetails.id);
                                 },

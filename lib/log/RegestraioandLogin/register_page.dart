@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
         : screenHeight * 0.09;
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: transParent,
       body: Stack(
         children: [
           const BgimageRegisterLogin(),
@@ -142,7 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 _agreeToTerms.value = newValue!;
                                 setState(() => _errorText = null);
                               },
-                              activeColor: value ? Colors.blue : Colors.red,
+                              activeColor: value ? Colors.blue : redColor,
                             ),const Text(
                               'I agree to the ',style: TextStyle(color: Colors.white54),
                             ),GestureDetector(
@@ -164,8 +164,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             _errorText!,
-                            style: const TextStyle(
-                                color: Colors.red, fontSize: 10),
+                            style: TextStyle(
+                                color: redColor, fontSize: 10),
                           ),
                         ),
                       ),
@@ -177,10 +177,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (_validateAndSubmit()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: const Text(
+                                content:  Text(
                                   'Registering...',
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
+                                      color: whiteColor, fontSize: 16),
                                 ),
                                 backgroundColor: Colors.blueAccent,
                                 behavior: SnackBarBehavior.floating,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/log/LoginPage/login_animation.dart';
 import '../../db/models/user/user.dart';
 import '../../main page/main_page.dart';
@@ -86,7 +87,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     double subtitleFontSize = screenWidth * 0.04;
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: transParent,
       body: Stack(
         children: [
           const BgimageRegisterLogin(),
@@ -117,7 +118,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       child: Text(
                         'Tech You Can Trust, Prices You\'ll Love!',
                         style: GoogleFonts.poppins(
-                          color: Colors.grey,fontSize: subtitleFontSize,fontWeight: FontWeight.w600,
+                          color: grey,fontSize: subtitleFontSize,fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -138,7 +139,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         alignment: Alignment.centerRight,
                         child: Text(
                           _emailError,
-                          style:const TextStyle(color: Colors.red, fontSize: 12),
+                          style: TextStyle(color: redColor, fontSize: 12),
                         ),
                       ),SizedBox(height: screenHeight * 0.03),
                     PasswordField(
@@ -150,7 +151,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       Align(alignment: Alignment.centerRight,
                         child: Text(
                           _passwordError,
-                          style:const TextStyle(color: Colors.red, fontSize: 12),
+                          style: TextStyle(color:redColor, fontSize: 12),
                         ),
                       ), SizedBox(height: screenHeight * 0.07),
                     SizedBox(
@@ -161,9 +162,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                           backgroundColor: const Color(0xFF3451FF),
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20),),
-                        ),child: const Text('Login',
+                        ),child:  Text('Login',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: whiteColor,
                             fontSize: 16,fontWeight: FontWeight.w600,
                           ),
                         ),

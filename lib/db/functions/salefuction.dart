@@ -53,6 +53,7 @@ Future<void> addSale(
       totalPrice: totalPrice,
     );
 
+      await updateProductStocks(List.from(tempSaleNotifier.value));
     tempSaleNotifier.value.clear();
     await salesBox.put(newSale.id, newSale);
 
@@ -65,7 +66,53 @@ Future<void> addSale(
   } catch (e) {
     log("Error in addSale: $e");
   }
+ }
+
+Future<void> updateProductStocks(List<SaleProduct> soldProducts) async {
+  await initAddDB(); // Ensure the addBox is initialized
+  
+  for (final soldProduct in soldProducts) {
+    final productId = soldProduct.product.id; // Get the product ID
+    final quantityToSubtract = int.tryParse(soldProduct.count) ?? 0; // Parse count as integer
+    
+    if (quantityToSubtract <= 0) {
+      log("Invalid quantity for product $productId: $quantityToSubtract");
+      continue;
+    }
+
+    final existingProduct = addBox?.get(productId);
+
+    if (existingProduct != null) {
+      final currentStock = int.tryParse(existingProduct.itemCount) ?? 0;
+
+      final updatedStock = currentStock - quantityToSubtract;
+
+      if (updatedStock < 0) {
+        log("Stock cannot be negative for product $productId. Current stock: $currentStock, Requested: $quantityToSubtract");
+        continue;
+      }
+
+      await updateItem(
+        id: existingProduct.id,
+        itemName: existingProduct.itemName,
+        description: existingProduct.description,
+        itemCount: updatedStock.toString(), 
+        mrp: existingProduct.mrp,
+        purchaseRate: existingProduct.purchaseRate,
+        dropDown: existingProduct.dropDown,
+        imagePath: existingProduct.imagePath,
+      );
+
+      log("Stock updated for product $productId. New stock: $updatedStock");
+    } else {
+      log("Product with ID $productId not found.");
+    }
+  }
+
+  await getAllItems();
+  log("All stocks updated successfully after sale.");
 }
+
 
 Future<bool> updateSale({
   required String id,
@@ -101,11 +148,19 @@ Future<bool> updateSale({
     log("Stack trace: $stackTrace");
     return false;
   }
+
+
+ }
+ void printAllSales() {
+  for (var sale in salesListNotifier.value) {
+    log('Sale: ID: ${sale.id}, Account: ${sale.accountName}, Address: ${sale.address}, '
+        'Phone: ${sale.phoneNumber}, Sales Number: ${sale.salesNumber}, Total Price: ${sale.totalPrice}');
+    for (var product in sale.saleProduct) {
+      log(', Name: ${product.product}, Count: ${product.count},}');
+    }
+  }
 }
-
-
-
-
+ 
 Future<void> getAllSales() async {
   await initSalesDB();
   if(addBox != null && addBox!.isOpen){
@@ -118,19 +173,6 @@ Future<void> getAllSales() async {
     log("Error: SalesBox is null or not opened");
   }
 } 
-
-
-
-
-void printAllSales() {
-  for (var sale in salesListNotifier.value) {
-    log('Sale: ID: ${sale.id}, Account: ${sale.accountName}, Address: ${sale.address}, '
-        'Phone: ${sale.phoneNumber}, Sales Number: ${sale.salesNumber}, Total Price: ${sale.totalPrice}');
-    for (var product in sale.saleProduct) {
-      log(', Name: ${product.product}, Count: ${product.count},}');
-    }
-  }
-}
 
 Future<void> deleteSale(String id) async {
   try {

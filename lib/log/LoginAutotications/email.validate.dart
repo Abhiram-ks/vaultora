@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/log/LoginAutotications/validation.dart';
 
 class EmailField extends StatefulWidget {
@@ -27,16 +28,16 @@ class _EmailFieldState extends State<EmailField> {
         labelText: widget.labelText,
         hintText: widget.hintText,
         filled: true,
-        fillColor: Colors.white.withOpacity(0.1),
-        labelStyle: const TextStyle(color: Colors.white),
+        fillColor: whiteColor.withOpacity(0.1),
+        labelStyle:  TextStyle(color: whiteColor),
         hintStyle: const TextStyle(color: Colors.white54),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
         ),
       ),
-      style: const TextStyle(
-        color: Colors.white,
+      style:  TextStyle(
+        color: whiteColor,
         fontFamily: 'Poppins',
         fontWeight: FontWeight.w400,
       ),
