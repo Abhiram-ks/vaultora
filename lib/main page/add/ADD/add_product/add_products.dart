@@ -18,6 +18,7 @@ import '../../productfiles_sub/drowp_down.dart';
 
 class AddProducts extends StatefulWidget {
   final UserModel userDetails;
+
   const AddProducts({super.key,required this.userDetails});
 
   @override

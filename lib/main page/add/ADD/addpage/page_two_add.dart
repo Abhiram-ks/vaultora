@@ -43,7 +43,7 @@ class AddProductPage extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => AddProducts(userDetails: userDetails),
+                    builder: (context) =>  AddProducts(userDetails: userDetails,),
                   ),
                 );
               },

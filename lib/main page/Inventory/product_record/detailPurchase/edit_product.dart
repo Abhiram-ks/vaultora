@@ -88,7 +88,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       log('Update details');
       final updatedItems = AddModel(
           id: widget.item.id,
-          userid: widget.item.userid,
+          userid:widget.item.userid,
           itemName: _itemNameController.text,
           description: _descriptionController.text,
           purchaseRate: _purchasePriceController.text,

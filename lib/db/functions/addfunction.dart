@@ -6,6 +6,7 @@ import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:flutter/foundation.dart';
 
 
+
 ValueNotifier<int> itemCountNotifier = ValueNotifier(0);
 ValueNotifier<AddModel?> currentiteamNotifier = ValueNotifier<AddModel?>(null);
 ValueNotifier<List<AddModel>> addListNotifier = ValueNotifier([]);

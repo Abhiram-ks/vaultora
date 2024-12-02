@@ -171,7 +171,7 @@ class _AppDrawerState extends State<AppDrawer> with SingleTickerProviderStateMix
                         CustomListTile(
                           iconData: Icons.shopping_bag_sharp,
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddProducts(userDetails: widget.userDetails,),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AddProducts(userDetails:widget.userDetails,),));
                           },
                           text: 'Add  product',
                         ),SizedBox(height: screenHeight*0.004,),
