@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/sub_record_screen/clear_filter.dart';
 
 import '../../../../db/functions/addfunction.dart';
 import '../../../../db/functions/categoryfunction.dart';
-import '../../../../db/models/add/add.dart';
 import '../../../../db/models/category/catalog.dart';
 
 class FilterDropdown extends StatefulWidget {

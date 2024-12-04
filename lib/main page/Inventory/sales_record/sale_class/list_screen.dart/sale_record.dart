@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/db/functions/salefuction.dart';
-import 'package:vaultora_inventory_app/db/models/sale/onsale.dart';
+import 'package:vaultora_inventory_app/db/models/sales/onsale.dart';
 import 'package:vaultora_inventory_app/main%20page/add/productfiles_sub/appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/sales_record/sale_class/list_screen.dart/details_sale_page.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/sales_record/sale_class/subclass_sale/clear_bottom_sale.dart';

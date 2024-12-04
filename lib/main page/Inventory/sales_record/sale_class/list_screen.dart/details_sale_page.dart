@@ -4,7 +4,7 @@ import 'package:vaultora_inventory_app/main%20page/Inventory/sales_record/sale_c
 import 'package:intl/intl.dart';
 import 'package:vaultora_inventory_app/main%20page/add/salefiles_sub/success_snackbar.dart';
 import '../../../../../db/functions/salefuction.dart';
-import '../../../../../db/models/sale/onsale.dart';
+import '../../../../../db/models/sales/onsale.dart';
 import '../../../../add/salefiles_sub/iteam_dropdown.dart';
 import '../../../product_record/detailPurchase/actionbuttons_specification.dart';
 import '../../../product_record/detailPurchase/delete_edit.dart';

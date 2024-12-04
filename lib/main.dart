@@ -5,7 +5,7 @@ import 'package:vaultora_inventory_app/db/functions/addfunction.dart';
 import 'package:vaultora_inventory_app/db/functions/salefuction.dart';
 import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
-import 'package:vaultora_inventory_app/db/models/sale/onsale.dart';
+import 'package:vaultora_inventory_app/db/models/sales/onsale.dart';
 import 'db/functions/adminfunction.dart';
 import 'db/functions/categoryfunction.dart';
 import 'db/models/user/user.dart';

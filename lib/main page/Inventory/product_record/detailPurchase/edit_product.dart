@@ -4,13 +4,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
-import 'package:vaultora_inventory_app/main%20page/add/productfiles_sub/check_out.dart';
+import 'package:vaultora_inventory_app/db/models/add/add.dart';
+import 'package:vaultora_inventory_app/main%20page/ADD/productfiles_sub/check_out.dart';
+import 'package:vaultora_inventory_app/main%20page/add/productfiles_sub/digitfiled.dart';
+import 'package:vaultora_inventory_app/main%20page/add/productfiles_sub/drop_down.dart';
+import 'package:vaultora_inventory_app/main%20page/add/productfiles_sub/filed_decoration.dart';
 
 import '../../../../db/functions/addfunction.dart';
-import '../../../../db/models/add/add.dart';
-import '../../../add/productfiles_sub/digitfiled.dart';
-import '../../../add/productfiles_sub/drowp_down.dart';
-import '../../../add/productfiles_sub/field_decoration.dart';
+
 import '../../../profile/edit_profile.dart/edit_style.dart';
 
 class CustomBottomSheet extends StatefulWidget {

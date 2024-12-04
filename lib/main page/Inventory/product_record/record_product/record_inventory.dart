@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:vaultora_inventory_app/main%20page/add/productfiles_sub/appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/sub_record_screen/filter_price.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/sub_record_screen/searchbar.dart';
 import '../../../../db/functions/addfunction.dart';
-import '../../../../db/models/add/add.dart';
 import '../../../add/productfiles_sub/add_style.dart';
 import 'specification.dart';
 import '../sub_record_screen/clear_filter.dart';

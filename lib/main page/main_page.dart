@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
-import 'package:vaultora_inventory_app/main%20page/add/ADD/addpage/addpage.dart';
+import 'package:vaultora_inventory_app/main%20page/add/addfiles/addpage/addpage.dart';
 
 import 'Inventory/category_page.dart';
 import 'home/homepage.dart';

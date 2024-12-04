@@ -6,7 +6,7 @@ import 'package:vaultora_inventory_app/db/models/user/user.dart';
 import 'package:vaultora_inventory_app/main%20page/home/actions/action_popup.dart';
 import 'package:vaultora_inventory_app/main%20page/home/actions/update_category.dart';
 import 'package:vaultora_inventory_app/main%20page/home/home_page_models/create_card.dart';
-import 'package:vaultora_inventory_app/main%20page/home/home_page_models/drewer.dart';
+import 'package:vaultora_inventory_app/main%20page/home/home_page_models/drewer/drewer.dart';
 import 'package:vaultora_inventory_app/main%20page/home/home_page_models/home_appbar.dart';
 import 'package:vaultora_inventory_app/main%20page/home/home_page_models/page_view.dart';
 import 'package:vaultora_inventory_app/main%20page/home/inventory_card/inventory_home.dart';
@@ -184,7 +184,9 @@ class _HomePageState extends State<HomePage> {
             return categories.isEmpty
                 ? const Padding(
                     padding: EdgeInsets.only(top: 10.0),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: Center(child: CircularProgressIndicator(
+                      color: Color.fromARGB(255, 29, 66, 77),
+                    )),
                   )
                 : Padding(
                     padding: const EdgeInsets.only(top: 1.0),

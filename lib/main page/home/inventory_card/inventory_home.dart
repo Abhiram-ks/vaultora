@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/record_product/record_inventory.dart';
-import 'package:vaultora_inventory_app/main%20page/add/ADD/logistic_stock/logistic.dart';
+import 'package:vaultora_inventory_app/main%20page/add/logistic_stock/logistic.dart';
 import 'package:vaultora_inventory_app/main%20page/home/inventory_card/inventory_card.dart';
 
 import '../../Inventory/sales_record/sale_class/list_screen.dart/sale_record.dart';

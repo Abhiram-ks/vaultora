@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:hive/hive.dart';
 import 'package:vaultora_inventory_app/db/functions/addfunction.dart';
-import 'package:vaultora_inventory_app/db/models/sale/onsale.dart';
+import 'package:vaultora_inventory_app/db/models/sales/onsale.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -13,6 +13,8 @@ late Box<SalesModel> salesBox;
 late Box<int> counterBox;
 int salesInvoiceCounter = 1;
 List<SalesModel> originalSalesList = []; 
+
+
 
 
 Future<void> initSalesDB() async {
@@ -69,11 +71,11 @@ Future<void> addSale(
  }
 
 Future<void> updateProductStocks(List<SaleProduct> soldProducts) async {
-  await initAddDB(); // Ensure the addBox is initialized
+  await initAddDB(); 
   
   for (final soldProduct in soldProducts) {
-    final productId = soldProduct.product.id; // Get the product ID
-    final quantityToSubtract = int.tryParse(soldProduct.count) ?? 0; // Parse count as integer
+    final productId = soldProduct.product.id; 
+    final quantityToSubtract = int.tryParse(soldProduct.count) ?? 0; 
     
     if (quantityToSubtract <= 0) {
       log("Invalid quantity for product $productId: $quantityToSubtract");
@@ -166,6 +168,7 @@ Future<void> getAllSales() async {
   if(addBox != null && addBox!.isOpen){
     originalSalesList = salesBox.values.toList();
     salesListNotifier.value = List.from(originalSalesList);
+
       // ignore: invalid_use_of_protected_member
     salesListNotifier.notifyListeners();
     saleCountNotifier.value = salesBox.length;

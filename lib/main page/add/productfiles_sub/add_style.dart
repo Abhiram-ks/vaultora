@@ -50,7 +50,7 @@ class AddStyle extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Align(
                           alignment: Alignment.topLeft,
-                          child: Icon(Icons.shopping_bag_rounded,color: black),
+                          child: Icon(Icons.shopping_bag_rounded, color: black),
                         ),
                       ),
                       ClipOval(
@@ -62,7 +62,8 @@ class AddStyle extends StatelessWidget {
                             image: DecorationImage(
                               image: imagePath.isNotEmpty
                                   ? FileImage(File(imagePath)) as ImageProvider
-                                  : const AssetImage('assets/welcome/main image.jpg'),
+                                  : const AssetImage(
+                                      'assets/welcome/main image.jpg'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -119,7 +120,8 @@ class AddStyle extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
                                   border: Border.all(
-                                    color: const Color.fromARGB(255, 196, 196, 196),
+                                    color: const Color.fromARGB(
+                                        255, 196, 196, 196),
                                     width: 1.5,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -149,4 +151,3 @@ class AddStyle extends StatelessWidget {
     );
   }
 }
-

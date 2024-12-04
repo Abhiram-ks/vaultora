@@ -36,7 +36,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 class MyAppBarTwo extends StatelessWidget implements PreferredSizeWidget {
   final String titleText;
 
-  const MyAppBarTwo({
+  const  MyAppBarTwo({
     super.key,
     required this.titleText,
   });

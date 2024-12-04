@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinch_to_zoom_scrollable/pinch_to_zoom_scrollable.dart';
+import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/detailPurchase/actionbuttons_specification.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/detailPurchase/category_specification.dart';
 import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/detailPurchase/delete_edit.dart';
@@ -11,7 +12,6 @@ import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/deta
 import 'package:vaultora_inventory_app/main%20page/Inventory/product_record/detailPurchase/textspecification.dart';
 
 import '../../../../db/functions/addfunction.dart';
-import '../../../../db/models/add/add.dart';
 
 class Specification extends StatefulWidget {
   final AddModel item;

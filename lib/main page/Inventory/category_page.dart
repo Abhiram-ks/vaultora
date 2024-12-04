@@ -57,7 +57,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-final List<Map<String, dynamic>> pageData = [
+ final List<Map<String, dynamic>> pageData = [
       {
         'image': 'assets/listimage/image3.jpg',
         'title': 'Real-time Tracking',

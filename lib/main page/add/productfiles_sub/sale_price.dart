@@ -51,4 +51,3 @@ class _FieldDecorationState extends State<SalePrice> {
   }
 }
 
-
