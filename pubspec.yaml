@@ -55,7 +55,6 @@ dependencies:
   vibration: ^2.0.1
   data_table_2: ^2.5.16
   tab_container: ^3.5.3
-  graphic: ^2.5.0
   fl_chart: ^0.69.2
 
 dev_dependencies:

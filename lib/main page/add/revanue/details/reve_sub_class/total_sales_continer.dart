@@ -68,7 +68,7 @@ class BlurredBackgroundCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Icon(
                Icons.assignment_turned_in,
-              color: const Color.fromARGB(255, 29, 66, 77).withOpacity(0.6 ),
+              color: const Color.fromARGB(255, 117, 155, 166).withOpacity(0.6 ),
               size: 60,
             ),
           ),

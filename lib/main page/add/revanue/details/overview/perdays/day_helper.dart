@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:intl/intl.dart';
 import 'package:vaultora_inventory_app/db/functions/salefuction.dart';
 
@@ -43,7 +46,6 @@ Future<Map<String, dynamic>> getTodayAndPreviousComparison() async {
   };
 }
 
-//helper for sales of the day
 Future<int> getTodaySalesCount() async {
   await initSalesDB();
 
@@ -59,112 +61,80 @@ Future<int> getTodaySalesCount() async {
   return count;
 }
 
-
-Future<Map<String, dynamic>> groupSalesByProduct(List<SalesModel> salesList) async {
-  Map<String, dynamic> groupedSales = {};
-
-  for (var sale in salesList) {
-    for (var product in sale.saleProduct) {
-      String productName = product.product.itemName;
-      int count = int.parse(product.count);
-      double totalSale = double.parse(product.price) * count;
-
-      if (groupedSales.containsKey(productName)) {
-        groupedSales[productName]['total'] += totalSale;
-        groupedSales[productName]['count'] += count;
-      } else {
-        groupedSales[productName] = {
-          'total': totalSale,
-          'count': count,
-        };
-      }
-    }
-  }
-
-  return groupedSales;
+bool isToday(DateTime saleDate) {
+  final now = DateTime.now();
+  return saleDate.year == now.year &&
+      saleDate.month == now.month &&
+      saleDate.day == now.day;
 }
 
-
-Future<Map<String, dynamic>> getGroupedSalesData() async {
-  List<SalesModel> salesList = salesListNotifier.value;
-
-  Map<String, dynamic> groupedData = {};
-  for (var sale in salesList) {
-    final accountName = sale.accountName;
-    final saleTotal = double.tryParse(sale.totalPrice) ?? 0.0;
-
-    if (groupedData.containsKey(accountName)) {
-      groupedData[accountName]["totalSales"] += saleTotal;
-      groupedData[accountName]["salesCount"] += 1;
-    } else {
-      groupedData[accountName] = {
-        "totalSales": saleTotal,
-        "salesCount": 1,
-      };
-    }
-  }
-
-  return groupedData;
-}
-
-
-Future<Map<String, dynamic>> getTopSoldProducts({int topN = 5}) async {
+Future<Map<String, dynamic>> getTopSoldProducts({int topN = 4}) async {
   await initSalesDB();
-
+  if (salesListNotifier.value.isEmpty) {
+    return {"message": "No sales data available"};
+  }
 
   Map<String, int> productCounts = {};
   Map<String, double> productTotalSales = {};
-
-  for (var sale in salesListNotifier.value) {
+  List<SalesModel> todaySales = salesListNotifier.value.where((sale) {
+    final saleDate = DateTime.fromMicrosecondsSinceEpoch(int.tryParse(sale.id) ?? 0);
+    final todayString = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    return DateFormat('yyyy-MM-dd').format(saleDate) == todayString;
+  }).toList();
+  for (var sale in todaySales) {
     for (var saleProduct in sale.saleProduct) {
       String productName = saleProduct.product.itemName;
-      int count = int.parse(saleProduct.count);
-      double salePrice = double.parse(saleProduct.price);
-
+      int count = int.tryParse(saleProduct.count) ?? 0;
+      double salePrice = double.tryParse(saleProduct.price) ?? 0.0;
 
       productCounts[productName] = (productCounts[productName] ?? 0) + count;
-      
-
-      productTotalSales[productName] = 
-        (productTotalSales[productName] ?? 0) + (count * salePrice);
+      productTotalSales[productName] =
+          (productTotalSales[productName] ?? 0) + (count * salePrice);
     }
   }
 
-
+  if (productCounts.isEmpty) {
+    return {"message": "No sales data available for today"};
+  }
   var sortedProducts = productCounts.entries.toList()
     ..sort((a, b) => b.value.compareTo(a.value));
 
-  List<double> segmentValues = [];
-  List<String> segmentLabels = [];
-  List<String> subLabels = [];
-  double othersTotal = 0;
-  int othersCount = 0;
-
-
   int totalCount = productCounts.values.reduce((a, b) => a + b);
 
- 
-  for (int i = 0; i < sortedProducts.length; i++) {
-    if (i < topN) {
-      String productName = sortedProducts[i].key;
-      int count = sortedProducts[i].value;
-      double percentage = (count / totalCount) * 100;
+  List<Map<String, dynamic>> segments = [];
+  int othersCount = 0;
+  double othersTotalPercentage = 0;
 
-      segmentValues.add(percentage);
-      segmentLabels.add(productName);
-      subLabels.add("$count sales (${percentage.toStringAsFixed(2)}%)");
+  for (int i = 0; i < sortedProducts.length; i++) {
+    String productName = sortedProducts[i].key;
+    int count = sortedProducts[i].value;
+    double percentage = (count / totalCount) * 100;
+
+    if (i < topN) {
+      segments.add({
+        'value': double.parse(percentage.toStringAsFixed(2)),
+        'label': productName,
+        'subLabel': "$count sales (${percentage.toStringAsFixed(2)}%)"
+      });
     } else {
-      othersTotal += (sortedProducts[i].value / totalCount) * 100;
-      othersCount += sortedProducts[i].value;
+      othersCount += count;
+      othersTotalPercentage += percentage;
     }
   }
 
-
-  if (othersTotal > 0) {
-    segmentValues.add(othersTotal);
-    segmentLabels.add('Others');
-    subLabels.add('$othersCount sales (${othersTotal.toStringAsFixed(2)}%)');
+  if (othersCount > 0) {
+    segments.add({
+      'value': double.parse(othersTotalPercentage.toStringAsFixed(2)),
+      'label': "Others",
+      'subLabel': "$othersCount sales (${othersTotalPercentage.toStringAsFixed(2)}%)"
+    });
   }
+
+segments.sort((a, b) => (a['value'] as double).compareTo(b['value']));
+
+List<double> segmentValues = segments.map((s) => s['value'] as double).toList();
+List<String> segmentLabels = segments.map((s) => s['label'] as String).toList();
+List<String> subLabels = segments.map((s) => s['subLabel'] as String).toList();
 
   return {
     'segmentValues': segmentValues,
@@ -172,3 +142,45 @@ Future<Map<String, dynamic>> getTopSoldProducts({int topN = 5}) async {
     'subLabels': subLabels,
   };
 }
+
+
+Future<Map<String, dynamic>> getSalesDataForChart() async {
+  await initSalesDB();
+  Map<String, double> dailySales = {};
+  final today = DateTime.now();
+  final todayString = DateFormat('yyyy-MM-dd').format(today);
+  final yesterdayString = DateFormat('yyyy-MM-dd').format(today.subtract(const Duration(days: 1)));
+  final dayBeforeYesterdayString = DateFormat('yyyy-MM-dd').format(today.subtract(const Duration(days: 2)));
+
+  for (var sale in salesListNotifier.value) {
+    final saleDate = DateTime.fromMicrosecondsSinceEpoch(int.tryParse(sale.id) ?? 0);
+    final saleDateString = DateFormat('yyyy-MM-dd').format(saleDate);
+
+
+    if (saleDateString == todayString) {
+      dailySales[todayString] = (dailySales[todayString] ?? 0) + (double.tryParse(sale.totalPrice) ?? 0.0);
+    } else if (saleDateString == yesterdayString) {
+      dailySales[yesterdayString] = (dailySales[yesterdayString] ?? 0) + (double.tryParse(sale.totalPrice) ?? 0.0);
+    } else if (saleDateString == dayBeforeYesterdayString) {
+      dailySales[dayBeforeYesterdayString] = (dailySales[dayBeforeYesterdayString] ?? 0) + (double.tryParse(sale.totalPrice) ?? 0.0);
+    }
+  }
+
+  double maxY = 200.0;
+  double minY = 0.0;
+
+  if (dailySales.isNotEmpty) {
+    maxY = dailySales.values.reduce((a, b) => a > b ? a : b) * 1.2;
+
+    double smallestValue = dailySales.values.reduce((a, b) => a < b ? a : b);
+    minY = smallestValue - (smallestValue * 0.25); 
+  }
+
+  log('Daily Sales Data: $dailySales');
+  return {
+    'dates': dailySales.keys.toList(),
+    'values': dailySales.values.toList(),
+    'maxY': maxY,
+    'minY': minY,
+  };
+} 
