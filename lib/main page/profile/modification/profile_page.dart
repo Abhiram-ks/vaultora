@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
+import 'package:vaultora_inventory_app/main%20page/add/logistic_stock/logistic.dart';
+import 'package:vaultora_inventory_app/main%20page/add/revanue/revanue.dart';
 import 'package:vaultora_inventory_app/main%20page/profile/modification/inkewell_button_profile.dart';
 import 'package:vaultora_inventory_app/main%20page/profile/modification/blur_container_profile.dart';
 import 'package:vaultora_inventory_app/main%20page/profile/modification/settings.dart';
@@ -271,7 +273,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const CategoryPage()),
+                                            const RevanuePage()),
+                                  );
+                                },
+                              ),
+                               SizedBox(height: screenHeight * 0.02),
+                              ClickableRowItem(
+                                icon: Icons.shopping_bag_outlined,
+                                text: 'Logistic',
+                                bgcolor: Colors.black,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const  LogisticPage()),
                                   );
                                 },
                               ),

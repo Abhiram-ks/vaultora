@@ -68,106 +68,117 @@ class Annualy extends StatelessWidget {
                     percentageText: percentageText,
                   );
                 },
-              ),
+              ), SizedBox(
+              height: screenHeight * 0.02,
+            ),
               SizedBox(
-              height: screenHeight * 0.65,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                   ValueListenableBuilder<int>(
-                  valueListenable: yearlySalesCountNotifier,
-                  builder: (context, yearlySalesCount, _) {
-                    return BlurredBackgroundCard(
-                      title: 'Sales for the Year',
-                      number: yearlySalesCount.toString(),
-                      screenHeight: screenHeight,
-                      screenWidth: screenWidth,
-                    );
-                  }),
+                height: screenHeight * 0.65,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ValueListenableBuilder<int>(
+                          valueListenable: yearlySalesCountNotifier,
+                          builder: (context, yearlySalesCount, _) {
+                            return BlurredBackgroundCard(
+                              title: 'Sales for the Year',
+                              number: yearlySalesCount.toString(),
+                              screenHeight: screenHeight,
+                              screenWidth: screenWidth,
+                            );
+                          }),
+                      SizedBox(
+                        height: screenHeight * 0.02,
+                      ),
+                      ValueListenableBuilder<List<SalesModel>>(
+                        valueListenable: salesListNotifier,
+                        builder: (context, salesList, _) {
+                          if (salesList.isEmpty) {
+                            return const Center(
+                              child: Text('No sales data available for today'),
+                            );
+                          }
+
+                          return FutureBuilder<Map<String, dynamic>>(
+                            future: getTopSoldProductsForYear(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+
+                              if (!snapshot.hasData ||
+                                  snapshot.data!['message'] != null) {
+                                return const Center(
+                                    child: Text(
+                                        'No product sales data available'));
+                              }
+
+                              final productData = snapshot.data!;
+                              return PieChartWidget(
+                                screenHeight:
+                                    MediaQuery.of(context).size.height,
+                                screenWidth: MediaQuery.of(context).size.width,
+                                segmentColors: GlobalColors.segmentColors,
+                                segmentValues: productData['segmentValues'],
+                                segmentLabels: productData['segmentLabels'],
+                                sublabel: productData['subLabels'],
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.02,
+                      ),
+                      ValueListenableBuilder<List<SalesModel>>(
+                        valueListenable: salesListNotifier,
+                        builder: (context, salesList, _) {
+                          if (salesList.isEmpty) {
+                            return const Center(
+                              child: Text('No sales data available for Year'),
+                            );
+                          }
+                          return FutureBuilder<Map<String, dynamic>>(
+                            future: getSalesDataForChartYear(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+
+                              if (!snapshot.hasData ||
+                                  snapshot.data!['years'].isEmpty) {
+                                return const Center(
+                                    child: Text(
+                                        'No sales data available for the chart.'));
+                              }
+
+                              final years = snapshot.data!['years'];
+                              final values = snapshot.data!['values'];
+                              final maxY = snapshot.data!['maxY'] ?? 200.0;
+                              final minY = snapshot.data!['minY'] ?? 0.0;
+
+                              return CustomLineChart(
+                                screenWidth: screenWidth,
+                                screenHeight: screenHeight,
+                                months: years.cast<String>(),
+                                values: values.cast<double>(),
+                                maxY: maxY,
+                                minY: minY,
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
                 height: screenHeight * 0.02,
               ),
-              ValueListenableBuilder<List<SalesModel>>(
-                valueListenable: salesListNotifier,
-                builder: (context, salesList, _) {
-                  if (salesList.isEmpty) {
-                    return const Center(
-                      child: Text('No sales data available for today'),
-                    );
-                  }
-
-                  return FutureBuilder<Map<String, dynamic>>(
-                    future: getTopSoldProductsForYear(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-
-                      if (!snapshot.hasData ||
-                          snapshot.data!['message'] != null) {
-                        return const Center(
-                            child: Text('No product sales data available'));
-                      }
-
-                      final productData = snapshot.data!;
-                      return PieChartWidget(
-                        screenHeight: MediaQuery.of(context).size.height,
-                        screenWidth: MediaQuery.of(context).size.width,
-                        segmentColors: GlobalColors.segmentColors,
-                        segmentValues: productData['segmentValues'],
-                        segmentLabels: productData['segmentLabels'],
-                        sublabel: productData['subLabels'],
-                      );
-                    },
-                  );
-                },
-              ),  SizedBox(
-              height: screenHeight * 0.02,
-            ),ValueListenableBuilder<List<SalesModel>>(
-  valueListenable: salesListNotifier,
-  builder: (context, salesList, _) {
-    if (salesList.isEmpty) {
-      return const Center(
-        child: Text('No sales data available for Year'),
-      );
-    }
-    return FutureBuilder<Map<String, dynamic>>(
-      future: getSalesDataForChartYear(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        if (!snapshot.hasData || snapshot.data!['years'].isEmpty) {
-          return const Center(
-              child: Text('No sales data available for the chart.'));
-        }
-
-        final years = snapshot.data!['years'];
-        final values = snapshot.data!['values'];
-        final maxY = snapshot.data!['maxY'] ?? 200.0;
-        final minY = snapshot.data!['minY'] ?? 0.0;
-
-        return CustomLineChart(
-          screenWidth: screenWidth,
-          screenHeight: screenHeight,
-          months: years.cast<String>(),
-          values: values.cast<double>(),
-          maxY: maxY,
-          minY: minY,
-        );
-      },
-    );
-  },
-),
-
-                  ],
-                ),
-              ),
-              )
-                , SizedBox(
-              height: screenHeight * 0.02,
-            ),
             ],
           ),
         ),

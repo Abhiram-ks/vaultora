@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 
 class SalesCard extends StatefulWidget {
   final String data;
@@ -39,7 +40,7 @@ class _SalesCardState extends State<SalesCard> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Card(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 230, 236, 233),
         elevation: 5.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -51,7 +52,43 @@ class _SalesCardState extends State<SalesCard> {
             children: [
               Row(
                 children: [
+                 
                   Expanded(
+                    flex: 2,
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                           Text(
+                            'Total',
+                            style: TextStyle(color: black),
+                          ),
+                          Text(
+                            '₹ ${widget.total}',
+                            style:  TextStyle(color: black),
+                          ),
+                          SizedBox(
+                            height: screenHeight*0.04,
+                          ),
+                          Row(
+                            children: [
+                          const Icon(
+                            Icons.timer_outlined,color:   Color.fromARGB(255, 29, 66, 77),
+                          ),SizedBox(width: screenWidth*0.02,),
+                          Text(
+                            widget.time,
+                            style:  TextStyle(color: black),
+                          ),
+                            ]
+                         
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                   Expanded(
                     flex: 4,
                     child: Padding(
                       padding: const EdgeInsets.all(5),
@@ -59,7 +96,7 @@ class _SalesCardState extends State<SalesCard> {
                         height: screenHeight * 03,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: const Color(0xFFE8EDEB),
+                          color: whiteColor,
                         ),
                         child: SingleChildScrollView(
                           child: Column(
@@ -179,47 +216,12 @@ class _SalesCardState extends State<SalesCard> {
                                 },
                                 child: Text(
                                   showDetails ? 'Hide Details' : 'Show Details',
-                                  style: const TextStyle(color: Colors.blue),
+                                  style: const TextStyle(color:   Color.fromARGB(255, 29, 66, 77),),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Total',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          Text(
-                            '₹ ${widget.total}',
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                          SizedBox(
-                            height: screenHeight*0.04,
-                          ),
-                          Row(
-                            children: [
-                          const Icon(
-                            Icons.timer_outlined,color: Colors.amber,
-                          ),SizedBox(width: screenWidth*0.02,),
-                          Text(
-                            widget.time,
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                            ]
-                         
-                          )
-                        ],
                       ),
                     ),
                   ),
@@ -232,7 +234,7 @@ class _SalesCardState extends State<SalesCard> {
                   height: 30,
                   width: 30,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 0, 140, 255),
+                    color:  const Color.fromARGB(255, 29, 66, 77),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   alignment: Alignment.center,

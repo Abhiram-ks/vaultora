@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/models/add/add.dart';
 import 'package:vaultora_inventory_app/main%20page/ADD/productfiles_sub/check_out.dart';
 import 'package:vaultora_inventory_app/main%20page/add/productfiles_sub/digitfiled.dart';
@@ -12,6 +13,7 @@ import 'package:vaultora_inventory_app/main%20page/add/productfiles_sub/filed_de
 
 import '../../../../db/functions/addfunction.dart';
 
+import '../../../add/revanue/details/overview/custom_Tracker/custom_revanue.dart';
 import '../../../profile/edit_profile.dart/edit_style.dart';
 
 class CustomBottomSheet extends StatefulWidget {
@@ -24,7 +26,7 @@ class CustomBottomSheet extends StatefulWidget {
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
   final _formKey = GlobalKey<FormState>();
-  
+
   late TextEditingController _itemNameController;
   late TextEditingController _descriptionController;
   late TextEditingController _itemCountController;
@@ -32,7 +34,6 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   late ValueNotifier<String> _imagePathNotifier;
   late TextEditingController _purchasePriceController;
   late ValueNotifier<String?> _selectedCategoryNotifier;
-
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
 
   bool _validateInputsitems() {
     if (_itemCountController.text.isEmpty ||
-        _purchasePriceController.text.isEmpty||
+        _purchasePriceController.text.isEmpty ||
         _descriptionController.text.isEmpty ||
         _itemCountController.text.isEmpty ||
         _mrpController.text.isEmpty) {
@@ -70,9 +71,12 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   Future<void> _updateItem() async {
     if (!_validateInputsitems() || _formKey.currentState?.validate() != true) {
       log("Validation faild.");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields.')),
-      );
+      CustomSnackBarCustomisation.show(
+          context: context,
+          message: "Please fill in all fields.",
+          messageColor: redColor,
+          icon: Icons.warning,
+          iconColor: redColor);
       return;
     }
     bool updatedItem = await updateItem(
@@ -89,12 +93,12 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       log('Update details');
       final updatedItems = AddModel(
           id: widget.item.id,
-          userid:widget.item.userid,
+          userid: widget.item.userid,
           itemName: _itemNameController.text,
           description: _descriptionController.text,
           purchaseRate: _purchasePriceController.text,
           mrp: _mrpController.text,
-          dropDown:_selectedCategoryNotifier.value ?? widget.item.imagePath,
+          dropDown: _selectedCategoryNotifier.value ?? widget.item.imagePath,
           itemCount: _itemCountController.text,
           totalPurchase: widget.item.totalPurchase,
           imagePath: _imagePathNotifier.value);
@@ -103,15 +107,21 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       currentiteamNotifier.value = updatedItems;
       // ignore: invalid_use_of_protected_member
       currentiteamNotifier.notifyListeners();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Item updated successfully.')),
-      );
+      CustomSnackBarCustomisation.show(
+          context: context,
+          message: "Item updated successfully.",
+          messageColor: green,
+          icon: Icons.cloud_done_outlined,
+          iconColor: green);
       Navigator.pop(context);
     } else {
       log("Failed to update item");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Update failed.')),
-      );
+        CustomSnackBarCustomisation.show(
+          context: context,
+          message:'Update failed. !',
+          messageColor: redColor,
+          icon: Icons.warning,
+          iconColor: redColor);
     }
   }
 
@@ -209,8 +219,9 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                   const Color.fromARGB(255, 111, 111, 111),
                               textColor:
                                   const Color.fromARGB(255, 101, 101, 101),
-                            ), SizedBox(height: screenHeight * 0.003),
-                              EditStyle(
+                            ),
+                            SizedBox(height: screenHeight * 0.003),
+                            EditStyle(
                               icon: Icons.price_change,
                               label: 'Purchase Rate',
                               controller: _purchasePriceController,
@@ -224,7 +235,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               height: screenHeight * 0.065,
                               hintText: 'Category',
                               selectedCategoryNotifier:
-                                 _selectedCategoryNotifier,
+                                  _selectedCategoryNotifier,
                             ),
                             SizedBox(height: screenHeight * 0.003),
                             EditStyle(

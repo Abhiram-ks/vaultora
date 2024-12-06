@@ -15,12 +15,12 @@ import '../../../../../Color/colors.dart';
 import '../../../../../db/functions/addfunction.dart';
 import '../../../../../db/models/user/user.dart';
 import '../../../../../log/Login_autotications/orline_dec.dart';
-
+import '../../revanue/details/overview/custom_Tracker/custom_revanue.dart';
 
 class AddProducts extends StatefulWidget {
   final UserModel userDetails;
 
-  const AddProducts({super.key,required this.userDetails});
+  const AddProducts({super.key, required this.userDetails});
 
   @override
   State<AddProducts> createState() => _AddProductsState();
@@ -59,15 +59,42 @@ class _AddProductsState extends State<AddProducts> {
     super.dispose();
   }
 
-bool _validateInputs() {
-  if (_imageNotifier.value == null) {log("Image is missing.");return false;}
-  if (_itemNameController.text.isEmpty) {log("Item name is empty.");return false;}
-  if (_descriptionController.text.isEmpty) {log("Description is empty.");return false;}
-  if (_purchasePriceController.text.isEmpty) {log("Purchase price is empty.");return false;}
-  if (_quantityController.text.isEmpty || int.tryParse(_quantityController.text) == null) {log("Quantity is empty or invalid.");return false;}
-  if (_mrpController.text.isEmpty) {log("MRP is empty.");return false;}
-  if (_selectedCategoryNotifier.value == null) {log("Category is not selected.");return false;}
-  if (_totalPriceNotifier.value == 0.0) {log("Total price is zero.");return false;}return true;}
+  bool _validateInputs() {
+    if (_imageNotifier.value == null) {
+      log("Image is missing.");
+      return false;
+    }
+    if (_itemNameController.text.isEmpty) {
+      log("Item name is empty.");
+      return false;
+    }
+    if (_descriptionController.text.isEmpty) {
+      log("Description is empty.");
+      return false;
+    }
+    if (_purchasePriceController.text.isEmpty) {
+      log("Purchase price is empty.");
+      return false;
+    }
+    if (_quantityController.text.isEmpty ||
+        int.tryParse(_quantityController.text) == null) {
+      log("Quantity is empty or invalid.");
+      return false;
+    }
+    if (_mrpController.text.isEmpty) {
+      log("MRP is empty.");
+      return false;
+    }
+    if (_selectedCategoryNotifier.value == null) {
+      log("Category is not selected.");
+      return false;
+    }
+    if (_totalPriceNotifier.value == 0.0) {
+      log("Total price is zero.");
+      return false;
+    }
+    return true;
+  }
 
   Future<void> _pickImage() async {
     final XFile? pickedFile =
@@ -86,16 +113,19 @@ bool _validateInputs() {
   Future<void> _addProduct() async {
     if (!_validateInputs() || _formKey.currentState?.validate() != true) {
       log("Validation failed.");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields.')),
-      );
+      CustomSnackBarCustomisation.show(
+          context: context,
+          message: 'Please fill in all fields. !',
+          messageColor: Colors.blue,
+          icon: Icons.info_outline_rounded,
+          iconColor: Colors.blue);
       return;
     }
     String selectedCategory = _selectedCategoryNotifier.value ?? '';
     String imagePath = _imageNotifier.value?.path ?? '';
 
     bool success = await addItem(
-      id: DateTime.now().toString(), 
+      id: DateTime.now().toString(),
       userId: widget.userDetails.id,
       itemName: _itemNameController.text,
       description: _descriptionController.text,
@@ -108,35 +138,41 @@ bool _validateInputs() {
     );
 
     if (success) {
-        _showSuccessDialog();
-      
+      _showSuccessDialog();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to add product.')),
-      );
+      CustomSnackBarCustomisation.show(
+          context: context,
+          message: "Failed to add product.!",
+          messageColor: redColor,
+          icon: Icons.sms_failed_outlined,
+          iconColor: redColor);
     }
   }
-void _showSuccessDialog() {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text("Success"),
-        content: const Text("Product added successfuly!"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); 
-              Navigator.of(context).pop();
-            },
-            child: const Text("OK", style: TextStyle(color: Colors.black),),
-          ),
-        ],
-      );
-    },
-  );
-}
+
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Success"),
+          content: const Text("Product added successfuly!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                "OK",
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,9 +201,8 @@ void _showSuccessDialog() {
                         height: screenHeight * 0.15,
                         width: screenHeight * 0.15,
                         alignment: Alignment.center,
-                        decoration:const BoxDecoration(
-                          color: 
-                          Color.fromARGB(255, 194, 194, 194),
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 194, 194, 194),
                           shape: BoxShape.circle,
                         ),
                         child: ValueListenableBuilder<File?>(
@@ -274,7 +309,7 @@ void _showSuccessDialog() {
                         backgroundColor:
                             const Color.fromARGB(255, 188, 188, 188),
                       ),
-                      child:  Icon(Icons.remove, color: whiteColor),
+                      child: Icon(Icons.remove, color: whiteColor),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -329,4 +364,3 @@ void _showSuccessDialog() {
     );
   }
 }
-

@@ -4,11 +4,13 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
 import 'package:vaultora_inventory_app/main%20page/profile/edit_profile.dart/Edit_style.dart';
 import '../../../db/functions/adminfunction.dart';
 import '../../../log/LoginAutotications/phone_validation.dart';
 import '../../../log/LoginAutotications/validation.dart';
+import '../../add/revanue/details/overview/custom_Tracker/custom_revanue.dart';
 import '../modification/inkewell_button_profile.dart';
 import '../validation/profile_validation.dart';
 
@@ -32,7 +34,8 @@ class _EditProfileState extends State<EditProfile> {
   void initState() {
     super.initState();
     _ventureNameController = TextEditingController(text: widget.userdata.name);
-    _adminNameController =TextEditingController(text: widget.userdata.username);
+    _adminNameController =
+        TextEditingController(text: widget.userdata.username);
     _phoneController = TextEditingController(text: widget.userdata.phone);
     _bioController = TextEditingController(text: widget.userdata.bio);
     _ageController = TextEditingController(text: widget.userdata.age);
@@ -47,22 +50,32 @@ class _EditProfileState extends State<EditProfile> {
         _ageController.text.isEmpty) {
       log("Please fill in all fields.");
       return false;
-    } return true;
+    }
+    return true;
   }
+
   final ImagePicker _picker = ImagePicker();
   String? _selectedImagePath;
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      setState(() {_selectedImagePath = image.path;});
+      setState(() {
+        _selectedImagePath = image.path;
+      });
     }
   }
 
-  Future<void> _saveProfile() async {  
-    if (! _validateInputs() || _formKey.currentState?.validate() != true) {
+  Future<void> _saveProfile() async {
+    if (!_validateInputs() || _formKey.currentState?.validate() != true) {
       log("Validation failed.");
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please fill in all fields.')),
-      );return;
+      CustomSnackBarCustomisation.show(
+          context: context,
+          message: "Please fill in all fields.!",
+          messageColor: Colors.blue,
+          icon: Icons.info_outline_rounded,
+          iconColor: Colors.blue);
+
+      return;
     }
 
     bool updated = await updateUser(
@@ -93,13 +106,21 @@ class _EditProfileState extends State<EditProfile> {
 
       // ignore: invalid_use_of_protected_member
       currentUserNotifier.notifyListeners();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile updated successfully.')),
-      );Navigator.pop(context);
+           CustomSnackBarCustomisation.show(
+          context: context,
+          message: "Profile updated successfully.",
+          messageColor: green,
+          icon: Icons.cloud_done_outlined,
+          iconColor: green);
+      Navigator.pop(context);
     } else {
       log("Failed to update profile");
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Update failed.')),
-      );
+       CustomSnackBarCustomisation.show(
+          context: context,
+          message: "Profile Update failed. !",
+          messageColor: redColor,
+          icon: Icons.person_off_outlined,
+          iconColor: redColor);
     }
   }
 
@@ -209,8 +230,10 @@ class _EditProfileState extends State<EditProfile> {
                               label: 'Account name',
                               controller: _adminNameController,
                               validate: NameValidator.validate,
-                              dividerColor: const Color.fromARGB(255, 204, 204, 204),
-                              textColor: const Color.fromARGB(255, 193, 193, 193),
+                              dividerColor:
+                                  const Color.fromARGB(255, 204, 204, 204),
+                              textColor:
+                                  const Color.fromARGB(255, 193, 193, 193),
                             ),
                             SizedBox(height: screenHeight * 0.01),
                             EditStyle(
@@ -218,8 +241,10 @@ class _EditProfileState extends State<EditProfile> {
                               controller: _ventureNameController,
                               label: 'Venture Name',
                               validate: VentureValidator.validate,
-                              dividerColor: const Color.fromARGB(255, 204, 204, 204),
-                              textColor: const Color.fromARGB(255, 193, 193, 193),
+                              dividerColor:
+                                  const Color.fromARGB(255, 204, 204, 204),
+                              textColor:
+                                  const Color.fromARGB(255, 193, 193, 193),
                             ),
                             SizedBox(height: screenHeight * 0.01),
                             EditStyle(
@@ -249,8 +274,10 @@ class _EditProfileState extends State<EditProfile> {
                               controller: _bioController,
                               label: 'Bio',
                               validate: BioValidatorField.validate,
-                              dividerColor: const Color.fromARGB(255, 204, 204, 204),
-                              textColor: const Color.fromARGB(255, 193, 193, 193),
+                              dividerColor:
+                                  const Color.fromARGB(255, 204, 204, 204),
+                              textColor:
+                                  const Color.fromARGB(255, 193, 193, 193),
                             ),
                             SizedBox(height: screenHeight * 0.02),
                             InkWellButton(
