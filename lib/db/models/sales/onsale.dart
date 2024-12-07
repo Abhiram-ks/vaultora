@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-import '../add/add.dart';
+import '../product/add.dart';
 part 'onsale.g.dart';
 
 

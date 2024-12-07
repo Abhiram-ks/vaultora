@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:vaultora_inventory_app/db/functions/addfunction.dart';
-import 'package:vaultora_inventory_app/db/functions/salefuction.dart';
-import 'package:vaultora_inventory_app/db/models/add/add.dart';
+import 'package:vaultora_inventory_app/db/helpers/addfunction.dart';
+import 'package:vaultora_inventory_app/db/helpers/salefuction.dart';
+import 'package:vaultora_inventory_app/db/models/product/add.dart';
 import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 import 'package:vaultora_inventory_app/db/models/sales/onsale.dart';
-import 'db/functions/adminfunction.dart';
-import 'db/functions/categoryfunction.dart';
+import 'db/helpers/adminfunction.dart';
+import 'db/helpers/categoryfunction.dart';
 import 'db/models/user/user.dart';
-import 'log/splash_welcom/splash_screen.dart';
+import 'splash_and_welcome/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
