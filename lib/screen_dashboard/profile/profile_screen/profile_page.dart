@@ -1,21 +1,13 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
-import 'package:vaultora_inventory_app/screen_dashboard/logistic/logistic.dart';
-import 'package:vaultora_inventory_app/screen_dashboard/revenue/revanue.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/profile/profile_widgets/inkewell_button_profile.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/profile/profile_widgets/blur_profile_container.dart';
-import 'package:vaultora_inventory_app/screen_dashboard/settings/blur_settings_container.dart';
-import 'package:vaultora_inventory_app/screen_dashboard/settings/terms_condition.dart';
 import '../../../Color/colors.dart';
 import '../../../db/helpers/adminfunction.dart';
-import '../../records/invetoty_page.dart';
-import '../../add_screen/Category_add/category_add.dart';
-import '../../common/dialog_box.dart';
-import '../../settings/privacy.dart';
+import '../../settings/list_settings_contier.dart';
 import '../edit_profile/edit_profille.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -228,110 +220,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(screenWidth * 0.04),
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 111, 111, 111)
-                              .withOpacity(0.66),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              ClickableRowItem(
-                                icon: Icons.file_open,
-                                text: 'Terms & Conditions',
-                                bgcolor: Colors.black,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                           const TermsCondition()),
-                                  );
-                                },
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              ClickableRowItem(
-                                icon: Icons.security_rounded,
-                                text: 'Privacy Policy',
-                                bgcolor: black,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Privacy()),
-                                  );
-                                },
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              ClickableRowItem(
-                                icon: Icons.bar_chart_rounded,
-                                text: 'Overview',
-                                bgcolor: black,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const RevanuePage()),
-                                  );
-                                },
-                              ),
-                               SizedBox(height: screenHeight * 0.02),
-                              ClickableRowItem(
-                                icon: Icons.shopping_bag_outlined,
-                                text: 'Logistic',
-                                bgcolor: black,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        const  LogisticPage()),
-                                  );
-                                },
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              ClickableRowItem(
-                                icon: Icons.category_sharp,
-                                text: 'Add Category',
-                                bgcolor: black,
-                                onTap: () {
-                                  CategoryBox.showAddCategoryDialog(context, widget.userDetails.id);
-                                },
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              ClickableRowItem(
-                                icon: Icons.question_mark_sharp,
-                                text: 'About',
-                                bgcolor:black,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const CategoryPage()),
-                                  );
-                                },
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              ClickableRowItem(
-                                icon: Icons.power_settings_new_sharp,
-                                text: 'Logout',
-                                bgcolor: redColor,
-                                onTap: () {
-                                  DialogBox.showLogoutDialog(context);
-                                },
-                              ),
-                            
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                      SizedBox(height: screenHeight * 0.1),
+                      child:  ListSettingsContier(
+                        screenHeight: screenHeight,
+                        screenWidth: screenHeight,
+                        username: widget.userDetails.id,),
+                    ),SizedBox(height: screenHeight * 0.1),
                   ],
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 
 class InventoryFunction extends StatelessWidget {
   final Color color;
@@ -27,6 +28,7 @@ class InventoryFunction extends StatelessWidget {
       child: Card(
         color: color,
         elevation: 1,
+        shadowColor: black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -52,7 +54,7 @@ class InventoryFunction extends StatelessWidget {
                     end: Alignment.bottomRight,
                     colors: [
                       Colors.black.withOpacity(0.75),
-                      Colors.black.withOpacity(0.0),
+                      Colors.black.withOpacity(0.10),
                     ],
                   ),
                 ),

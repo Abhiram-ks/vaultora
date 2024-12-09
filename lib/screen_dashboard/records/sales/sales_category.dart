@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
-
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'sales_record/sale_record.dart';
 
 class SalesCategory extends StatefulWidget {
@@ -79,7 +79,7 @@ class _SalesCategoryState extends State<SalesCategory> {
                           'Detailed analysis helps in understanding customer preferences and purchasing patterns, '
                           'allowing for more tailored marketing strategies and inventory management.',
                           trimLines: 2,
-                          colorClickableText: Colors.blue,
+                          colorClickableText: inside,
                           trimMode: TrimMode.Line,
                           trimCollapsedText: 'Read more',
                           trimExpandedText: 'Show less',
@@ -88,15 +88,15 @@ class _SalesCategoryState extends State<SalesCategory> {
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
                           ),
-                          lessStyle: const TextStyle(
+                          lessStyle:  TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color:inside,
                           ),
-                          moreStyle: const TextStyle(
+                          moreStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: inside,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -140,7 +140,7 @@ class _SalesCategoryState extends State<SalesCategory> {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

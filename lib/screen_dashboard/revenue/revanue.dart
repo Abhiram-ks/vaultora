@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/models/product/add.dart';
 import 'package:vaultora_inventory_app/db/models/sales/onsale.dart';
-
 import '../../db/helpers/addfunction.dart';
 import '../../db/helpers/salefuction.dart';
 import 'sub_files_revenue/revanue_container.dart';

@@ -24,7 +24,7 @@ class InventoryHome extends StatelessWidget {
         imagePath: 'assets/category/animation(6).json',
         title: 'Purchase',
         subtitle: 'SUPPLY SUMMARY',
-        color: const Color.fromARGB(255, 174, 222, 246),
+        color: const Color.fromARGB(255, 125, 185, 203),
       ),
       SizedBox(width: screenWidth * 0.03),
       InventoryFunction(
@@ -34,7 +34,7 @@ class InventoryHome extends StatelessWidget {
         imagePath: 'assets/category/animation(2).json',
         title: 'Revenue',
         subtitle: 'PROFIT TRACKER',
-        color: const Color.fromARGB(255, 226, 212, 255),
+        color: const Color.fromARGB(255, 125, 185, 203),
       ),
       SizedBox(width: screenWidth * 0.03),
       InventoryFunction(
@@ -44,7 +44,7 @@ class InventoryHome extends StatelessWidget {
         imagePath: 'assets/gif/twoanimation.json',
         title: 'Sales',
         subtitle: 'INCOME INSIGHTS',
-        color: const Color.fromARGB(255, 245, 246, 174),
+        color: const Color.fromARGB(255, 125, 185, 203),
       ),
       SizedBox(width: screenWidth * 0.03),
       InventoryFunction(

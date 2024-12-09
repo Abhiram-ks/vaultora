@@ -12,7 +12,7 @@ import '../../../log/Autotication_singup/validation.dart';
 import '../../common/snackbar.dart';
 import '../profile_widgets/edit_decoration.dart';
 import '../profile_widgets/inkewell_button_profile.dart';
-import '../../validation_profile/profile_validation.dart';
+import '../profile_widgets/profile_validation.dart';
 
 class EditProfile extends StatefulWidget {
   final UserModel userdata;

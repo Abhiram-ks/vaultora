@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 class ClickableRowItem extends StatelessWidget {
   final IconData icon; 
   final String text;   
@@ -36,11 +37,11 @@ class ClickableRowItem extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: bgcolor,
+                  backgroundColor: transParent,
                   child: SizedBox(
                     height: screenHeight*0.07,
                     width: screenWidth*0.07,
-                    child: Icon(icon, color: Colors.white)),
+                    child: Icon(icon, color: whiteColor)),
                 ),
                 const SizedBox(width: 16),
                 Text(
@@ -49,7 +50,7 @@ class ClickableRowItem extends StatelessWidget {
                 ),
               ],
             ),
-            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey), 
+             Icon(Icons.arrow_forward_ios, size: 16, color:whiteColor), 
           ],
         ),
       ),

@@ -65,13 +65,13 @@ class _LogisticPageState extends State<LogisticPage> {
                     description: zeroStockItems.isNotEmpty
                         ? zeroStockItems.map((item) => item.itemName).join(', ')
                         : 'No items in zero stock',
-                    gradientColors1: [
-                      black,
-                      blue,
+                    gradientColors1: const[
+                         Color.fromARGB(255, 59, 140, 164),
+                         Color.fromARGB(255, 40, 98, 116),
                     ],
-                    gradientColors2:  [
-                      blue,
-                      black,
+                    gradientColors2: const [
+                         Color.fromARGB(255, 59, 140, 164),
+                         Color.fromARGB(255, 125, 185, 203),
                     ],
                     right: 10.0,
                     bottom: 10.0,

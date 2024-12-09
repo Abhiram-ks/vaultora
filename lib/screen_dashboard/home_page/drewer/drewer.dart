@@ -10,6 +10,8 @@ import 'package:vaultora_inventory_app/screen_dashboard/add_screen/product_add/a
 import 'package:vaultora_inventory_app/screen_dashboard/add_screen/sales_add/add_sales.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/logistic/logistic.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/home_page/subfiles_home/customlist_titile.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/settings/privacy.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/settings/terms_condition.dart';
 
 import '../../profile/profile_screen/profile_page.dart';
 import '../../add_screen/Category_add/category_add.dart';
@@ -217,14 +219,14 @@ class _AppDrawerState extends State<AppDrawer> with SingleTickerProviderStateMix
                            CustomListTile(
                           iconData: Icons.policy_rounded,
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage(userDetails: widget.userDetails,),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const Privacy()));
                           },
                           text: 'Privacy Policy',
                         ),SizedBox(height: screenHeight*0.004,),
                            CustomListTile(
                           iconData: Icons.file_copy_rounded,
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage(userDetails: widget.userDetails,),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const TermsCondition(),));
                           },
                           text: 'Terms & Conditions',
                         ),SizedBox(height: screenHeight*0.004,),

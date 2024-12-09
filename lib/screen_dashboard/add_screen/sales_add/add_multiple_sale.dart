@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/helpers/salefuction.dart';
 import 'package:vaultora_inventory_app/db/models/sales/onsale.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/records/sales/subfiles_sales/mutiplefilessub.dart';
 import '../../../db/helpers/addfunction.dart';
 import '../../../db/models/product/add.dart';
 import '../../common/appbar.dart';
@@ -82,12 +83,10 @@ void handleProductClick(int index) {
         selectedProduct!.itemName.trim().toLowerCase());
 
     if (isDuplicate) {
-      CustomSnackBarCustomisation.show(
-          context: context,
-          message: "This product is already in the sales list.",
-          messageColor: blue,
-          icon: Icons.assignment_turned_in,
-          iconColor: blue);
+      CustomSnackBarCustomisation.show(context: context,message:
+       "This product is already in the sales list.", messageColor:blue,
+       icon: Icons.assignment_turned_in,
+       iconColor: blue);
     }
   });
 }
@@ -270,90 +269,7 @@ void onCheckoutPressed() {
               ),
             ),
             SizedBox(height: screenHeight * 0.01),
-            Card(
-              color: whiteColor,
-              child: SizedBox(
-                width: double.infinity,
-                height: screenHeight * 0.06,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        child: SizedBox(
-                          height: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Available Stock',
-                                style: TextStyle(
-                                  color: green,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              ValueListenableBuilder<int>(
-                                valueListenable: stockLevel,
-                                builder: (context, stock, child) {
-                                  return Column(
-                                    children: [
-                                      Text(
-                                        'Stock Level: ${stock.toInt()}',
-                                        style:  TextStyle(
-                                          color: black,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 18.0,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    ],
-                                  );
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: decrementCount,
-                          ),
-                          Container(
-                            color: Colors.grey[300],
-                            width: 50,
-                            child: Center(
-                              child: Text(
-                                '$count',
-                                style: const TextStyle(fontSize: 24),
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: incrementCount,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            multipleSalesSubfile(incrementCount,screenHeight,stockLevel,decrementCount,count),
             SizedBox(height: screenHeight * 0.01),
             ValueListenableBuilder<String>(
                 valueListenable: checkoutText,

@@ -10,11 +10,13 @@ class TermsCondition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: whiteColor,
       appBar:const MyAppBarlast(titleText: 'Terms & Conditons'),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+       padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.02,vertical: screenHeight*0.02),
         child: Column(
           children: [
             Expanded(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/records/product/filtering_product/filtaring_price.dart';
 
 import '../product_record.dart';
@@ -98,7 +99,7 @@ class _PurchaseCategoryState extends State<PurchaseCategory> {
                           'Detailed analysis helps in understanding customer preferences and purchasing patterns, '
                           'allowing for more tailored marketing strategies and inventory management.',
                           trimLines: 2,
-                          colorClickableText: Colors.blue,
+                          colorClickableText: inside,
                           trimMode: TrimMode.Line,
                           trimCollapsedText: 'Read more',
                           trimExpandedText: 'Show less',
@@ -107,15 +108,15 @@ class _PurchaseCategoryState extends State<PurchaseCategory> {
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
                           ),
-                          lessStyle: const TextStyle(
+                          lessStyle:  TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: inside,
                           ),
-                          moreStyle: const TextStyle(
+                          moreStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color:inside,
                           ),
                         ),
                         const SizedBox(height: 8),
