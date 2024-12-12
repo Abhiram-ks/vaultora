@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -55,18 +58,23 @@ class AddStyle extends StatelessWidget {
                       ),
                       ClipOval(
                         child: Container(
-                          width: screenWidth * 0.25,
-                          height: screenWidth * 0.25,
-                          decoration: BoxDecoration(
-                            color: whiteColor,
-                            image: DecorationImage(
-                              image: imagePath.isNotEmpty
-                                  ? FileImage(File(imagePath)) as ImageProvider
-                                  : const AssetImage(
-                                      'assets/welcome/main image.jpg'),
+                          width: 85,
+                          height: 85,
+                          color: transParent,
+                          child: imagePath.isNotEmpty ? (kIsWeb ? Image.memory(  base64Decode(imagePath),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                          ): Image.file(
+                            File(imagePath),
                               fit: BoxFit.cover,
-                            ),
-                          ),
+                            width: double.infinity,
+                            height: double.infinity,
+                          )
+                          ): Image.asset(  'assets/category/file.png',  fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,),
+                          
                         ),
                       ),
                     ],

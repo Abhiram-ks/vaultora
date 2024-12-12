@@ -32,12 +32,12 @@ Future<Map<String, dynamic>> calculateSalesForCustomDateRange(
   for (var date = start;
       date.isBefore(end.add(const Duration(days: 1)));
       date = date.add(const Duration(days: 1))) {
-    final dateString = DateFormat('yyyy-MM-dd').format(date);
+    final dateString = DateFormat('dd-MM-yyyy').format(date);
 
     final dailySalesList = salesBox.values.where((sale) {
       final saleDate =
           DateTime.fromMicrosecondsSinceEpoch(int.parse(sale.id));
-      return DateFormat('yyyy-MM-dd').format(saleDate) == dateString;
+      return DateFormat('dd-MM-yyyy').format(saleDate) == dateString;
     }).toList();
 
 

@@ -23,9 +23,7 @@ class MultipleSales extends StatefulWidget {
   final Map<AddModel, double> temporaryStock;
 
   const MultipleSales({
-    super.key,
-    required this.onAdd,
-    required this.temporaryStock,
+    super.key,required this.onAdd, required this.temporaryStock,
   });
 
   @override
@@ -39,7 +37,6 @@ class _MultipleSalesState extends State<MultipleSales> {
   ValueNotifier<int> stockLevel = ValueNotifier<int>(0);
   ValueNotifier<String> checkoutText = ValueNotifier<String>('₹ 0.00');
   ValueNotifier<double> quantityNotifier = ValueNotifier<double>(0);
-
   int count = 0;
   AddModel? selectedProduct;
 
@@ -48,7 +45,6 @@ class _MultipleSalesState extends State<MultipleSales> {
     super.initState();
     filteredList = addListNotifier.value;
   }
-
   void filterSearchResults(String query) {
     if (query.isEmpty) {
       setState(() {
@@ -65,33 +61,25 @@ class _MultipleSalesState extends State<MultipleSales> {
         selectedProductIndex = null;
         stockLevel.value = 0;
       });
-    }
-  }
-
+    }}
 void handleProductClick(int index) {
   setState(() {
     selectedProductIndex = index;
     selectedProduct = filteredList[index];
     stockLevel.value = widget.temporaryStock[selectedProduct!]!.toInt();
-
     count = stockLevel.value > 0 ? 1 : 0;
-
     double mrp = double.tryParse(filteredList[index].mrp) ?? 0;
     checkoutText.value = '₹ ${(count * mrp).toStringAsFixed(2)}';
     bool isDuplicate = tempSaleNotifier.value.any((saleProduct) =>
         saleProduct.product.itemName.trim().toLowerCase() ==
         selectedProduct!.itemName.trim().toLowerCase());
-
     if (isDuplicate) {
       CustomSnackBarCustomisation.show(context: context,message:
        "This product is already in the sales list.", messageColor:blue,
        icon: Icons.assignment_turned_in,
        iconColor: blue);
     }
-  });
-}
-
-
+  });}
   void incrementCount() {
     setState(() {
       if (count < stockLevel.value) {
@@ -101,9 +89,7 @@ void handleProductClick(int index) {
             : 0;
         checkoutText.value = '₹ ${(count * mrp).toStringAsFixed(2)}';
       }
-    });
-  }
-
+    });}
   void decrementCount() {
     setState(() {
       if (count > 1) {
@@ -113,9 +99,7 @@ void handleProductClick(int index) {
             : 0;
         checkoutText.value = '₹ ${(count * mrp).toStringAsFixed(2)}';
       }
-    });
-  }
-
+    }); }
 void onCheckoutPressed() {
   if (selectedProductIndex != null) {
     final selectedProduct = filteredList[selectedProductIndex!];
@@ -124,7 +108,6 @@ void onCheckoutPressed() {
     bool isDuplicate = tempSaleNotifier.value.any((saleProduct) =>
         saleProduct.product.itemName.trim().toLowerCase() ==
         selectedProduct.itemName.trim().toLowerCase());
-
     if (isDuplicate) {
       CustomSnackBarCustomisation.show(
           context: context,
@@ -134,7 +117,6 @@ void onCheckoutPressed() {
           iconColor: redColor);
       return;
     }
-
     if (availableStock == 0) {
          CustomSnackBarCustomisation.show(
           context: context,
@@ -144,7 +126,6 @@ void onCheckoutPressed() {
           iconColor: redColor);
       return;
     }
-
     if (widget.temporaryStock.containsKey(selectedProduct)) {
       double availableStock = widget.temporaryStock[selectedProduct]!;
       if (availableStock >= count) {
@@ -161,28 +142,22 @@ void onCheckoutPressed() {
 
         // ignore: invalid_use_of_protected_member
         tempSaleNotifier.notifyListeners();
-
         setState(() {
           selectedProductIndex = null;
           searchController.clear();
           count = 0;
           stockLevel.value = 0;
           checkoutText.value = '₹ 0.00';
-        });
-
-         CustomSnackBar.showSuccessSnackBar(context, selectedProduct.itemName);
+        }); CustomSnackBar.showSuccessSnackBar(context, selectedProduct.itemName);
       } else {
           CustomSnackBar.show(
            context: context,
           message:'Insufficient stock for ${selectedProduct.itemName}.',
           );
-      }
-    }
+      }}
   } else {
      CustomSnackBar.showErrorSnackBar(context);
-  }
-}
-
+  }}
   void updateTemporaryStock(AddModel product, double quantity) {
     setState(() {
       if (widget.temporaryStock.containsKey(product)) {
@@ -190,14 +165,11 @@ void onCheckoutPressed() {
             (widget.temporaryStock[product]! - quantity)
                 .clamp(0.0, double.infinity);
       }
-    });
-  }
-
+    });}
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar:  MyAppBarTwo(titleText: 'Add Sale',bgColor: inside,),

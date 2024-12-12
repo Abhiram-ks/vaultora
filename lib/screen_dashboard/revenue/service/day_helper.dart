@@ -148,13 +148,18 @@ Future<Map<String, dynamic>> getSalesDataForChart() async {
   await initSalesDB();
   Map<String, double> dailySales = {};
   final today = DateTime.now();
-  final todayString = DateFormat('yyyy-MM-dd').format(today);
-  final yesterdayString = DateFormat('yyyy-MM-dd').format(today.subtract(const Duration(days: 1)));
-  final dayBeforeYesterdayString = DateFormat('yyyy-MM-dd').format(today.subtract(const Duration(days: 2)));
+  final todayString = DateFormat('dd-MM-yyyy').format(today);
+  final yesterdayString = DateFormat('dd-MM-yyyy').format(today.subtract(const Duration(days: 1)));
+  final dayBeforeYesterdayString = DateFormat('dd-MM-yyyy').format(today.subtract(const Duration(days: 2)));
+
+  dailySales[todayString] = 0.0;
+  dailySales[yesterdayString] = 0.0;
+  dailySales[dayBeforeYesterdayString] = 0.0;
+
 
   for (var sale in salesListNotifier.value) {
     final saleDate = DateTime.fromMicrosecondsSinceEpoch(int.tryParse(sale.id) ?? 0);
-    final saleDateString = DateFormat('yyyy-MM-dd').format(saleDate);
+    final saleDateString = DateFormat('dd-MM-yyyy').format(saleDate);
 
 
     if (saleDateString == todayString) {

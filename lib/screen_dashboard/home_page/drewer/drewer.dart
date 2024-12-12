@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/add_screen/Category_add/category_add.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/records/sales/sales_record/sale_record.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/add_screen/product_add/add_product.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/add_screen/sales_add/add_sales.dart';
@@ -14,7 +15,6 @@ import 'package:vaultora_inventory_app/screen_dashboard/settings/privacy.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/settings/terms_condition.dart';
 
 import '../../profile/profile_screen/profile_page.dart';
-import '../../add_screen/Category_add/category_add.dart';
 import '../../records/product/product_records/product_record.dart';
 import '../../revenue/revanue.dart';
 
@@ -255,8 +255,13 @@ class _AppDrawerState extends State<AppDrawer> with SingleTickerProviderStateMix
                         ),SizedBox(height: screenHeight*0.004,),
                         CustomListTile(
                           iconData: Icons.category_outlined,
+                          
                           onTap: (){
-                            CategoryBox.showAddCategoryDialog(context, widget.userDetails.id);
+                             showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AddCategoryDialog(userId: widget.userDetails.id),
+                );
                           },
                           text: 'Add Category',
                         ),SizedBox(height: screenHeight*0.1,),

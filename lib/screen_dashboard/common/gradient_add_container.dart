@@ -36,19 +36,33 @@ class CustomContainer extends StatefulWidget {
 
 class _CustomContainerState extends State<CustomContainer> {
   bool _isFirstGradient = true;
+  bool _isDisposed = false; 
+  
 
   @override
   void initState() {
     super.initState();
+    loadGradient();
+    
+  }
+    @override
+  void dispose() {
+    _isDisposed = true; 
+    super.dispose();
+  }
+  
+
+  void loadGradient() {
     Future.doWhile(() async {
       await Future.delayed(const Duration(seconds: 3));
+      if (_isDisposed) return false;
       setState(() {
         _isFirstGradient = !_isFirstGradient;
       });
       return true;
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

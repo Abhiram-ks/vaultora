@@ -1,8 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class DeleteConfirmationBottomSheet {
   static Future<bool?> show(BuildContext context, String itemName) async {
+
+
     return showModalBottomSheet<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -75,9 +78,7 @@ class DeleteConfirmationBottomSheet {
                   ),
                   Expanded(
                     child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(true);
-                        Navigator.of(context).pop();
+                      onPressed: () {Navigator.of(context).pop(true);
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.black,
@@ -103,3 +104,5 @@ class DeleteConfirmationBottomSheet {
     );
   }
 }
+
+

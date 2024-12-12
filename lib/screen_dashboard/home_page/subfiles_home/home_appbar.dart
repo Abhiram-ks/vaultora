@@ -38,7 +38,6 @@ class _HomeAppbarState extends State<HomeAppbar>
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return AppBar(
       toolbarHeight: screenHeight * 0.09,
@@ -75,7 +74,7 @@ class _HomeAppbarState extends State<HomeAppbar>
                       'Vaultora',
                       style: GoogleFonts.poppins(
                         color: whiteColor,
-                        fontSize: screenWidth * 0.08,
+                        fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -107,7 +106,7 @@ class _HomeAppbarState extends State<HomeAppbar>
                       'Tech You Can Trust, Prices You’ll Love!',
                       style: GoogleFonts.poppins(
                         color:whiteColor,
-                        fontSize: screenWidth * 0.04,
+                        fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
                       maxLines: 1, 

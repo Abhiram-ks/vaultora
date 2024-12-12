@@ -67,9 +67,9 @@ class _SearchbarmainState extends State<Searchbarmain> {
               onChanged: _filterItems,
               decoration: InputDecoration(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                   color: Colors.grey,
-                  fontSize: screenWidth * 0.04,
+                  fontSize: 15,
                 ),
                 border: InputBorder.none,
               ),
@@ -104,11 +104,11 @@ class _SearchbarmainState extends State<Searchbarmain> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   "Search",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: screenWidth * 0.04,
+                    fontSize: 15,
                     color: Colors.white,
                   ),
                 ),

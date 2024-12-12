@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/add_screen/Category_add/category_add.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/settings/blur_settings_container.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/settings/caleder_marker.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/settings/privacy.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/settings/terms_condition.dart';
 
 import '../../Color/colors.dart';
-import '../add_screen/Category_add/category_add.dart';
+
 import '../common/dialog_box.dart';
 import '../logistic/logistic.dart';
 import '../revenue/revanue.dart';
@@ -100,9 +101,15 @@ class ListSettingsContier extends StatelessWidget {
               icon: Icons.category_sharp,
               text: 'Add Category',
               bgcolor: black,
+              
               onTap: () {
-                CategoryBox.showAddCategoryDialog(context, username);
-              },
+                             showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AddCategoryDialog(userId: username),
+                );
+              }
+              
             ),
             SizedBox(height: screenHeight * 0.02),
              ClickableRowItem(

@@ -83,8 +83,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double titleFontSize = screenWidth * 0.1;
-    double subtitleFontSize = screenWidth * 0.04;
 
     return Scaffold(
       backgroundColor: transParent,
@@ -110,7 +108,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                     Align(alignment: Alignment.topLeft,
                       child: ShaderText(
                         text: 'Vaultora',
-                        fontSize: titleFontSize,animation: _animation,
+                        fontSize: 32,
+                        animation: _animation,
                       ),
                     ),
                     Align(
@@ -118,7 +117,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       child: Text(
                         'Tech You Can Trust, Prices You\'ll Love!',
                         style: GoogleFonts.poppins(
-                          color: grey,fontSize: subtitleFontSize,fontWeight: FontWeight.w600,
+                          color: grey,fontSize: 16,fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),

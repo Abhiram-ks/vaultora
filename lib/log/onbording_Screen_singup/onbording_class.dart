@@ -85,7 +85,7 @@ class _CenteredImageWithTextState extends State<CenteredImageWithText>
               child: Text(
                 widget.text,
                 style: GoogleFonts.roboto(
-                  fontSize: screenWidth * 0.045,
+                  fontSize: 18,
                   fontWeight: FontWeight.w300,
                   color: whiteColor,
                 ),

@@ -155,14 +155,15 @@ class _CustomisationState extends State<Customisation> {
                     if (difference < 0) {
                       CustomSnackBarCustomisation.show(
                           context: context,
-                          message:  "End date cannot be earlier than start date.!",
+                          message:
+                              "End date cannot be earlier than start date.!",
                           messageColor: Colors.blue,
                           icon: Icons.info_outline_rounded,
                           iconColor: Colors.blue);
-                    } else if (difference > 20) {
+                    } else if (difference > 120) {
                       CustomSnackBarCustomisation.show(
                           context: context,
-                          message: "Date range exceeds 20 days !",
+                          message: "Date range exceeds 120 days !",
                           messageColor: redColor,
                           icon: Icons.warning,
                           iconColor: redColor);
@@ -212,6 +213,14 @@ class _CustomisationState extends State<Customisation> {
                               final totalSales = salesData["totalSales"];
                               final dailySales =
                                   salesData["dailySales"] as List<dynamic>;
+                              final hasNonZeroSales = dailySales.any(
+                                  (dailyData) => dailyData['salesCount'] > 0);
+                              if (!hasNonZeroSales) {
+                                  
+                                return const Text(
+                                    'No sales data available.');
+                                    
+                              }
 
                               return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,46 +262,43 @@ class _CustomisationState extends State<Customisation> {
                                           ),
                                         ),
                                         if (isListVisible)
-                                          ListView.builder(
-                                            shrinkWrap: true,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemCount: dailySales.length,
-                                            itemBuilder: (context, index) {
-                                              final dailyData =
-                                                  dailySales[index];
-                                              return ListTile(
-                                                title: Text(
-                                                    "Date: ${dailyData['date']}"),
-                                                subtitle: Text(
-                                                  "Sales: ₹ ${dailyData['totalSales'].toStringAsFixed(2)}",
-                                                ),
-                                                trailing: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const Text(
-                                                      "Total Sales:",
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 12,
-                                                      ),
+                                          SizedBox(
+                                            height: screenHeight * 0.4,
+                                            child: ListView.builder(
+                                              itemCount: dailySales.length,
+                                              physics: const NeverScrollableScrollPhysics(),
+                                              itemBuilder: (context, index) {
+                                                final dailyData = dailySales[index];
+                                                final salesCount = dailyData['salesCount'] ??  0;
+                                                if (salesCount > 0) {
+                                                  return ListTile(
+                                                    title: Text(  "Date: ${dailyData['date']}"),
+                                                    subtitle: Text("Sales: ₹ ${dailyData['totalSales'].toStringAsFixed(2)}",  ),
+                                                    trailing: Column(
+                                                      mainAxisAlignment: MainAxisAlignment .center,
+                                                      children: [
+                                                        const Text(
+                                                          "Total Sales:",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "$salesCount",
+                                                          style:  TextStyle(
+                                                            color: inside, fontWeight:
+                                                                FontWeight.bold, fontSize: 17,
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                    Text(
-                                                      "${dailyData['salesCount']}",
-                                                      style: const TextStyle(
-                                                        color: Color.fromARGB(
-                                                            255, 29, 66, 77),
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 17,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
+                                                  );
+                                                }
+                                                return const SizedBox();
+                                              },
+                                            ),
                                           ),
                                       ],
                                     )

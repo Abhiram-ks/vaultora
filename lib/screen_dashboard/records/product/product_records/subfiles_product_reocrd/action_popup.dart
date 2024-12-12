@@ -1,9 +1,50 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:vaultora_inventory_app/Color/colors.dart';
+import 'package:vaultora_inventory_app/db/helpers/addfunction.dart';
 import '../../../../../db/helpers/categoryfunction.dart';
+import '../../../../common/snackbar.dart';
 
-void showDeleteConfirmation(BuildContext context, String categoryId) {
+void showDeleteConfirmation(BuildContext context, String categoryId) async {
+ Future<void> deleteCategoryWithCheck(
+  BuildContext context, String categoryId) async{   await initCategoryDB();
+  await initAddDB();
+   final category = categoryBox!.get(categoryId);
+   if(category == null){
+    log("Category not found: $categoryId");
+    return;
+   }
+
+   bool isUsedInItems = addBox!.values.any((item) => item.dropDown == category.categoryName);
+
+   if(isUsedInItems){
+    CustomSnackBarCustomisation.show(
+      context: context,
+      icon: Icons.shopping_bag_outlined,
+      iconColor: redColor,
+      message: 'Cannot delete category as it is in use.',
+      messageColor: redColor,
+    );
+    return;
+   }
+    await categoryBox!.delete(categoryId);
+    log("Category deleted: $categoryId");
+      categoryListNotifier.value = categoryBox!.values.toList();
+    // ignore: invalid_use_of_protected_member
+    categoryListNotifier.notifyListeners();
+
+  CustomSnackBarCustomisation.show(
+    context:context,
+    icon: Icons.cloud_done_outlined,
+    iconColor: green,
+    message: 'Category deleted successfully.',
+    messageColor: green,
+     );
+
+  }
+ 
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -47,7 +88,7 @@ void showDeleteConfirmation(BuildContext context, String categoryId) {
           ),
           TextButton(
             onPressed: () async {
-              await deleteCategory(categoryId);
+              await deleteCategoryWithCheck(context, categoryId);
               Navigator.of(context).pop();
             },
             style: TextButton.styleFrom(

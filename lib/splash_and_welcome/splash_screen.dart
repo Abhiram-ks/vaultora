@@ -64,6 +64,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> gotoLoggedUser() async {
     await Future.delayed(const Duration(seconds: 3));
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) =>  Homepage(userDetails: lastLoggedUser!),), (route) => false,);
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (ctx) => Homepage(userDetails: lastLoggedUser!),
@@ -83,9 +85,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double titleFontSize = screenWidth * 0.1;
-    double subtitleFontSize = screenWidth * 0.04;
+
 
     return Scaffold(
       backgroundColor: black,
@@ -104,8 +104,8 @@ class _SplashScreenState extends State<SplashScreen>
                     borderRadius: BorderRadius.circular(100),
                     child: Image.asset(
                       'assets/welcome/Screenshot_2024-10-22_112608-transformed.png',
-                      width: screenWidth * 0.5,
-                      height: screenHeight * 0.3,
+                      width: 200,
+                      height: 200,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -114,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ShaderMask(
                   shaderCallback: (bounds) {
                     return LinearGradient(
-                      colors:  [redColor, whiteColor],
+                      colors:  [whiteColor, black],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       stops: [
@@ -127,7 +127,7 @@ class _SplashScreenState extends State<SplashScreen>
                     'Vaultora',
                     style: GoogleFonts.poppins(
                       color: whiteColor,
-                      fontSize: titleFontSize,
+                      fontSize: 30,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -142,7 +142,7 @@ class _SplashScreenState extends State<SplashScreen>
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
                       color: whiteColor,
-                      fontSize: subtitleFontSize,
+                      fontSize: 16,
                       fontWeight: FontWeight.w200,
                     ),
                   ),

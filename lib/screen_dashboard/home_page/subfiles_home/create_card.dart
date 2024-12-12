@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
@@ -41,30 +43,52 @@ class _CreateCardState extends State<CreateCard> {
       child: Stack(
         children: [
           Container(
-            width: screenWidth * 0.41,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(
-                image: widget.imagePath.isNotEmpty
-                    ? FileImage(File(widget.imagePath)) as ImageProvider
-                    : const AssetImage('assets/category/file.png'),
+  width: screenWidth * 0.41,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(15),
+  ),
+  child: Stack(
+    children: [
+      ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: widget.imagePath.isNotEmpty
+            ? (kIsWeb
+                ? Image.memory(
+                    base64Decode(widget.imagePath),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  )
+                : Image.file(
+                    File(widget.imagePath),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ))
+            : Image.asset(
+                'assets/category/file.png',
                 fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
               ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    black.withOpacity(0.0),
-                    black.withOpacity(0.75),
-                  ],
-                ),
-              ),
-            ),
+      ),
+      Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Colors.black.withOpacity(0.0),
+              Colors.black.withOpacity(0.75),
+            ],
           ),
+        ),
+      ),
+    ],
+  ),
+),
+
           Positioned(
             bottom: 10,
             left: 10,

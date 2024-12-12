@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/add_screen/Category_add/category_add.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/records/product/product_records/subfiles_product_reocrd/action_popup.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/add_screen/Category_add/update_category.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/home_page/subfiles_home/create_card.dart';
@@ -184,11 +185,24 @@ class _HomePageState extends State<HomePage> {
               valueListenable: categoryListNotifier,
               builder: (context, categories, child) {
                 return categories.isEmpty
-                    ?  Padding(
+                    ? Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Center(
-                            child: CircularProgressIndicator(
-                          color:inside,
+                            child: Column(
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AddCategoryDialog(
+                                        userId: widget.userDetails.id),
+                                  );
+                                },
+                                child: const Text('No add one!')),
+                            CircularProgressIndicator(
+                              color: inside,
+                            ),
+                          ],
                         )),
                       )
                     : Padding(
@@ -213,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                                   showModalBottomSheet(
                                       context: context,
                                       isScrollControlled: true,
-                                      backgroundColor:transParent,
+                                      backgroundColor: transParent,
                                       builder: (BuildContext context) {
                                         return EditBottomSheet(
                                           id: category.id,

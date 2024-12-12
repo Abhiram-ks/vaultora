@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vaultora_inventory_app/db/helpers/adminfunction.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/common/snackbar.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/settings/terms_condition.dart';
 import '../../Color/colors.dart';
 import '../Autotication_singup/email.validate.dart';
@@ -178,22 +179,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: ElevatedButton(
                         onPressed: () async {
                           if (_validateAndSubmit()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content:  Text(
-                                  'Registering...',
-                                  style: TextStyle(
-                                      color: whiteColor, fontSize: 16),
-                                ),
-                                backgroundColor: Colors.blueAccent,
-                                behavior: SnackBarBehavior.floating,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 1),
-                              ),
-                            );
+                            CustomSnackBarCustomisation.show(
+                              context: context, 
+                              message:'Registering...',
+                               messageColor: blue, 
+                               icon: Icons.satellite_alt_rounded, 
+                               iconColor: blue);
                             bool isSuccess = await addUser(
                               id: DateTime.now().millisecondsSinceEpoch.toString(),
                               name: _ventureNameController.text,
@@ -204,12 +195,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             );
                             if (isSuccess) {
                               developer.log("User added");
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Successfully registered!'),
-                                  duration: Duration(seconds: 1),
-                                ),
-                              );
+                              CustomSnackBarCustomisation.show(
+                                context: context,
+                                 message: 'Successfully registered!',
+                                  messageColor: green, 
+                                  icon: Icons.cloud_done_outlined,
+                                   iconColor: green);
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -217,12 +208,12 @@ class _RegisterPageState extends State<RegisterPage> {
                               );
                             } else {
                               developer.log("Failed to add user");
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      'Failed to register. Please try again.'),
-                                  duration: Duration(seconds: 2),
-                                ),
+                              CustomSnackBarCustomisation.show(
+                                context: context,
+                                icon: Icons.wifi_tethering_error,
+                                iconColor: redColor,
+                                message:  'Failed to register. Please try again.',
+                                messageColor: redColor
                               );
                             }
                           }

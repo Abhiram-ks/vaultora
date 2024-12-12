@@ -4,6 +4,7 @@ import 'package:vaultora_inventory_app/screen_dashboard/add_screen/Category_add/
 import '../../../common/gradient_add_container.dart';
 import '../../product_add/add_product.dart';
 import '../../sales_add/add_sales.dart';
+
 class AddProductPage extends StatelessWidget {
   final double screenWidth;
   final double screenHeight;
@@ -30,12 +31,12 @@ class AddProductPage extends StatelessWidget {
               description:
                   'Seamlessly add items with details like name, category, price, and quantity. It ensures accuracy through photo uploads, error validation, and real-time updates, while its intuitive design enhances efficiency and organization.',
               gradientColors1: const [
-                 Color.fromARGB(255, 125, 185, 203),
+                Color.fromARGB(255, 125, 185, 203),
                 Color.fromARGB(255, 33, 80, 94),
               ],
               gradientColors2: const [
-               Color.fromARGB(255, 188, 229, 241),
-              Color.fromARGB(255, 59, 140, 164),
+                Color.fromARGB(255, 188, 229, 241),
+                Color.fromARGB(255, 59, 140, 164),
               ],
               right: 10.0,
               bottom: 10.0,
@@ -43,7 +44,9 @@ class AddProductPage extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) =>  AddProducts(userDetails: userDetails,),
+                    builder: (context) => AddProducts(
+                      userDetails: userDetails,
+                    ),
                   ),
                 );
               },
@@ -54,19 +57,23 @@ class AddProductPage extends StatelessWidget {
               title: 'Add Category',
               description:
                   'Inventory by allowing users to create, edit, or delete product categories. It ensures better organization, improves searchability, and simplifies stock management with an intuitive interface.',
-              gradientColors1:  const [
-                   Color.fromARGB(255, 2, 72, 92),
-                 Color.fromARGB(255, 179, 230, 245)
+              gradientColors1: const [
+                Color.fromARGB(255, 2, 72, 92),
+                Color.fromARGB(255, 179, 230, 245)
               ],
               gradientColors2: const [
-                 Color.fromARGB(255, 59, 140, 164),
-            Color.fromARGB(255, 180, 225, 238),
+                Color.fromARGB(255, 59, 140, 164),
+                Color.fromARGB(255, 180, 225, 238),
               ],
               right: 10.0,
               bottom: 10.0,
               lottieSize: 102.0,
               onTap: () {
-                CategoryBox.showAddCategoryDialog(context, userDetails.id);
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AddCategoryDialog(userId: userDetails.id),
+                );
               },
             ),
             SizedBox(height: screenHeight * 0.024),
@@ -80,9 +87,9 @@ class AddProductPage extends StatelessWidget {
                 Color.fromARGB(255, 40, 98, 116),
               ],
               gradientColors2: const [
-                  Color.fromARGB(255, 180, 225, 238),
-                  Color.fromARGB(255, 125, 185, 203),
-              ], 
+                Color.fromARGB(255, 180, 225, 238),
+                Color.fromARGB(255, 125, 185, 203),
+              ],
               right: 10.0,
               bottom: 10.0,
               lottieSize: 102.0,

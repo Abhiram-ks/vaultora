@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart'; 
+
 
 class DigitField extends StatefulWidget {
   final String hintText;
@@ -8,7 +10,7 @@ class DigitField extends StatefulWidget {
   final bool obscureText;
   final TextEditingController controller;
   final String? Function(String? value) validate;
-  final Function(String)? onChanged; // Optional onChanged parameter
+  final ValueChanged<String?> ? onChanged; 
 
   const DigitField({
     super.key,
@@ -17,7 +19,7 @@ class DigitField extends StatefulWidget {
     this.obscureText = false,
     required this.controller,
     required this.validate,
-    this.onChanged, // Accept onChanged function
+    this.onChanged,
   });
 
   @override
@@ -37,13 +39,14 @@ class _FieldDecorationState extends State<DigitField> {
         borderRadius: BorderRadius.circular(15),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: TextFormField(
+          child: FormBuilderTextField(
+            name: 'digitField', 
             controller: widget.controller,
             obscureText: widget.obscureText,
             validator: widget.validate,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onChanged: widget.onChanged, // Trigger onChanged if provided
+            onChanged: widget.onChanged, 
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
               hintText: widget.hintText,
@@ -71,16 +74,11 @@ class DigitInputValidator {
   static String? validate(String? value) {
     if (value == null || value.isEmpty) {
       return 'This field cannot be empty';
-    } 
-
-    else if (value.contains(' ')) {
+    } else if (value.contains(' ')) {
       return 'No spaces allowed';
-    }
-    
-    else if (RegExp(r'[a-zA-Z]').hasMatch(value)) {
+    } else if (RegExp(r'[a-zA-Z]').hasMatch(value)) {
       return 'No Letters allowed';
     }
-
     return null;
   }
 }

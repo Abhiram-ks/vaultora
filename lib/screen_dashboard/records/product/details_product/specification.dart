@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinch_to_zoom_scrollable/pinch_to_zoom_scrollable.dart';
@@ -59,19 +61,18 @@ class _SpecificationState extends State<Specification> {
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverAppBar(
-                backgroundColor:inside,
+                backgroundColor: inside,
                 expandedHeight: 250.0,
                 pinned: true,
                 automaticallyImplyLeading: false,
                 flexibleSpace: Container(
-                  decoration:  BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                
-                         inside,
-                          whiteColor,
+                        inside,
+                        whiteColor,
                       ],
                     ),
                   ),
@@ -122,22 +123,22 @@ class _SpecificationState extends State<Specification> {
                                 child: PinchToZoomScrollableWidget(
                                   child: ClipOval(
                                     child: widget.item.imagePath.isNotEmpty
-                                        ? Image.file(
-                                            File(value.imagePath),
+                                        ? (kIsWeb ? Image.memory(   base64Decode(value.imagePath),
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        ): Image.file(
+                                          File(value.imagePath),
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                        ) 
+                                        ):Image.asset(
+                                           'assets/category/file.png',
                                             fit: BoxFit.cover,
-                                            width: screenWidth * 0.27,
-                                            height: screenWidth * 0.27,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return const Icon(Icons.error);
-                                            },
+                                             width: double.infinity,
+                                            height: double.infinity,
                                           )
-                                        : Image.asset(
-                                            'assets/welcome/main image.jpg',
-                                            fit: BoxFit.cover,
-                                            width: screenWidth * 0.27,
-                                            height: screenWidth * 0.27,
-                                          ),
                                   ),
                                 ),
                               ),
@@ -152,14 +153,13 @@ class _SpecificationState extends State<Specification> {
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Container(
-                  decoration:  BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
                         whiteColor,
-                         whiteColor,
-                          
+                        whiteColor,
                       ],
                     ),
                   ),
@@ -206,14 +206,15 @@ class _SpecificationState extends State<Specification> {
                           children: [
                             ActionbuttonsSpecification(
                               icon: Icons.delete_outline_outlined,
-                              iconColor:redColor,
+                              iconColor: redColor,
                               onPressed: () async {
                                 bool? confirmDeletion =
                                     await DeleteConfirmationBottomSheet.show(
-                                        context, widget.item.itemName);
-
+                                  context,
+                                  widget.item.itemName,
+                                );
                                 if (confirmDeletion == true) {
-                                  deleteItem(widget.item.id);
+                                  await deleteItem(widget.item.id, context);
                                 }
                               },
                             ),
@@ -224,7 +225,7 @@ class _SpecificationState extends State<Specification> {
                                 showModalBottomSheet(
                                     context: context,
                                     isScrollControlled: true,
-                                    backgroundColor:transParent,
+                                    backgroundColor: transParent,
                                     builder: (BuildContext context) {
                                       return CustomBottomSheet(
                                           item: widget.item);
@@ -232,8 +233,7 @@ class _SpecificationState extends State<Specification> {
                               },
                             ),
                             ActionbuttonsSpecificationText(
-                              borderColor:
-                                 inside,
+                              borderColor: inside,
                               text: '₹ ${value.mrp}',
                             )
                           ],

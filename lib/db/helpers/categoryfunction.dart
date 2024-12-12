@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import '../models/category/catalog.dart';
 
 ValueNotifier<CategoryModel?> currentCategoryNotifier = ValueNotifier<CategoryModel?>(null);
@@ -53,6 +52,12 @@ Future<bool> updateCategory({
   await initCategoryDB();
   try {
     if (categoryBox!.containsKey(id)) {
+      bool isDuplicate = categoryBox!.values.any((category) => category.categoryName.toLowerCase() == categoryName.toLowerCase() && category.id != id);
+      if (isDuplicate) {
+        log("Category name '$categoryName' already exists.");
+        return false;
+        
+      }
       final existingCategory = categoryBox!.get(id);
       final updatedCategory = CategoryModel(
         id: existingCategory!.id, 

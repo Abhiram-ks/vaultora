@@ -13,6 +13,29 @@ class SalesCategory extends StatefulWidget {
 }
 
 class _SalesCategoryState extends State<SalesCategory> {
+  
+  void _navigateToSalesRecord(){
+     Navigator.of(context).push(
+    PageRouteBuilder(
+     transitionDuration: const Duration(milliseconds: 500),
+     pageBuilder: (context, animation, secondaryAnimation) =>  const SalesData(),
+     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+       const begin = Offset(1.0, 0.0);
+       const end = Offset.zero;
+       const curve = Curves.ease;
+       var tween =Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      var offsetAnimation = animation.drive(tween);
+      return SlideTransition(position: offsetAnimation,
+      child: child,
+      );
+     },
+  )
+    
+  );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -20,26 +43,10 @@ class _SalesCategoryState extends State<SalesCategory> {
     return GestureDetector(
         onHorizontalDragEnd: (details) {
     if (details.primaryVelocity! < 0) {
-      Navigator.push(
-        context,
-        PageRouteBuilder(
-          transitionDuration: const Duration(milliseconds: 500),
-          pageBuilder: (context, animation, secondaryAnimation) =>const SalesData(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0.0); 
-            const end = Offset.zero;       
-            const curve = Curves.ease;
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
-            return SlideTransition(
-              position: offsetAnimation,
-              child: child,
-            );
-          },
-        ),
-      );
+      _navigateToSalesRecord();
     }
   },
+  onTap: _navigateToSalesRecord,
       child: Container(
         width: double.infinity,
         height: screenHeight * 0.21,

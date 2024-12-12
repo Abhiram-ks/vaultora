@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/models/product/add.dart';
-import 'package:flutter/foundation.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/common/snackbar.dart';
 
 
 
@@ -123,10 +124,34 @@ Future<void> getAllItems() async {
   }
 }
 
-Future<void> deleteItem(String id) async {
+
+Future<void> deleteItem(String id, BuildContext context) async {
   await initAddDB();
-  await addBox!.delete(id);
-  await getAllItems();
+  AddModel? item = addBox!.get(id);
+  if (item != null) {
+    int itemCount = int.tryParse(item.itemCount) ?? 0;
+    if (itemCount == 0) {
+      await addBox!.delete(id);
+      await getAllItems();
+      log("Item deleted successfully: ${item.itemName}");
+      CustomSnackBarCustomisation.show(
+        context: context, 
+        message: 'Successfully deleted Item', 
+        messageColor:green, 
+        icon: Icons.cloud_done_outlined,
+         iconColor:green);
+      Navigator.of(context).pop();
+    } else {
+       CustomSnackBarCustomisation.show(
+        context: context, 
+        message: "Stock is available for the item.",
+         messageColor: orange,
+          icon: Icons.shopping_cart,
+           iconColor: orange);
+    }
+  } else {
+    log("Item not found: $id");
+  }
 }
 
 void printAllItems() {
