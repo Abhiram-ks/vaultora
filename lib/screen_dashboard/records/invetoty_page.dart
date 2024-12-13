@@ -141,7 +141,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     dotColor: Colors.grey,
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.05),
+                SizedBox(height: screenHeight * 0.02),
 
                 ValueListenableBuilder<int>(valueListenable: itemCountNotifier,
                  builder:  (context, count, child){

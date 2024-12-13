@@ -18,41 +18,43 @@ Widget multipleSalesSubfile(dynamic incrementCount, dynamic screenHeight, dynami
                             const BorderRadius.all(Radius.circular(10)),
                         child: SizedBox(
                           height: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Available Stock',
-                                style: TextStyle(
-                                  color: green,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Available Stock',
+                                  style: TextStyle(
+                                    color: green,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.0,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              ValueListenableBuilder<int>(
-                                valueListenable: stockLevel,
-                                builder: (context, stock, child) {
-                                  return Column(
-                                    children: [
-                                      Text(
-                                        'Stock Level: ${stock.toInt()}',
-                                        style:  TextStyle(
-                                          color: black,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 18.0,
+                                ValueListenableBuilder<int>(
+                                  valueListenable: stockLevel,
+                                  builder: (context, stock, child) {
+                                    return Column(
+                                      children: [
+                                        Text(
+                                          'Stock Level: ${stock.toInt()}',
+                                          style:  TextStyle(
+                                            color: black,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 18.0,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
                                         ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                    ],
-                                  );
-                                },
-                              )
-                            ],
+                                      ],
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),

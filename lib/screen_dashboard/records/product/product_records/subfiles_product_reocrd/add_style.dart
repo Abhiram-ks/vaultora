@@ -27,7 +27,6 @@ class AddStyle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
@@ -71,9 +70,11 @@ class AddStyle extends StatelessWidget {
                             width: double.infinity,
                             height: double.infinity,
                           )
-                          ): Image.asset(  'assets/category/file.png',  fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,),
+                          ): Image.asset( 
+                         'assets/category/file.png',  
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,),
                           
                         ),
                       ),

@@ -69,11 +69,11 @@ class SearchField extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Text(
+                child:const Text(
                   "Search",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: screenWidth * 0.04,
+                    fontSize: 15,
                     color: Colors.white,
                   ),
                 ),

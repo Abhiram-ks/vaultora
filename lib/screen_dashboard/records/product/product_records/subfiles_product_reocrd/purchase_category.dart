@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
-import 'package:vaultora_inventory_app/screen_dashboard/records/product/filtering_product/filtaring_price.dart';
-
 import '../product_record.dart';
 
 class PurchaseCategory extends StatefulWidget {
@@ -166,7 +164,6 @@ class _PurchaseCategoryState extends State<PurchaseCategory> {
                             ),
                           ),
                         ),
-                       const SwipeHint(),
                       ],
                     ),
                   ),

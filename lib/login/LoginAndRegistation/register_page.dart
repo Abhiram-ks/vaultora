@@ -74,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Form(
               key: _formKey,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

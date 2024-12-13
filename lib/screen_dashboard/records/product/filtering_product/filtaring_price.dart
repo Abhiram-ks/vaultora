@@ -28,21 +28,3 @@ class FiltaringPrice extends StatelessWidget {
     );
   }
 }
-
-class SwipeHint extends StatelessWidget {
-  const SwipeHint({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(
-      padding:  EdgeInsets.only(right: 12.0),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Text(
-          'Swipe -->',
-          style: TextStyle(color: Color.fromARGB(255, 159, 159, 159),fontSize: 14),
-        ),
-      ),
-    );
-  }
-}

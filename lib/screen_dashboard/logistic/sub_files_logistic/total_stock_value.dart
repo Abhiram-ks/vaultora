@@ -38,26 +38,28 @@ class StockValue extends StatelessWidget {
           children: [
             Expanded(
               flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Total Stock Value',
-                    style: GoogleFonts.kodchasan(
-                      fontSize: 16,
-                      color: black,
-                      fontWeight: FontWeight.w500,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Total Stock Value',
+                      style: GoogleFonts.kodchasan(
+                        fontSize: 16,
+                        color: black,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '₹ $stockValue',
-                    style: GoogleFonts.kodchasan(
-                      fontSize: 20,
-                      color: black,
-                      fontWeight: FontWeight.bold,
+                    Text(
+                      '₹ $stockValue',
+                      style: GoogleFonts.kodchasan(
+                        fontSize: 20,
+                        color: black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Expanded(

@@ -70,9 +70,9 @@ void _filterSales(String query, {DateTime? startDate, DateTime? endDate}) {
 
               decoration: InputDecoration(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(
+                hintStyle:const TextStyle(
                   color: Colors.grey,
-                  fontSize: screenWidth * 0.04,
+                  fontSize: 14,
                 ),
                 border: InputBorder.none,
               ),
@@ -107,11 +107,11 @@ void _filterSales(String query, {DateTime? startDate, DateTime? endDate}) {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Text(
+                child:const Text(
                   "Search",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: screenWidth * 0.04,
+                    fontSize: 14,
                     color: Colors.white,
                   ),
                 ),

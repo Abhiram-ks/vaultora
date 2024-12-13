@@ -1,7 +1,9 @@
-
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:vaultora_inventory_app/Color/colors.dart';
 
 class ShowSaleAdded extends StatelessWidget {
   final VoidCallback? onTap;
@@ -48,33 +50,48 @@ class ShowSaleAdded extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Icon(Icons.shopify,color: Colors.black,),
-                          ),
-                        ),
-                        ClipOval(
-                          child: Container(
-                            width: screenWidth * 0.2,
-                            height: screenWidth * 0.2,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              image: DecorationImage(
-                                image: imagePath.isNotEmpty
-                                    ? FileImage(File(imagePath))
-                                        as ImageProvider
-                                    : const AssetImage(
-                                        'assets/welcome/main image.jpg'),
-                                fit: BoxFit.cover,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 8),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Icon(
+                                Icons.shopify,
+                                color: Colors.black,
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          ClipOval(
+                            child: Container(
+                              width: 80,
+                              height: 80,
+                              color: transParent,
+                              child: imagePath.isNotEmpty
+                                  ? (kIsWeb
+                                      ? Image.memory(
+                                          base64Decode(imagePath),
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                        )
+                                      : Image.file(
+                                          File(imagePath),
+                                          fit: BoxFit.cover,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                        ))
+                                  : Image.asset(
+                                      'assets/welcome/main image.jpg',
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -108,7 +125,10 @@ class ShowSaleAdded extends StatelessWidget {
                                   SizedBox(height: screenHeight * 0.01),
                                   Row(
                                     children: [
-                                      const Icon(Icons.local_print_shop,color: Colors.black,),
+                                      const Icon(
+                                        Icons.local_print_shop,
+                                        color: Colors.black,
+                                      ),
                                       SizedBox(width: screenWidth * 0.02),
                                       const Text(
                                         'Price',

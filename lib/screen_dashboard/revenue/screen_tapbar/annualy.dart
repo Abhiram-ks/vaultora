@@ -93,7 +93,7 @@ class Annualy extends StatelessWidget {
                         builder: (context, salesList, _) {
                           if (salesList.isEmpty) {
                             return const Center(
-                              child: Text('No sales data available for today'),
+                              child: Text('No sales data available for Year'),
                             );
                           }
 

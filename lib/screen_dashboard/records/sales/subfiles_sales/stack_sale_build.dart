@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vaultora_inventory_app/log/Autotication_singup/validation.dart';
-import 'package:vaultora_inventory_app/log/Autotication_login/phone_validation.dart';
+import 'package:vaultora_inventory_app/login/Autotication_singup/validation.dart';
+import 'package:vaultora_inventory_app/login/Autotication_login/phone_validation.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/records/sales/subfiles_sales/edit_sale.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/records/sales/filtering_sales/time_date.dart';
 

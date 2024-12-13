@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vaultora_inventory_app/log/onbording_Screen_singup/onbording_class.dart';
-import 'package:vaultora_inventory_app/log/LoginAndRegistation/register_page.dart';
+import 'package:vaultora_inventory_app/login/onbording_Screen_singup/onbording_class.dart';
+import 'package:vaultora_inventory_app/login/LoginAndRegistation/register_page.dart';
 
 import '../../Color/colors.dart';
 import '../validation_login/bg_stack.dart';

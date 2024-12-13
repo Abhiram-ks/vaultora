@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
-import 'package:vaultora_inventory_app/log/text_animation/login_animation.dart';
+import 'package:vaultora_inventory_app/login/text_animation/login_animation.dart';
 import '../../db/models/user/user.dart';
 import '../../screen_dashboard/main_page.dart';
 import '../Autotication_singup/email.validate.dart';

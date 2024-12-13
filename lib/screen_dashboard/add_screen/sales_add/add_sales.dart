@@ -1,20 +1,15 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/models/product/add.dart';
 import 'package:vaultora_inventory_app/db/models/sales/onsale.dart';
 import '../../../db/helpers/addfunction.dart';
 import '../../../db/helpers/salefuction.dart';
-import '../../../log/Autotication_singup/validation.dart';
-import '../../../log/Autotication_login/phone_validation.dart';
 import 'add_multiple_sale.dart';
 import '../../records/sales/subfiles_sales/actions_sale.dart';
 import '../../records/sales/subfiles_sales/iteam_dropdown.dart';
-import '../../records/sales/subfiles_sales/logo_section.dart';
-import '../../records/sales/subfiles_sales/sales_stack.dart';
 import '../../records/sales/subfiles_sales/success_snackbar.dart';
-import '../../records/sales/subfiles_sales/textfiled_sale.dart';
+import 'fuctionsadd.dart';
 
 
 class AddSales extends StatefulWidget {
@@ -90,96 +85,11 @@ class _AddSalesState extends State<AddSales> {
         physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
-            SalesStack(
-              text: 'Add Sale Products',
-              ther: Padding(
-                padding: const EdgeInsets.only(top: 94.0),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: screenWidth * 0.038),
-                  child: Card(
-                    color: whiteColor,
-                    child: Material(
-                      elevation: 2,
-                      borderRadius: BorderRadius.circular(15),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          color: whiteColor,
-                          width: double.infinity,
-                          child: Column(
-                            children: [
-                              LogoSection(
-                                screenWidth: screenWidth,
-                                screenHeight: screenHeight,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(
-                                      isExpanded
-                                          ? Icons.keyboard_arrow_up
-                                          : Icons.keyboard_arrow_down,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        isExpanded = !isExpanded;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                              AnimatedCrossFade(
-                                duration: const Duration(milliseconds: 300),
-                                firstChild: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.05,
-                                  ),
-                                  child: Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      children: [
-                                        CustomTextFieldsale(
-                                          controller: _billingNameController,
-                                          hintText: 'Enter Full Name',
-                                          labelText: 'Billing Name',
-                                          validate: NameValidator.validate,
-                                        ),
-                                        const SizedBox(height: 16),
-                                        CustomTextFieldsale(
-                                          controller: _addressNameController,
-                                          hintText: 'Enter Address',
-                                          labelText: 'Billing Address',
-                                          validate: VentureValidator.validate,
-                                        ),
-                                        const SizedBox(height: 16),
-                                        CustomTextFieldsalePhone(
-                                          controller: _phoneController,
-                                          hintText: '',
-                                          labelText: 'Phone Number',
-                                          validate:
-                                              PhoneNumberValidator.validate,
-                                        ),
-                                        const SizedBox(height: 16)
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                secondChild: const SizedBox.shrink(),
-                                crossFadeState: isExpanded
-                                    ? CrossFadeState.showFirst
-                                    : CrossFadeState.showSecond,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+           dataForCustomerDetails(
+            screenWidth, screenHeight, isExpanded,
+            (bool newValue) {setState(() {isExpanded = newValue;  });},
+            _billingNameController, _addressNameController, _formKey, _phoneController,
+          ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.038),
               child: SizedBox(
@@ -354,23 +264,11 @@ class _AddSalesState extends State<AddSales> {
                                           onPressed: () async {
                                             if (_formKey.currentState!
                                                 .validate()) {
-                                              String billingName =
-                                                  _billingNameController.text
-                                                      .trim();
-                                              String address =
-                                                  _addressNameController.text
-                                                      .trim();
-                                              String phoneNumber =
-                                                  _phoneController.text.trim();
-                                              String totalPrice =
-                                                  totalAmountNotifier.value
-                                                      .toStringAsFixed(2);
-
-                                              await addSale(
-                                                  billingName,
-                                                  phoneNumber,
-                                                  address,
-                                                  totalPrice);
+                                              String billingName = _billingNameController.text .trim();
+                                              String address = _addressNameController.text .trim();
+                                              String phoneNumber =_phoneController.text.trim();
+                                              String totalPrice =    totalAmountNotifier.value .toStringAsFixed(2);
+                                              await addSale( billingName, phoneNumber, address, totalPrice);
                                               log("Sale added: Name: $billingName, Address: $address, Phone: $phoneNumber, Total Price: ₹$totalPrice");
 
                                               _billingNameController.clear();

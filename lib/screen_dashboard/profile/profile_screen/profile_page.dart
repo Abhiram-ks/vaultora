@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
@@ -63,11 +65,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           Icon(Icons.lock_person, color: whiteColor),
+                          Icon(Icons.lock_person, color: whiteColor),
                           const SizedBox(width: 8),
                           Text(
                             value.username,
-                            style:  TextStyle(color: whiteColor),
+                            style: TextStyle(color: whiteColor),
                           ),
                         ],
                       ),
@@ -88,41 +90,33 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Positioned(
                             child: SizedBox(
-                              width: screenWidth *
-                                  0.27,
-                              height:
-                                  screenWidth * 0.27, 
+                              width: 100,
+                              height: 100,
                               child: CircleAvatar(
-                                backgroundColor: transParent,
-                                child: ClipOval(
-                                  child: value.imagePath != null &&
-                                          value.imagePath!.isNotEmpty
-                                      ? ColorFiltered(
-                                          colorFilter: ColorFilter.mode(
-                                            black.withOpacity(0.2),
-                                            BlendMode.darken,
-                                          ),
-                                          child: Image.file(
-                                            File(value.imagePath!),
+                                  backgroundColor: transParent,
+                                  child: ClipOval(
+                                    child: value.imagePath != null &&
+                                            value.imagePath!.isNotEmpty
+                                        ? (kIsWeb
+                                            ? Image.memory(
+                                                base64Decode(value.imagePath!),
+                                                fit: BoxFit.cover,
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                              )
+                                            : Image.file(
+                                                File(value.imagePath!),
+                                                fit: BoxFit.cover,
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                              ))
+                                        : Image.asset(
+                                            'assets/welcome/main image.jpg',
                                             fit: BoxFit.cover,
-                                            width: screenWidth * 0.27,
-                                            height: screenWidth * 0.27,
+                                            width: double.infinity,
+                                            height: double.infinity,
                                           ),
-                                        )
-                                      : ColorFiltered(
-                                          colorFilter: ColorFilter.mode(
-                                            black.withOpacity(0.2),
-                                            BlendMode.darken,
-                                          ),
-                                          child: Image.asset(
-                                            'assets/liquid/Timeline-bro.png',
-                                            fit: BoxFit.cover,
-                                            width: screenWidth * 0.27,
-                                            height: screenWidth * 0.27,
-                                          ),
-                                        ),
-                                ),
-                              ),
+                                  )),
                             ),
                           ),
                         ],
@@ -220,11 +214,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(screenWidth * 0.04),
-                      child:  ListSettingsContier(
+                      child: ListSettingsContier(
                         screenHeight: screenHeight,
                         screenWidth: screenHeight,
-                        username: widget.userDetails.id,),
-                    ),SizedBox(height: screenHeight * 0.1),
+                        username: widget.userDetails.id,
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.1),
                   ],
                 ),
               ),

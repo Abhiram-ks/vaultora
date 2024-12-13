@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import '../../common/snackbar.dart';
 import '../sub_files_revenue/calender_revenu.dart';
@@ -217,8 +218,19 @@ class _CustomisationState extends State<Customisation> {
                                   (dailyData) => dailyData['salesCount'] > 0);
                               if (!hasNonZeroSales) {
                                   
-                                return const Text(
-                                    'No sales data available.');
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                      Lottie.asset(
+                                      'assets/category/sale_empty.json',
+                                      width: screenWidth * 0.5,
+                                      height: screenHeight * 0.3,
+                                    ),
+                                    const Text(
+                                        'No sales data available.'),
+                                  ],
+                                );
                                     
                               }
 

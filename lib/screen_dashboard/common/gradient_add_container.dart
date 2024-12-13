@@ -129,7 +129,7 @@ class _CustomContainerState extends State<CustomContainer> {
                         child: Text(
                           widget.title,
                           style: GoogleFonts.kodchasan(
-                            fontSize: 22,
+                            fontSize: 19,
                             color: whiteColor,
                             fontWeight: FontWeight.w500,
                           ),
@@ -154,7 +154,7 @@ class _CustomContainerState extends State<CustomContainer> {
                                 trimCollapsedText: 'Read more',
                                 trimExpandedText: 'Show less',
                                 style: GoogleFonts.kodchasan(
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   color: whiteColor,
                                   fontWeight: FontWeight.w400,
                                 ),

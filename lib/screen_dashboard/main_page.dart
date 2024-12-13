@@ -46,7 +46,7 @@ class _HomepageState extends State<Homepage> {
 
   Future<void> _vibrate() async {
     if (await Vibration.hasVibrator() ?? false) {
-      Vibration.vibrate(duration: 60);
+      Vibration.vibrate(duration: 50);
     }
   }
 

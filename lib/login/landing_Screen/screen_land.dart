@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
-import 'package:vaultora_inventory_app/log/landing_Screen/land_four.dart';
+import 'package:vaultora_inventory_app/login/landing_Screen/land_four.dart';
 import 'land_one.dart';
 import 'land_three.dart';
 import 'land_two.dart';

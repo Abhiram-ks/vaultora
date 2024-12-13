@@ -41,7 +41,7 @@ class _HomeAppbarState extends State<HomeAppbar>
     double screenHeight = MediaQuery.of(context).size.height;
     return AppBar(
       toolbarHeight: screenHeight * 0.09,
-      backgroundColor: appbarColor,
+      backgroundColor: whiteColor,
       elevation: 0,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -50,11 +50,14 @@ class _HomeAppbarState extends State<HomeAppbar>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AnimatedBuilder(
+                
                 animation: _animation,
                 builder: (context, child) {
                   return ShaderMask(
+                    
                     shaderCallback: (bounds) {
                       return LinearGradient(
+                        
                         colors:  [
                           const Color.fromARGB(255, 149, 149, 149),
                           whiteColor,
@@ -70,6 +73,7 @@ class _HomeAppbarState extends State<HomeAppbar>
                       ).createShader(bounds);
                     },
                     blendMode: BlendMode.srcIn,
+                    
                     child: Text(
                       'Vaultora',
                       style: GoogleFonts.poppins(

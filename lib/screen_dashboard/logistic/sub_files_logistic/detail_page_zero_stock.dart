@@ -1,7 +1,9 @@
 
 
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 
@@ -46,36 +48,44 @@ class ZeroStockDetails extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Column(
-                      children: [
-                         Padding(
-                          padding:const EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Icon(
-                              Icons.shopping_bag_rounded,
-                              color: orange,
-                            ),
-                          ),
-                        ),
-                        ClipOval(
-                          child: Container(
-                            width: screenWidth * 0.2,
-                            height: screenWidth * 0.2,
-                            decoration: BoxDecoration(
-                              color: whiteColor,
-                              image: DecorationImage(
-                                image: imagePath.isNotEmpty
-                                    ? FileImage(File(imagePath))
-                                        as ImageProvider
-                                    : const AssetImage(
-                                        'assets/welcome/main image.jpg'),
-                                fit: BoxFit.cover,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                           Padding(
+                            padding:const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Icon(
+                                Icons.shopping_bag_rounded,
+                                color: orange,
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          ClipOval(
+                            child: Container(
+                                width: 70,
+                                height: 70,
+                                color: transParent,
+                                 child: imagePath.isNotEmpty ? (kIsWeb ? Image.memory(
+                                  base64Decode(imagePath),
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                ) : Image.file(
+                                    File(imagePath),
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                )): Image.asset(
+                                  'assets/welcome/main image.jpg',
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(

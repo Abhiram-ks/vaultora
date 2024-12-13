@@ -129,7 +129,7 @@ class DayWise extends StatelessWidget {
                       builder: (context, salesList, _) {
                         if (salesList.isEmpty) {
                           return const Center(
-                            child: Text('No sales data available for Month'),
+                            child: Text('No sales data available for today'),
                           );
                         }
                         return FutureBuilder<Map<String, dynamic>>(

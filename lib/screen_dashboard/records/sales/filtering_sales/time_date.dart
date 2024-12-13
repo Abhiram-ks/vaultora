@@ -60,19 +60,21 @@ class DateTimeDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 6.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(formattedDate),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(formattedTime,style: const TextStyle(color: Colors.grey),),
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(formattedDate),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(formattedTime,style: const TextStyle(color: Colors.grey),),
+            ),
+          ],
+        ),
       ),
     );
   }

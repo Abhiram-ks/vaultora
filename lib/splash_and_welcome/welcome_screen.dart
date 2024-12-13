@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import '../Color/colors.dart';
-import '../log/LoginAndRegistation/login_page.dart';
-import '../log/onbording_Screen_singup/onbording_screen.dart';
+import '../login/LoginAndRegistation/login_page.dart';
+import '../login/onbording_Screen_singup/onbording_screen.dart';
 
 class CheckScreen extends StatefulWidget {
   const CheckScreen({super.key});

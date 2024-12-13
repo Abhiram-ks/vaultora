@@ -16,15 +16,23 @@ class CustomSnackBarCustomisation {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(message, style: TextStyle(color: messageColor)),
-            Icon(
-              icon,
-              color: iconColor,
-            )
-          ],
-        ),
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    Flexible(
+      child: Text(
+        message,
+        style: TextStyle(color: messageColor),
+        overflow: TextOverflow.ellipsis,
+        softWrap: true,
+      ),
+    ),
+    Icon(
+      icon,
+      color: iconColor,
+    ),
+  ],
+),
+
         duration: const Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
         elevation: 10,

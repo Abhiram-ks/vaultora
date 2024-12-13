@@ -1,14 +1,17 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/add_screen/Category_add/category_add.dart';
 import '../../../db/helpers/adminfunction.dart';
-import '../../../log/Autotication_singup/phone_validation.dart';
-import '../../../log/Autotication_singup/validation.dart';
+import '../../../login/Autotication_singup/phone_validation.dart';
+import '../../../login/Autotication_singup/validation.dart';
 import '../../common/snackbar.dart';
 import '../profile_widgets/edit_decoration.dart';
 import '../profile_widgets/inkewell_button_profile.dart';
@@ -29,6 +32,12 @@ class _EditProfileState extends State<EditProfile> {
   late TextEditingController _phoneController;
   late TextEditingController _bioController;
   late TextEditingController _ageController;
+  final ValueNotifier<ImageData> _imageNotifier = ValueNotifier<ImageData>(
+    ImageData(webImageBytes: null, imagePath: null, pickedFile: null)
+  );
+
+
+
 
   @override
   void initState() {
@@ -39,7 +48,14 @@ class _EditProfileState extends State<EditProfile> {
     _phoneController = TextEditingController(text: widget.userdata.phone);
     _bioController = TextEditingController(text: widget.userdata.bio);
     _ageController = TextEditingController(text: widget.userdata.age);
-    _selectedImagePath = widget.userdata.imagePath;
+   if (widget.userdata.imagePath != null && widget.userdata.imagePath!.isNotEmpty) {
+    _imageNotifier.value = ImageData(
+      webImageBytes: null,
+      imagePath: widget.userdata.imagePath, 
+      pickedFile: null
+    );
+  }
+   
   }
 
   bool _validateInputs() {
@@ -54,18 +70,60 @@ class _EditProfileState extends State<EditProfile> {
     return true;
   }
 
-  final ImagePicker _picker = ImagePicker();
-  String? _selectedImagePath;
-  Future<void> _pickImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _selectedImagePath = image.path;
-      });
-    }
+   Future<void> pickImage() async{
+     final picker = ImagePicker();
+
+     try {
+       final pickedFile = await picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 500,
+        imageQuality: 80,
+        );
+        if(pickedFile != null) {
+          if (kIsWeb) {
+            final webImage = await pickedFile.readAsBytes();
+            _imageNotifier.value = ImageData(
+              webImageBytes: webImage, 
+              imagePath: null, 
+              pickedFile: pickedFile);
+          } else{
+            _imageNotifier.value = ImageData(
+              webImageBytes: null, 
+              imagePath: pickedFile.path, 
+              pickedFile: pickedFile);
+          } 
+        } else {
+           CustomSnackBarCustomisation.show(
+          context: context,
+          message: "Please select an image to proceed",
+          messageColor: orange,
+          icon: Icons.image_search_sharp,
+          iconColor: orange,
+        );
+        }
+     } catch (e) {
+        CustomSnackBarCustomisation.show(
+        context: context,
+        message: "Image Selection Error",
+        messageColor: redColor,
+        icon: Icons.photo_size_select_large_sharp,
+        iconColor: redColor,
+      );
+     }  
   }
 
   Future<void> _saveProfile() async {
+       String? updatedImagePath;
+       if (kIsWeb) {
+    if (_imageNotifier.value.webImageBytes != null) {
+      updatedImagePath = base64Encode(_imageNotifier.value.webImageBytes!);
+    } else {
+      updatedImagePath = widget.userdata.imagePath;
+    }
+  } else {
+    updatedImagePath = _imageNotifier.value.imagePath ?? widget.userdata.imagePath;
+  }
+
     if (!_validateInputs() || _formKey.currentState?.validate() != true) {
       log("Validation failed.");
       CustomSnackBarCustomisation.show(
@@ -85,7 +143,7 @@ class _EditProfileState extends State<EditProfile> {
       phone: _phoneController.text,
       bio: _bioController.text,
       age: _ageController.text,
-      imagePath: _selectedImagePath ?? widget.userdata.imagePath,
+      imagePath: updatedImagePath ?? widget.userdata.imagePath,
     );
 
     if (updated) {
@@ -99,7 +157,7 @@ class _EditProfileState extends State<EditProfile> {
         phone: _phoneController.text,
         bio: _bioController.text,
         age: _ageController.text,
-        imagePath: _selectedImagePath ?? widget.userdata.imagePath,
+        imagePath: updatedImagePath ?? widget.userdata.imagePath,
       );
       await userBox!.put(widget.userdata.id, updatedUser);
       currentUserNotifier.value = updatedUser;
@@ -162,52 +220,60 @@ class _EditProfileState extends State<EditProfile> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Lottie.asset(
-                        'assets/gif/welcome 2.json',
-                        width: screenWidth * 0.9,
-                        height: screenHeight * 0.4,
-                      ),
-                      Positioned(
-                        child: GestureDetector(
-                          onTap: _pickImage,
-                          child: SizedBox(
-                            width: screenWidth * 0.27,
-                            height: screenWidth * 0.27,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              child: ClipOval(
-                                child: _selectedImagePath != null &&
-                                        File(_selectedImagePath!).existsSync()
-                                    ? ColorFiltered(
-                                        colorFilter: ColorFilter.mode(
-                                          black.withOpacity(0.2),
-                                          BlendMode.darken,
-                                        ),
-                                        child: Image.file(
-                                          File(_selectedImagePath!),
-                                          fit: BoxFit.cover,
-                                          width: screenWidth * 0.27,
-                                          height: screenWidth * 0.27,
-                                        ),
-                                      )
-                                    : ColorFiltered(
-                                        colorFilter: ColorFilter.mode(
-                                          black.withOpacity(0.2),
-                                          BlendMode.darken,
-                                        ),
-                                        child: Image.asset(
-                                          'assets/liquid/Timeline-bro.png',
-                                          fit: BoxFit.cover,
-                                          width: screenWidth * 0.27,
-                                          height: screenWidth * 0.27,
-                                        ),
-                                      ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+  Lottie.asset(
+    'assets/gif/welcome 2.json',
+    width: screenWidth * 0.9,
+    height: screenHeight * 0.4,
+  ),
+  Positioned(
+    child: GestureDetector(
+      onTap: pickImage,
+      child: SizedBox(
+        width: screenWidth * 0.27,
+        height: screenWidth * 0.27,
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          child: ClipOval(
+            child: ValueListenableBuilder<ImageData>(
+              valueListenable: _imageNotifier,
+              builder: (context, imageData, child) {
+                ImageProvider imageProvider;
+                
+                if (kIsWeb) {
+                  if (imageData.webImageBytes != null) {
+                    imageProvider = MemoryImage(imageData.webImageBytes!);
+                  } else if (widget.userdata.imagePath != null && widget.userdata.imagePath!.isNotEmpty) {
+                    try {
+                      imageProvider = MemoryImage(base64Decode(widget.userdata.imagePath!));
+                    } catch (e) {
+                      imageProvider = const AssetImage('assets/welcome/main image.jpg');
+                    }
+                  } else {
+                    imageProvider = const AssetImage('assets/welcome/main image.jpg');
+                  }
+                } else {
+                  if (imageData.imagePath != null) {
+                    imageProvider = FileImage(File(imageData.imagePath!));
+                  } else if (widget.userdata.imagePath != null && widget.userdata.imagePath!.isNotEmpty) {
+                    imageProvider = FileImage(File(widget.userdata.imagePath!));
+                  } else {
+                    imageProvider = const AssetImage('assets/welcome/main image.jpg');
+                  }
+                }
+
+                return CircleAvatar(
+                  radius: screenWidth * 0.14,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: imageProvider,
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    ),
+  ),
+]
                   ),
                 )),
           ),

@@ -13,7 +13,7 @@ import 'package:vaultora_inventory_app/screen_dashboard/records/product/filterin
 import '../../../../Color/colors.dart';
 import '../../../db/helpers/addfunction.dart';
 import '../../../../db/models/user/user.dart';
-import '../../../log/validation_login/orline_dec.dart';
+import '../../../login/validation_login/orline_dec.dart';
 import '../../common/snackbar.dart';
 import '../../records/product/product_records/subfiles_product_reocrd/check_out.dart';
 
@@ -29,21 +29,13 @@ class AddProducts extends StatefulWidget {
 class _AddProductsState extends State<AddProducts> {
   final _formKey = GlobalKey<FormState>();
   final ValueNotifier<ImageData> _imageNotifier = ValueNotifier<ImageData>(
-    ImageData(
-      webImageBytes: null,
-      imagePath: null,
-      pickedFile: null,
-    ),
-  );
+  ImageData(webImageBytes: null,imagePath: null,pickedFile: null,),);
   final TextEditingController _itemNameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _purchasePriceController =
-      TextEditingController();
-  final TextEditingController _quantityController =
-      TextEditingController(text: '1');
+  final TextEditingController _purchasePriceController =TextEditingController();
+  final TextEditingController _quantityController =TextEditingController(text: '1');
   final TextEditingController _mrpController = TextEditingController();
-  final ValueNotifier<String?> _selectedCategoryNotifier =
-      ValueNotifier<String?>(null);
+  final ValueNotifier<String?> _selectedCategoryNotifier =ValueNotifier<String?>(null);
   final ValueNotifier<double> _totalPriceNotifier = ValueNotifier<double>(0.0);
   Color _quantityColor = black;
   int _quantity = 1;

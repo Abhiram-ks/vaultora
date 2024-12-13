@@ -4,6 +4,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vaultora_inventory_app/db/models/category/catalog.dart';
 import 'package:vaultora_inventory_app/db/models/user/user.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/add_screen/Category_add/category_add.dart';
+import 'package:vaultora_inventory_app/screen_dashboard/home_page/subfiles_home/homepage_configuration.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/records/product/product_records/subfiles_product_reocrd/action_popup.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/add_screen/Category_add/update_category.dart';
 import 'package:vaultora_inventory_app/screen_dashboard/home_page/subfiles_home/create_card.dart';
@@ -20,16 +21,13 @@ class HomePage extends StatefulWidget {
     super.key,
     required this.userDetails,
   });
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   List<CategoryModel> categories = [];
-
   final PageController _pageController = PageController();
-
   int _currentPage = 0;
   late Timer _pageTimer;
 
@@ -54,7 +52,6 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _pageTimer.cancel();
     _pageController.dispose();
-
     super.dispose();
   }
 
@@ -62,94 +59,34 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    final List<Color> cardColors = [
-      const Color.fromARGB(255, 29, 66, 77),
-      const Color.fromARGB(255, 40, 98, 116),
-      const Color.fromARGB(255, 59, 140, 164),
-      const Color.fromARGB(255, 125, 185, 203),
-      const Color.fromARGB(255, 40, 98, 116),
-    ];
-
-    final List<Map<String, dynamic>> pageData = [
-      {
-        'image': 'assets/liquid/girl.jpg',
-        'title': 'Real-time Tracking',
-        'subtitle': 'UPDATES STOCK LEVELS INSTANTLY',
-        'subtitle2': 'An Inventory App is a digital tool that helps',
-        'subtitle3': 'businesses keep track of their products,',
-        'subtitle4': 'stock levels and orders in real-time.',
-        'color': const Color.fromARGB(255, 171, 174, 118),
-      },
-      {
-        'image': 'assets/liquid/growth.jpg',
-        'title': 'Revenue',
-        'subtitle': 'PROFIT TRACKER, MONITORING GAINS',
-        'subtitle2': 'Revenue is the total income a business',
-        'subtitle3': ' earns from selling goods or services before ',
-        'subtitle4': 'any costs or expenses are subtracted.',
-        'color': const Color.fromARGB(255, 62, 58, 58),
-      },
-      {
-        'image': 'assets/liquid/manwith headset.jpg',
-        'title': 'Universal Language ',
-        'subtitle': 'CONNECTS PEOPLE ACROSS CULTURES',
-        'subtitle2': 'Music is the art of combining sounds to express emotion,',
-        'subtitle3': 'tell stories, and connect people. It’s a universal ',
-        'subtitle4': 'language that inspires and unites across cultures.',
-        'color': Colors.blue[300],
-      },
-      {
-        'image': 'assets/liquid/5363923.jpg',
-        'title': 'Stock Management',
-        'subtitle': 'MONITORS INVENTORY LEVELS EFFICIENTLY',
-        'subtitle2': 'Stock is the supply of goods a business holds to',
-        'subtitle3': 'meet customer demand, ensuring smooth',
-        'subtitle4': 'operations and preventing shortages.',
-        'color': const Color.fromARGB(255, 113, 93, 66),
-      },
-      {
-        'image':
-            'assets/liquid/happy-girl-singing-favorite-song-listening-music-wireless-headphones-smiling-dancing-standing-pink-background.jpg',
-        'title': 'Seamless Experience',
-        'subtitle': 'Enjoy the Features of the APP',
-        'subtitle2': 'Inventory is the collection of goods a business keeps on',
-        'subtitle3': 'hand to fulfill customer needs, supporting efficient ',
-        'subtitle4': 'operations and preventing stockouts.',
-        'color': const Color.fromARGB(255, 213, 89, 170),
-      },
-    ];
-
     return Scaffold(
+      backgroundColor: whiteColor,
       drawer: AppDrawer(userDetails: widget.userDetails),
       appBar: const HomeAppbar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(screenWidth * 0.03),
           child: Column(children: [
-            SizedBox(
-              height: screenHeight * 0.02,
-            ),
+            SizedBox( height: screenHeight * 0.02, ),
             SizedBox(
               height: screenHeight / 4,
               width: double.infinity,
               child: PageviewBuilder(
                 pageController: _pageController,
-                itemCount: pageData.length,
-                pageData: pageData,
+                itemCount: HomePageConfiguration.pageData.length,
+                pageData: HomePageConfiguration.pageData,
               ),
-            ),
-            SizedBox(height: screenHeight * 0.024),
+            ), SizedBox(height: screenHeight * 0.024),
             SmoothPageIndicator(
               controller: _pageController,
-              count: pageData.length,
+              count: HomePageConfiguration.pageData.length,
               effect: ExpandingDotsEffect(
                 dotHeight: 8,
                 dotWidth: 8,
                 activeDotColor: black,
                 dotColor: grey,
               ),
-            ),
-            SizedBox(height: screenHeight * 0.024),
+            ), SizedBox(height: screenHeight * 0.024),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -160,8 +97,7 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
+                Icon( Icons.arrow_forward_ios_rounded,
                   size: 15,
                   color: grey,
                 )
@@ -188,24 +124,19 @@ class _HomePageState extends State<HomePage> {
                     ? Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Center(
-                            child: Column(
+                        child: Column(
                           children: [
                             GestureDetector(
                                 onTap: () {
                                   showDialog(
                                     context: context,
-                                    builder: (context) => AddCategoryDialog(
-                                        userId: widget.userDetails.id),
+                                    builder: (context) => AddCategoryDialog( userId: widget.userDetails.id),
                                   );
-                                },
-                                child: const Text('No add one!')),
-                            CircularProgressIndicator(
-                              color: inside,
-                            ),
+                                },child: const Text('No add one!')),
+                                CircularProgressIndicator(color: inside, ),
                           ],
                         )),
-                      )
-                    : Padding(
+                      ): Padding(
                         padding: const EdgeInsets.only(top: 1.0),
                         child: SizedBox(
                           height: screenHeight / 5,
@@ -214,16 +145,13 @@ class _HomePageState extends State<HomePage> {
                             itemCount: categories.length,
                             itemBuilder: (context, index) {
                               final category = categories[index];
-                              final backgroundColor =
-                                  cardColors[index % cardColors.length];
+                              final backgroundColor =HomePageConfiguration.cardColors[index %HomePageConfiguration.cardColors.length];
                               return CreateCard(
                                 imagePath: category.imagePath,
                                 title: category.categoryName,
                                 categoryId: category.id,
-                                onDelete: () {
-                                  showDeleteConfirmation(context, category.id);
-                                },
-                                onEdit: () {
+                                onDelete: () {showDeleteConfirmation(context, category.id);
+                                }, onEdit: () {
                                   showModalBottomSheet(
                                       context: context,
                                       isScrollControlled: true,
@@ -235,19 +163,16 @@ class _HomePageState extends State<HomePage> {
                                           categoryName: category.categoryName,
                                         );
                                       });
-                                },
-                                backgroundColor: backgroundColor,
+                                }, backgroundColor: backgroundColor,
                               );
-                            },
-                            separatorBuilder: (context, index) {
+                            }, separatorBuilder: (context, index) {
                               return SizedBox(width: screenWidth * 0.04);
                             },
                           ),
                         ),
                       );
-              },
-            ),
-            SizedBox(height: screenHeight * 0.08),
+               },
+            ), SizedBox(height: screenHeight * 0.08),
           ]),
         ),
       ),

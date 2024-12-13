@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/helpers/addfunction.dart';
 import 'package:vaultora_inventory_app/db/models/product/add.dart';
@@ -93,10 +94,16 @@ class _LogisticPageState extends State<LogisticPage> {
                   valueListenable: addListNotifier,
                   builder: (context, List<AddModel> items, child) {
                     if (items.isEmpty) {
-                      return const Center(
-                        child:   CircularProgressIndicator(
-                          color:  Color.fromARGB(255, 29, 66, 77),
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                        Lottie.asset(
+                                      'assets/category/sale_empty.json',
+                                      width: screenWidth * 0.5,
+                                      height: screenHeight * 0.3,
                         ),
+                        ],
                       );
                     }
 

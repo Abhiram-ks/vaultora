@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -8,6 +10,7 @@ import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/models/product/add.dart';
 
 import '../../../../db/helpers/addfunction.dart';
+import '../../../add_screen/Category_add/category_add.dart';
 import '../../../common/snackbar.dart';
 import '../../../profile/profile_widgets/edit_decoration.dart';
 import '../product_records/subfiles_product_reocrd/check_out.dart';
@@ -31,14 +34,17 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   late TextEditingController _descriptionController;
   late TextEditingController _itemCountController;
   late TextEditingController _mrpController;
-  late ValueNotifier<String> _imagePathNotifier;
   late TextEditingController _purchasePriceController;
   late ValueNotifier<String?> _selectedCategoryNotifier;
+  final ValueNotifier<ImageData>   _imagePathNotifier = ValueNotifier<ImageData>(
+    ImageData(webImageBytes: null, imagePath: null, pickedFile: null),
+  );
+  final ValueNotifier<String> selectedImagePath = ValueNotifier<String>('');
+
 
   @override
   void initState() {
     super.initState();
-    _imagePathNotifier = ValueNotifier<String>(widget.item.imagePath);
     _selectedCategoryNotifier = ValueNotifier<String>(widget.item.dropDown);
     _itemNameController = TextEditingController(text: widget.item.itemName);
     _descriptionController =
@@ -46,6 +52,13 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
     _itemCountController = TextEditingController(text: widget.item.itemCount);
     _mrpController = TextEditingController(text: widget.item.mrp);
     _purchasePriceController = TextEditingController(text: widget.item.mrp);
+    if (widget.item.imagePath.isNotEmpty) {
+      _imagePathNotifier.value = ImageData(
+        webImageBytes: null,
+         imagePath: widget.item.imagePath,
+          pickedFile: null);
+          selectedImagePath.value = widget.item.imagePath;
+    }
   }
 
   bool _validateInputsitems() {
@@ -60,15 +73,53 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
     return true;
   }
 
-  Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      _imagePathNotifier.value = pickedFile.path;
-    }
+  Future<void> pickImage() async{
+     final picker = ImagePicker();
+
+     try {
+       final pickedFile = await picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 500,
+        imageQuality: 80,
+        );
+        if(pickedFile != null) {
+          if (kIsWeb) {
+            final webImage = await pickedFile.readAsBytes();
+            _imagePathNotifier.value = ImageData(
+              webImageBytes: webImage, 
+              imagePath: null, 
+              pickedFile: pickedFile);
+              selectedImagePath.value =  base64Encode(webImage);
+          } else{
+            _imagePathNotifier.value = ImageData(
+              webImageBytes: null, 
+              imagePath: pickedFile.path, 
+              pickedFile: pickedFile);
+              selectedImagePath.value = pickedFile.path;
+          } 
+        } else {
+           CustomSnackBarCustomisation.show(
+          context: context,
+          message: "Please select an image to proceed",
+          messageColor: orange,
+          icon: Icons.image_search_sharp,
+          iconColor: orange,
+        );
+        }
+     } catch (e) {
+        CustomSnackBarCustomisation.show(
+        context: context,
+        message: "Image Selection Error",
+        messageColor: redColor,
+        icon: Icons.photo_size_select_large_sharp,
+        iconColor: redColor,
+      );
+     }  
   }
 
+// _imagePathNotifier.value = pickedFile.path;
   Future<void> _updateItem() async {
+    String updatedImagePath = selectedImagePath.value;
     if (!_validateInputsitems() || _formKey.currentState?.validate() != true) {
       log("Validation faild.");
       CustomSnackBarCustomisation.show(
@@ -85,7 +136,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       description: _descriptionController.text,
       itemCount: _itemCountController.text,
       mrp: _mrpController.text,
-      imagePath: _imagePathNotifier.value,
+      imagePath: updatedImagePath,
       dropDown: _selectedCategoryNotifier.value ?? widget.item.dropDown,
       purchaseRate: _purchasePriceController.text,
     );
@@ -101,7 +152,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
           dropDown: _selectedCategoryNotifier.value ?? widget.item.imagePath,
           itemCount: _itemCountController.text,
           totalPurchase: widget.item.totalPurchase,
-          imagePath: _imagePathNotifier.value);
+          imagePath: updatedImagePath);
       await addBox!.put(widget.item.id, updatedItems);
 
       currentiteamNotifier.value = updatedItems;
@@ -154,7 +205,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   child: Container(
                     width: 80.0,
                     height: 2.0,
-                    color: Colors.white,
+                    color: transParent,
                   ),
                 ),
                 Stack(
@@ -169,23 +220,44 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       },
                     ),
                     Positioned(
-                      child: ValueListenableBuilder<String>(
-                        valueListenable: _imagePathNotifier,
-                        builder: (context, imagePath, child) {
-                          return GestureDetector(
-                            onTap: _pickImage,
-                            child: CircleAvatar(
-                              radius: screenWidth * 0.14,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: imagePath.isNotEmpty
-                                  ? FileImage(File(imagePath))
-                                  : const AssetImage(
-                                          'assets/welcome/main image.jpg')
-                                      as ImageProvider,
-                            ),
-                          );
-                        },
-                      ),
+              child: ValueListenableBuilder<ImageData>(
+  valueListenable: _imagePathNotifier,
+  builder: (context, imageData, child) {
+    ImageProvider? imageProvider;
+
+    if (kIsWeb) {
+      if (imageData.webImageBytes != null) {
+        imageProvider = MemoryImage(imageData.webImageBytes!);
+      } else if (widget.item.imagePath.isNotEmpty) {
+        try {
+          imageProvider = MemoryImage(base64Decode(widget.item.imagePath));
+        } catch (e) {
+          imageProvider = const AssetImage('assets/welcome/main image.jpg');
+        }
+      } else {
+        imageProvider = const AssetImage('assets/welcome/main image.jpg');
+      }
+    } else {
+      if (imageData.imagePath != null) {
+        imageProvider = FileImage(File(imageData.imagePath!));
+      } else if (widget.item.imagePath.isNotEmpty) {
+        imageProvider = FileImage(File(widget.item.imagePath));
+      } else {
+        imageProvider = const AssetImage('assets/welcome/main image.jpg');
+      }
+    }
+
+    return GestureDetector(
+      onTap: pickImage,
+      child: CircleAvatar(
+        radius: screenWidth * 0.14,
+        backgroundColor: Colors.transparent,
+        backgroundImage: imageProvider,
+      ),
+    );
+  },
+)
+
                     )
                   ],
                 ),

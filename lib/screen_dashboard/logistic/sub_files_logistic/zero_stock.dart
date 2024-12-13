@@ -37,15 +37,24 @@ class _ZeroStockState extends State<ZeroStock> {
   @override
   void initState() {
     super.initState();
-    Future.doWhile(() async {
-      await Future.delayed(const Duration(seconds: 3));
+    _startGradientAnimation();
+  }
+
+void _startGradientAnimation() async {
+  while (mounted) {
+    await Future.delayed(const Duration(seconds: 3));
+    if (mounted) {
       setState(() {
         _isFirstGradient = !_isFirstGradient;
       });
-      return true;
-    });
+    }
   }
-
+}
+    @override
+  void dispose() {
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;

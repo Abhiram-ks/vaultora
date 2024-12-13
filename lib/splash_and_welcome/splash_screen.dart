@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import '../db/models/user/user.dart';
 import '../screen_dashboard/main_page.dart';
-import '../log/landing_Screen/screen_land.dart';
+import '../login/landing_Screen/screen_land.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

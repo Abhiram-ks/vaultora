@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
-import 'package:vaultora_inventory_app/log/Autotication_singup/validation.dart';
+import 'package:vaultora_inventory_app/login/Autotication_singup/validation.dart';
 
 class EmailField extends StatefulWidget {
   final String labelText;

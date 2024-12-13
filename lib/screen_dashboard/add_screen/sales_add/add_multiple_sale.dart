@@ -1,22 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vaultora_inventory_app/Color/colors.dart';
 import 'package:vaultora_inventory_app/db/helpers/salefuction.dart';
 import 'package:vaultora_inventory_app/db/models/sales/onsale.dart';
-import 'package:vaultora_inventory_app/screen_dashboard/records/sales/subfiles_sales/mutiplefilessub.dart';
 import '../../../db/helpers/addfunction.dart';
 import '../../../db/models/product/add.dart';
 import '../../common/appbar.dart';
 import '../../common/snackbar.dart';
 import '../../records/sales/subfiles_sales/actions_sale.dart';
 import '../../records/sales/subfiles_sales/decoration_list_view.dart';
+import '../../records/sales/subfiles_sales/mutiplefilessub.dart';
 import '../../records/sales/subfiles_sales/serch_sale.dart';
 import '../../records/sales/subfiles_sales/snackbar.dart';
-
-
-
 
 class MultipleSales extends StatefulWidget {
   final void Function(AddModel, double)? onAdd;
@@ -44,6 +40,7 @@ class _MultipleSalesState extends State<MultipleSales> {
   void initState() {
     super.initState();
     filteredList = addListNotifier.value;
+   
   }
   void filterSearchResults(String query) {
     if (query.isEmpty) {
@@ -66,10 +63,15 @@ void handleProductClick(int index) {
   setState(() {
     selectedProductIndex = index;
     selectedProduct = filteredList[index];
-    stockLevel.value = widget.temporaryStock[selectedProduct!]!.toInt();
+      if (selectedProduct != null && widget.temporaryStock.containsKey(selectedProduct)) {
+      stockLevel.value = widget.temporaryStock[selectedProduct]!.toInt();
+    } else {
+      stockLevel.value = 0;
+    }
     count = stockLevel.value > 0 ? 1 : 0;
     double mrp = double.tryParse(filteredList[index].mrp) ?? 0;
     checkoutText.value = '₹ ${(count * mrp).toStringAsFixed(2)}';
+
     bool isDuplicate = tempSaleNotifier.value.any((saleProduct) =>
         saleProduct.product.itemName.trim().toLowerCase() ==
         selectedProduct!.itemName.trim().toLowerCase());
@@ -130,16 +132,13 @@ void onCheckoutPressed() {
       double availableStock = widget.temporaryStock[selectedProduct]!;
       if (availableStock >= count) {
         widget.temporaryStock[selectedProduct] = availableStock - count;
-
         tempSaleNotifier.value = List.from(tempSaleNotifier.value)
-          ..add(
-            SaleProduct(
+          ..add(SaleProduct(
               product: selectedProduct,
               count: count.toString(),
               price: checkoutText.value,
             ),
           );
-
         // ignore: invalid_use_of_protected_member
         tempSaleNotifier.notifyListeners();
         setState(() {
@@ -151,21 +150,18 @@ void onCheckoutPressed() {
         }); CustomSnackBar.showSuccessSnackBar(context, selectedProduct.itemName);
       } else {
           CustomSnackBar.show(
-           context: context,
-          message:'Insufficient stock for ${selectedProduct.itemName}.',
+           context: context,message:'Insufficient stock for ${selectedProduct.itemName}.',
           );
       }}
-  } else {
-     CustomSnackBar.showErrorSnackBar(context);
-  }}
+  } else { CustomSnackBar.showErrorSnackBar(context);}}
   void updateTemporaryStock(AddModel product, double quantity) {
     setState(() {
       if (widget.temporaryStock.containsKey(product)) {
-        widget.temporaryStock[product] =
-            (widget.temporaryStock[product]! - quantity)
-                .clamp(0.0, double.infinity);
+        widget.temporaryStock[product] = (widget.temporaryStock[product]! - quantity).clamp(0.0, double.infinity);
       }
-    });}
+    });
+    }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -241,20 +237,18 @@ void onCheckoutPressed() {
               ),
             ),
             SizedBox(height: screenHeight * 0.01),
-            multipleSalesSubfile(incrementCount,screenHeight,stockLevel,decrementCount,count),
+            multipleSalesSubfile(incrementCount, screenHeight,stockLevel,decrementCount,count),
             SizedBox(height: screenHeight * 0.01),
             ValueListenableBuilder<String>(
                 valueListenable: checkoutText,
                 builder: (context, checkoutValue, child) {
                   return ActionButtons(
-                    onAddSalePressed: () {
-                      Navigator.of(context).pop();
-                    },
+                    onAddSalePressed: () { Navigator.of(context).pop();},
                     onCheckoutPressed: onCheckoutPressed,
                     addSaleText: 'Return',
                     checkoutText: checkoutValue,
                   );
-                }),
+               }),
           ],
         ),
       ),
