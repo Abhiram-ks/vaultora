@@ -81,7 +81,7 @@ class _CheckScreenState extends State<CheckScreen>
                             ),
                             padding: EdgeInsets.all(screenWidth * 0.01),
                             child: Lottie.asset(
-                              'assets/gif/welcome_vaultora.json',
+                              'assets/gif/welcome_one.json',
                               fit: BoxFit.contain,
                               height: screenHeight * 0.6,
                             ),
@@ -93,7 +93,7 @@ class _CheckScreenState extends State<CheckScreen>
                             ),
                             padding: EdgeInsets.all(screenWidth * 0.01),
                             child: Lottie.asset(
-                              'assets/gif/dataanalisics.json',
+                              'assets/gif/welcome_two.json',
                               fit: BoxFit.contain,
                               height: screenHeight * 0.6,
                             ),
@@ -105,7 +105,7 @@ class _CheckScreenState extends State<CheckScreen>
                             ),
                             padding: EdgeInsets.all(screenWidth * 0.01),
                             child: Lottie.asset(
-                              'assets/gif/threeanimation.json',
+                              'assets/gif/welcome_three.json',
                               fit: BoxFit.contain,
                               height: screenHeight * 0.6,
                             ),

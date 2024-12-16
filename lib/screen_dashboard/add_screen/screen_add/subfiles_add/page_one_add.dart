@@ -22,7 +22,7 @@ class RevenueAndLogisticPage extends StatelessWidget {
           children: [
             SizedBox(height: screenHeight * 0.024),
             CustomContainer(
-              lottieFile: 'assets/category/revenue.json',
+              lottieFile: 'assets/gif/revenueandlogisic.json',
               title: 'Revenue',
               description:
                   'Revenue is the total income a business earns from its core operations, such as selling products or services, over a specific period. It represents the top line of the income statement and indicates how effectively the company generates income.',
@@ -45,7 +45,7 @@ class RevenueAndLogisticPage extends StatelessWidget {
             ),
             SizedBox(height: screenHeight * 0.024),
             CustomContainer(
-              lottieFile: 'assets/category/logistics.json',
+              lottieFile: 'assets/gif/logistics.json',
               title: 'Logistics',
               description:
                   'Logistics refers to the process of planning, implementing, and managing the efficient flow of goods, services, and information from the point of origin to the point of consumption. It ensures that the right products reach the right place at the right time, in the right condition, and at the lowest possible cost.',

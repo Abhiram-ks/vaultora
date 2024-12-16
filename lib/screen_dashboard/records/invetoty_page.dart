@@ -108,7 +108,7 @@ class _CategoryPageState extends State<CategoryPage> {
  return Scaffold(
    appBar: const MyAppBar(
     titleText: 'Inventory ',
-    animationPath: 'assets/category/truck.json',
+    animationPath: 'assets/gif/truck.json',
       ),
      body: SingleChildScrollView(
       child: Padding(

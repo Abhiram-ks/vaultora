@@ -21,7 +21,7 @@ class DialogBox {
                 SizedBox(
                   width: 200,
                   child: Lottie.asset(
-                    'assets/gif/logout white.json',
+                    'assets/gif/logout_lottie.json',
                     height: 100,
                   ),
                 ),

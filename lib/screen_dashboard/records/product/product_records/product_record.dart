@@ -92,7 +92,7 @@ class _PurchaseRecordState extends State<PurchaseRecord> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Lottie.asset(
-                                  'assets/category/norecords.json',
+                                  'assets/gif/purchase_empty.json',
                                   width: screenWidth * 0.5,
                                   height: screenHeight * 0.3,
                                 ),

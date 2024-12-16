@@ -26,7 +26,7 @@ class AddProductPage extends StatelessWidget {
           children: [
             SizedBox(height: screenHeight * 0.024),
             CustomContainer(
-              lottieFile: 'assets/category/truck.json',
+              lottieFile: 'assets/gif/truck.json',
               title: 'Add Product',
               description:
                   'Seamlessly add items with details like name, category, price, and quantity. It ensures accuracy through photo uploads, error validation, and real-time updates, while its intuitive design enhances efficiency and organization.',
@@ -53,7 +53,7 @@ class AddProductPage extends StatelessWidget {
             ),
             SizedBox(height: screenHeight * 0.024),
             CustomContainer(
-              lottieFile: 'assets/gif/twoanimation.json',
+              lottieFile: 'assets/gif/sales.json',
               title: 'Add Category',
               description:
                   'Inventory by allowing users to create, edit, or delete product categories. It ensures better organization, improves searchability, and simplifies stock management with an intuitive interface.',
@@ -78,7 +78,7 @@ class AddProductPage extends StatelessWidget {
             ),
             SizedBox(height: screenHeight * 0.024),
             CustomContainer(
-              lottieFile: 'assets/category/add_sales.json',
+              lottieFile: 'assets/gif/add_sales.json',
               title: 'Add Sales',
               description:
                   'Tracking transactions, allowing users to record sales with details such as product, quantity, date, and price. It ensures accurate inventory updates, streamlines revenue tracking, and provides real-time insights into sales performance, enhancing overall business efficiency.',

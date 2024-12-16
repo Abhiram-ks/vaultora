@@ -10,7 +10,6 @@ import 'sub_files_logistic/total_stock_value.dart';
 import 'sub_files_logistic/zero_stock.dart';
 import '../common/appbar.dart';
 
-
 class LogisticPage extends StatefulWidget {
   const LogisticPage({super.key});
 
@@ -19,7 +18,6 @@ class LogisticPage extends StatefulWidget {
 }
 
 class _LogisticPageState extends State<LogisticPage> {
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -27,7 +25,7 @@ class _LogisticPageState extends State<LogisticPage> {
 
     return Scaffold(
       backgroundColor: whiteColor,
-      appBar:  MyAppBarTwo(
+      appBar: MyAppBarTwo(
         titleText: 'Logistic',
         bgColor: inside,
       ),
@@ -66,13 +64,13 @@ class _LogisticPageState extends State<LogisticPage> {
                     description: zeroStockItems.isNotEmpty
                         ? zeroStockItems.map((item) => item.itemName).join(', ')
                         : 'No items in zero stock',
-                    gradientColors1: const[
-                         Color.fromARGB(255, 59, 140, 164),
-                         Color.fromARGB(255, 40, 98, 116),
+                    gradientColors1: const [
+                      Color.fromARGB(255, 59, 140, 164),
+                      Color.fromARGB(255, 40, 98, 116),
                     ],
                     gradientColors2: const [
-                         Color.fromARGB(255, 59, 140, 164),
-                         Color.fromARGB(255, 125, 185, 203),
+                      Color.fromARGB(255, 59, 140, 164),
+                      Color.fromARGB(255, 125, 185, 203),
                     ],
                     right: 10.0,
                     bottom: 10.0,
@@ -98,11 +96,11 @@ class _LogisticPageState extends State<LogisticPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                        Lottie.asset(
-                                      'assets/category/sale_empty.json',
-                                      width: screenWidth * 0.5,
-                                      height: screenHeight * 0.3,
-                        ),
+                          Lottie.asset(
+                            'assets/gif/sale_empty.json',
+                            width: screenWidth * 0.5,
+                            height: screenHeight * 0.3,
+                          ),
                         ],
                       );
                     }

@@ -11,6 +11,7 @@ analyzer:
   errors:
     use_build_context_synchronously: ignore
     invalid_use_of_visible_for_testing_member: ignore
+    deprecated_member_use: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:

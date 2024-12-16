@@ -65,7 +65,7 @@ class StockValue extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Lottie.asset(
-                'assets/category/add_sales.json',
+                'assets/gif/add_sales.json',
                 height: screenHeight * 0.07,
                 width: screenWidth * 0.15,
                 fit: BoxFit.contain,

@@ -37,6 +37,17 @@ The Service Provider may disclose User Provided and Automatically Collected Info
 
 You can stop all collection of information by the Application easily by uninstalling it. You may use the standard uninstall processes as may be available as part of your mobile device or via the mobile application marketplace or network.
 
+Vibration Access:
+The Application may use the device's vibration function to provide haptic feedback during specific interactions such as notifications or alerts. This functionality enhances user experience by providing tactile feedback based on certain actions within the Application.
+
+Phone Call Access:
+The Application may request access to your phone's call-related functionalities, specifically for managing incoming and outgoing calls during the use of the Application. This permission enables the Application to pause or modify its behavior when a phone call is active. This may include actions such as muting sound or pausing media content. Please note that the Application does not record or store any phone call information, including numbers or call details. The access granted to phone call functionality is used solely to improve the user experience during call interactions.
+
+The information collected through these features will solely be used for the purposes of providing a better and more seamless experience for the user, and will not be shared with third-party services except as described in this Privacy Policy.
+
+Permissions Request Process
+The Application will request the necessary permissions to access vibration and phone call functionality. These permissions are vital for certain features to work properly and are explained in the sections above. You can choose to allow or deny these permissions based on your preferences. If you decline these permissions, certain functionalities of the Application may not work as intended.
+
 *Data Retention Policy*
 
 The Service Provider will retain User Provided data for as long as you use the Application and for a reasonable time thereafter. If you'd like them to delete User Provided Data that you have provided via the Application, please contact them at abhiramks0001@gmail.com and they will respond in a reasonable time.

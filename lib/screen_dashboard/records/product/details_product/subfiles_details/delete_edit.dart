@@ -31,7 +31,7 @@ class DeleteConfirmationBottomSheet {
               ),
               const SizedBox(height: 10),
               Lottie.asset(
-                'assets/category/delete.json',
+                'assets/gif/delete.json',
                 width: 100,
                 height: 86,
                 errorBuilder: (context, error, stackTrace) {

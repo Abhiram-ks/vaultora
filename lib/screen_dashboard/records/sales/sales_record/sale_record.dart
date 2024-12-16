@@ -122,7 +122,7 @@ void _applyDateFilters(DateTime? startDate, DateTime? endDate) {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Lottie.asset(
-                                      'assets/category/sale_empty.json',
+                                      'assets/gif/sale_empty.json',
                                       width: screenWidth * 0.5,
                                       height: screenHeight * 0.3,
                                     ),

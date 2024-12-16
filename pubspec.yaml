@@ -44,7 +44,6 @@ dependencies:
   intl: ^0.19.0
   liquid_swipe: ^3.1.0
   lottie: ^3.1.2
-  path_provider: ^2.1.4
   pinch_to_zoom_scrollable: ^0.1.2
   readmore: ^3.0.0
   smooth_page_indicator: ^1.2.0+3
@@ -58,6 +57,8 @@ dependencies:
   fl_chart: ^0.69.2
   flutter_markdown: ^0.7.4+3
   flutter_form_builder: ^9.5.0
+  path_provider: ^2.1.5
+  path_provider_android: ^2.2.15
 
 dev_dependencies:
   build_runner: ^2.4.13
@@ -88,7 +89,6 @@ flutter:
     - assets/gif/
     - assets/welcome/
     - assets/liquid/
-    - assets/category/
     - assets/listimage/
     - assets/privacy/
 

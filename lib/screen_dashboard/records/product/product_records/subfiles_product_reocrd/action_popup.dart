@@ -53,7 +53,7 @@ void showDeleteConfirmation(BuildContext context, String categoryId) async {
         content: Row(
           children: [
                  Lottie.asset(
-                'assets/category/delete.json',
+                'assets/gif/delete.json',
                 width: 80,
                 height: 76,
                 errorBuilder: (context, error, stackTrace) {

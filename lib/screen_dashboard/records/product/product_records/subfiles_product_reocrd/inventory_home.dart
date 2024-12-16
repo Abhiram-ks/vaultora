@@ -21,7 +21,7 @@ class InventoryHome extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(builder:(context) => const PurchaseRecord(),));
         },
-        imagePath: 'assets/category/animation(6).json',
+        imagePath: 'assets/gif/purchase.json',
         title: 'Purchase',
         subtitle: 'SUPPLY SUMMARY',
         color: const Color.fromARGB(255, 125, 185, 203),
@@ -31,7 +31,7 @@ class InventoryHome extends StatelessWidget {
         onTap: () {
           
         },
-        imagePath: 'assets/category/animation(2).json',
+        imagePath: 'assets/gif/revenueandlogisic.json',
         title: 'Revenue',
         subtitle: 'PROFIT TRACKER',
         color: const Color.fromARGB(255, 125, 185, 203),
@@ -41,7 +41,7 @@ class InventoryHome extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) =>const SalesData(),));
         },
-        imagePath: 'assets/gif/twoanimation.json',
+        imagePath: 'assets/gif/sales.json',
         title: 'Sales',
         subtitle: 'INCOME INSIGHTS',
         color: const Color.fromARGB(255, 125, 185, 203),

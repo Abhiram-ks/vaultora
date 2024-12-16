@@ -41,8 +41,8 @@ class _AddpageState extends State<Addpage> {
 
     String getAnimationPath(int index) {
       return index == 0
-          ? 'assets/category/animation(6).json'
-          : 'assets/category/animation(2).json';
+          ? 'assets/gif/purchase.json'
+          : 'assets/gif/truck.json';
     }
 
     return Scaffold(

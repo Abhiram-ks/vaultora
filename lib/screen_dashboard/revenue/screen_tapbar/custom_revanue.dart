@@ -223,7 +223,7 @@ class _CustomisationState extends State<Customisation> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                       Lottie.asset(
-                                      'assets/category/sale_empty.json',
+                                      'assets/gif/sale_empty.json',
                                       width: screenWidth * 0.5,
                                       height: screenHeight * 0.3,
                                     ),

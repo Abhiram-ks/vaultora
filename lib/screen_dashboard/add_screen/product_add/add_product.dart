@@ -233,7 +233,7 @@ bool _validateInputs() {
                                     height: screenHeight * 0.2,
                                   )
                                 : Lottie.asset(
-                                    'assets/category/addimage.json',
+                                    'assets/gif/addimage.json',
                                     fit: BoxFit.contain,
                                     width: screenHeight * 0.2,
                                     height: screenHeight * 0.2,

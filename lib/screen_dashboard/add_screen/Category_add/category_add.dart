@@ -159,7 +159,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                         if (imageData.webImageBytes == null &&
                             imageData.imagePath == null)
                           Lottie.asset(
-                            'assets/category/addimage.json',
+                            'assets/gif/addimage.json',
                             fit: BoxFit.contain,
                             width: 90,
                             height:90
