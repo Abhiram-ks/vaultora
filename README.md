@@ -16,4 +16,4 @@ The app empowers owners to add and manage products, record multiple sales, and m
 * Secure & Lightweight- Fast and efficient local storage with no internet dependency or login friction.
 
 - Technologies & Tools Used: 
-Hive (NoSQL) | Flutter & Dart – Cross-platform app development | MVC Architecture | Custom UI/UX | State Management 
+Hive (NoSQL) | Flutter & Dart | MVC Architecture | Custom UI/UX | State Management 
