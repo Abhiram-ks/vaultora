@@ -1,3 +1,6 @@
+
+![image alt](https://github.com/Abhiram-ks/vaultora/blob/0d3f523e36f89dcc38dc72908b8474d2eea47213/Cavlog%20(1).png)
+
 # Vaultora – Smart Inventory Management App(📦)
 
 # Project Overview:
