@@ -1,5 +1,5 @@
 
-![image alt](https://github.com/Abhiram-ks/vaultora/blob/0d3f523e36f89dcc38dc72908b8474d2eea47213/Cavlog%20(1).png)
+![image alt](https://github.com/Abhiram-ks/vaultora/blob/8ced38a6fda922bc59810f1ecdb8fb9841a1ad40/vaultora%20banner.png)
 
 # Vaultora – Smart Inventory Management App(📦)
 
